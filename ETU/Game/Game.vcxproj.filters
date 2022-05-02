@@ -91,11 +91,11 @@
     <ClInclude Include="TitleScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\TP1\Game\Hud.h">
-      <Filter>Hud</Filter>
-    </ClInclude>
     <ClInclude Include="ContentManager.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Hud.h">
+      <Filter>Hud</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -138,11 +138,11 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>GenericFiles</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\TP1\Game\Hud.cpp">
-      <Filter>Hud</Filter>
-    </ClCompile>
     <ClCompile Include="ContentManager.cpp">
       <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Hud.cpp">
+      <Filter>Hud</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

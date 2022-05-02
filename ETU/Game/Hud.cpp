@@ -11,7 +11,6 @@ Hud::Hud()
 
 void Hud::initialize(const ContentManager& contentManager)
 {
-	this.contentManager = contentManager;
 	hudView = sf::View(sf::FloatRect(0, 0, (float)Game::GAME_WIDTH, (float)Game::GAME_HEIGHT));
 	addMenuStartText();
 	addScoreText();

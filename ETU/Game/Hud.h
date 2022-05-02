@@ -1,4 +1,5 @@
 #pragma once
+#include "ContentManager.h"
 class Hud
 {
 public:

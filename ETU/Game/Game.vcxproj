@@ -155,7 +155,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\TP1\Game\Hud.h" />
     <ClInclude Include="ActorType.h" />
     <ClInclude Include="AnimatedGameObject.h" />
     <ClInclude Include="Animation.h" />
@@ -165,6 +164,7 @@
     <ClInclude Include="Event.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Hud.h" />
     <ClInclude Include="InputBasedAnimation.h" />
     <ClInclude Include="Inputs.h" />
     <ClInclude Include="SceneResult.h" />
@@ -179,7 +179,6 @@
     <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\TP1\Game\Hud.cpp" />
     <ClCompile Include="AnimatedGameObject.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationFrame.cpp" />
@@ -187,6 +186,7 @@
     <ClCompile Include="CyclicAnimation.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Hud.cpp" />
     <ClCompile Include="InputBasedAnimation.cpp" />
     <ClCompile Include="Inputs.cpp" />
     <ClCompile Include="LinearAnimation.cpp" />
