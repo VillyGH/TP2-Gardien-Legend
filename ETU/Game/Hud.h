@@ -22,7 +22,7 @@ public:
 	void removeGameInfoText();
 	void removePauseText();
 private:
-	const ContentManager contentManager
+	const ContentManager contentManager;
 	sf::View hudView;
 	sf::Text menuStartText;
 	sf::Text scoreText;

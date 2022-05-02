@@ -31,6 +31,7 @@ bool TitleScene::init()
   menuImage.setPosition(Game::GAME_WIDTH / 2.0f, Game::GAME_HEIGHT / 2.0f);
 
   hud.initialize(contentManager);
+  hud.addMenuStartText();
 
   return true;
 }
