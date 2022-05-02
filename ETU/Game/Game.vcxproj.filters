@@ -20,6 +20,8 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="Scenes\ContentManagers">
+      <UniqueIdentifier>{8c96c7ad-c911-43c8-b71b-daae3f71e4f1}</UniqueIdentifier>
     <Filter Include="Bullets">
       <UniqueIdentifier>{a56334a4-6740-4ea9-a7cc-c0939060e07f}</UniqueIdentifier>
     </Filter>
@@ -85,6 +87,18 @@
     <ClInclude Include="TitleScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Level01.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuContentManager.h">
+      <Filter>Scenes\ContentManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="Level01ContentManager.h">
+      <Filter>Scenes\ContentManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreBoardContentManager.h">
+      <Filter>Scenes\ContentManagers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Publisher.cpp">
@@ -125,6 +139,21 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>GenericFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Level01.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentManager.cpp">
+      <Filter>Scenes\ContentManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuContentManager.cpp">
+      <Filter>Scenes\ContentManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="Level01ContentManager.cpp">
+      <Filter>Scenes\ContentManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreBoardContentManager.cpp">
+      <Filter>Scenes\ContentManagers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
