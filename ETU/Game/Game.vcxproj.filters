@@ -23,6 +23,12 @@
     <Filter Include="Bullets">
       <UniqueIdentifier>{a56334a4-6740-4ea9-a7cc-c0939060e07f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Hud">
+      <UniqueIdentifier>{7dbb2d32-9f55-40ff-a34c-3671e8f798ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Leaderboard">
+      <UniqueIdentifier>{65cfc19a-2325-4e54-9be7-a38e8bfac50f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -85,6 +91,12 @@
     <ClInclude Include="TitleScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\TP1\Game\Hud.h">
+      <Filter>Hud</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentManager.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Publisher.cpp">
@@ -125,6 +137,12 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>GenericFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\TP1\Game\Hud.cpp">
+      <Filter>Hud</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentManager.cpp">
+      <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
