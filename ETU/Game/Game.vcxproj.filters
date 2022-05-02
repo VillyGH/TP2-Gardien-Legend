@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Bonus">
+      <UniqueIdentifier>{f81dc113-d171-4da8-a580-e946f80bab53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PubSub">
+      <UniqueIdentifier>{5cca3c48-32c6-4d35-90d9-d7329e8e3429}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Animations">
+      <UniqueIdentifier>{9ed0a21d-58fc-4567-a92e-94cf3743e0ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{2da220f6-b49f-4d73-8dc9-d5e8db51128f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Characters">
+      <UniqueIdentifier>{88fbd685-f9bd-47a7-bbe5-d699b703812e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GenericFiles">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="targetver.h">
+      <Filter>GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Inputs.h">
+      <Filter>GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedGameObject.h">
+      <Filter>GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="CyclicAnimation.h">
+      <Filter>Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="InputBasedAnimation.h">
+      <Filter>Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="LinearAnimation.h">
+      <Filter>Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorType.h">
+      <Filter>GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Publisher.h">
+      <Filter>PubSub</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>PubSub</Filter>
+    </ClInclude>
+    <ClInclude Include="Subscriber.h">
+      <Filter>PubSub</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationFrame.h">
+      <Filter>Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationState.h">
+      <Filter>Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="scenetype.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneResult.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Publisher.cpp">
+      <Filter>PubSub</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="CyclicAnimation.cpp">
+      <Filter>Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="InputBasedAnimation.cpp">
+      <Filter>Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="LinearAnimation.cpp">
+      <Filter>Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationFrame.cpp">
+      <Filter>Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedGameObject.cpp">
+      <Filter>GenericFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>GenericFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>GenericFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Inputs.cpp">
+      <Filter>GenericFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>GenericFiles</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\extern\SFML\bin\openal32.dll" />
+    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-audio-2.dll" />
+    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-audio-d-2.dll" />
+    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-graphics-2.dll" />
+    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-graphics-d-2.dll" />
+    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-network-2.dll" />
+    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-network-d-2.dll" />
+    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-system-2.dll" />
+    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-system-d-2.dll" />
+    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-window-2.dll" />
+    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-window-d-2.dll" />
+  </ItemGroup>
+</Project>
