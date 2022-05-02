@@ -22,6 +22,8 @@
     </Filter>
     <Filter Include="Scenes\ContentManagers">
       <UniqueIdentifier>{8c96c7ad-c911-43c8-b71b-daae3f71e4f1}</UniqueIdentifier>
+    <Filter Include="Bullets">
+      <UniqueIdentifier>{a56334a4-6740-4ea9-a7cc-c0939060e07f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
