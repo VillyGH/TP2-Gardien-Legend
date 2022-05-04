@@ -28,6 +28,8 @@
     </Filter>
     <Filter Include="Hud EXEMPLE ENLEVER FIN">
       <UniqueIdentifier>{7dbb2d32-9f55-40ff-a34c-3671e8f798ae}</UniqueIdentifier>
+    <Filter Include="Scenes\ContentManagers">
+      <UniqueIdentifier>{8c96c7ad-c911-43c8-b71b-daae3f71e4f1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
