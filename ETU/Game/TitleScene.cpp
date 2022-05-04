@@ -33,9 +33,8 @@ bool TitleScene::init()
   if(!contentManager.loadContent())
     return false;
 
-  if (!titleMusic.openFromFile("Assets\\Music\\TVTheme.ogg"))
+  if (!titleMusic.openFromFile("Assets\\Music\\Title\\SkyFire (Title Screen).ogg"))
       return false;
-  //titleMusic.openFromFile(contentManager.)
   titleMusic.setVolume(10);
   titleMusic.setLoop(true);
   titleMusic.play();
@@ -72,7 +71,7 @@ bool TitleScene::handleEvents(sf::RenderWindow& window)
       window.close();
       retval = true;
     }
-    if (event.type == sf::Event::MouseButtonPressed || event.type == sf::Event::KeyPressed)
+    if (event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::KeyPressed)
     {
         gameStarted = true;
         titleMusic.stop();

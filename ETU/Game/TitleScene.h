@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.h"
-#include "ContentManager.h"
+#include "MenuContentManager.h"
 #include "Hud.h"
 class TitleScene :
     public Scene
@@ -15,7 +15,7 @@ public:
   virtual bool uninit() override;
   virtual bool handleEvents(sf::RenderWindow& window) override;
 private:
-  ContentManager contentManager;
+  MenuContentManager contentManager;
   sf::Texture menuImageTexture;
   sf::Sprite menuImage;
   sf::Text menuStartText;

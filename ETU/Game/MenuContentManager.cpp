@@ -8,7 +8,6 @@ MenuContentManager::MenuContentManager()
 
 bool MenuContentManager::loadContent()
 {
-
     if (!backgroundTexture.loadFromFile("Assets\\Sprites\\Level01\\SpaceBackground.png"))
         return false;
     else
@@ -17,10 +16,8 @@ bool MenuContentManager::loadContent()
         return false;
     if (!mainFont.loadFromFile("Assets\\Fonts\\Level01\\emulogic.ttf"))
         return false;
-
     if (!titleScreenTexture.loadFromFile("Assets\\Sprites\\Title\\Title.png"))
         return false;
-
     return true;
 }
 const sf::Texture& MenuContentManager::getBackgroundTexture() const
