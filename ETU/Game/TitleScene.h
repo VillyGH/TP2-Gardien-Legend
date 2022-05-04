@@ -18,6 +18,8 @@ private:
   ContentManager contentManager;
   sf::Texture menuImageTexture;
   sf::Sprite menuImage;
-  Hud hud;
+  sf::Text menuStartText;
+  sf::Music titleMusic;
+  bool gameStarted;
 };
 

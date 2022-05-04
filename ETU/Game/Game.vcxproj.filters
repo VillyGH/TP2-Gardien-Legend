@@ -23,11 +23,11 @@
     <Filter Include="Bullets">
       <UniqueIdentifier>{a56334a4-6740-4ea9-a7cc-c0939060e07f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Hud">
-      <UniqueIdentifier>{7dbb2d32-9f55-40ff-a34c-3671e8f798ae}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Leaderboard">
       <UniqueIdentifier>{65cfc19a-2325-4e54-9be7-a38e8bfac50f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hud EXEMPLE ENLEVER FIN">
+      <UniqueIdentifier>{7dbb2d32-9f55-40ff-a34c-3671e8f798ae}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -76,7 +76,7 @@
     <ClInclude Include="AnimationState.h">
       <Filter>Animations</Filter>
     </ClInclude>
-    <ClInclude Include="scenetype.h">
+    <ClInclude Include="Scenetype.h">
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="SceneResult.h">
@@ -95,7 +95,7 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Hud.h">
-      <Filter>Hud</Filter>
+      <Filter>Hud EXEMPLE ENLEVER FIN</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -142,7 +142,7 @@
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Hud.cpp">
-      <Filter>Hud</Filter>
+      <Filter>Hud EXEMPLE ENLEVER FIN</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

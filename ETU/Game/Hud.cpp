@@ -21,15 +21,7 @@ void Hud::initialize(const ContentManager& contentManager)
 
 // Ajout de texte
 
-void Hud::addMenuStartText()
-{
-	const std::string menuStartString = "Press any key to start";
-	menuStartText.setFont(contentManager.getMainFont());
-	menuStartText.setCharacterSize(64);
-	menuStartText.setFillColor(sf::Color::White);
-	menuStartText.setPosition(Game::GAME_WIDTH / 2.0f - menuStartText.getLocalBounds().width / 2.0f, Game::GAME_HEIGHT / 2.0f - menuStartText.getLocalBounds().height / 2.0f);
-	menuStartText.setString(menuStartString);
-}
+
 
 void Hud::addScoreText()
 {

@@ -14,24 +14,43 @@ TitleScene::~TitleScene()
 }
 SceneType TitleScene::update()
 {
-  return getSceneType();
+    SceneType retval = getSceneType();
+
+    if (gameStarted)
+        retval = SceneType::GAME_SCENE;
+
+    return retval;
 }
 
 void TitleScene::draw(sf::RenderWindow& window) const
 {
   window.draw(menuImage);
+  window.draw(menuStartText);
 }
 
 bool TitleScene::init()
 {
-  if(contentManager.loadContent())
+  if(!contentManager.loadContent())
     return false;
+
+  if (!titleMusic.openFromFile("Assets\\Music\\TVTheme.ogg"))
+      return false;
+  //titleMusic.openFromFile(contentManager.)
+  titleMusic.setVolume(10);
+  titleMusic.setLoop(true);
+  titleMusic.play();
+
   menuImage.setTexture(contentManager.getTitleScreenTexture());
   menuImage.setOrigin(menuImage.getTexture()->getSize().x / 2.0f, menuImage.getTexture()->getSize().y / 2.0f);
   menuImage.setPosition(Game::GAME_WIDTH / 2.0f, Game::GAME_HEIGHT / 2.0f);
 
-  hud.initialize(contentManager);
-  hud.addMenuStartText();
+  const std::string menuStartString = "Press any key to start";
+  menuStartText.setFont(contentManager.getMainFont());
+  menuStartText.setCharacterSize(16);
+  menuStartText.setFillColor(sf::Color::White);
+  menuStartText.setPosition(Game::GAME_WIDTH / 2.0f - menuStartText.getLocalBounds().width / 2.0f, Game::GAME_HEIGHT / 1.2f - menuStartText.getLocalBounds().height / 2.0f);
+  menuStartText.setString(menuStartString);
+  menuStartText.setOrigin(menuStartText.getLocalBounds().width / 2.0f, menuStartText.getLocalBounds().height / 2.0f);
 
   return true;
 }
@@ -52,6 +71,11 @@ bool TitleScene::handleEvents(sf::RenderWindow& window)
     {
       window.close();
       retval = true;
+    }
+    if (event.type == sf::Event::MouseButtonPressed || event.type == sf::Event::KeyPressed)
+    {
+        gameStarted = true;
+        titleMusic.stop();
     }
   }
   return retval;
