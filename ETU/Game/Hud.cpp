@@ -56,11 +56,11 @@ void Hud::addPauseText()
 void Hud::addGameOverText(int score)
 {
 	const std::string gameOverString = "Game Over ! Votre score : " + std::to_string(score);
-	gameOverText.setFont(contentManager.getMainFont());
-	gameOverText.setCharacterSize(64);
-	gameOverText.setFillColor(sf::Color(42,2,2,255));
-	gameOverText.setPosition(Game::GAME_WIDTH / 2.0f - gameOverText.getLocalBounds().width / 2.0f, Game::GAME_HEIGHT / 2.0f - gameOverText.getLocalBounds().height / 2.0f);
-	gameOverText.setString(gameOverString);
+	leaderboardText.setFont(contentManager.getMainFont());
+	leaderboardText.setCharacterSize(64);
+	leaderboardText.setFillColor(sf::Color(42,2,2,255));
+	leaderboardText.setPosition(Game::GAME_WIDTH / 2.0f - leaderboardText.getLocalBounds().width / 2.0f, Game::GAME_HEIGHT / 2.0f - leaderboardText.getLocalBounds().height / 2.0f);
+	leaderboardText.setString(gameOverString);
 }
 
 
@@ -128,5 +128,5 @@ void Hud::draw(sf::RenderWindow& window)  const
   window.draw(nbKillsText);
   window.draw(nbLivesRemainingText);
   window.draw(pauseText);
-  window.draw(gameOverText);
+  window.draw(leaderboardText);
 }

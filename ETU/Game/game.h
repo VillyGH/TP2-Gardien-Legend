@@ -1,10 +1,12 @@
 #pragma once
 #include "stdafx.h"
 #include "Inputs.h"
-#include "scenetype.h"
+#include "SceneType.h"
 
 
 class TitleScene;
+class Level01Scene;
+class ScoreboardScene;
 class Scene;
 class Game
 {

@@ -1,10 +1,10 @@
 #pragma once
 
 
-enum SceneType
+enum class SceneType
 {
   NONE,
   TITLE_SCENE,
-  GAME_SCENE,
+  LEVEL01_SCENE,
   END_GAME_SCENE
 };

@@ -1,26 +1,26 @@
 #include "stdafx.h"
-#include "Level01.h"
+#include "Level01Scene.h"
 #include "game.h"
 
 #include "ContentManager.h"
 
-const float Level01::TIME_PER_FRAME = 1.0f / (float)Game::FRAME_RATE;
-const float Level01::GAMEPAD_SPEEDRATIO = 1000.0f;
-const float Level01::KEYBOARD_SPEED = 0.1f;
-const float Level01::TIME_BETWEEN_FIRE = 0.5f;
-const float Level01::MAX_ENEMIES = 15; 
+const float Level01Scene::TIME_PER_FRAME = 1.0f / (float)Game::FRAME_RATE;
+const float Level01Scene::GAMEPAD_SPEEDRATIO = 1000.0f;
+const float Level01Scene::KEYBOARD_SPEED = 0.1f;
+const float Level01Scene::TIME_BETWEEN_FIRE = 0.5f;
+const float Level01Scene::MAX_ENEMIES = 15; 
 
-Level01::Level01()
-    : Scene(SceneType::LEVEL01)
+Level01Scene::Level01Scene()
+    : Scene(SceneType::LEVEL01_SCENE)
 {
 }
 
-Level01::~Level01()
+Level01Scene::~Level01Scene()
 {
 
 }
 
-SceneType Level01::update()
+SceneType Level01Scene::update()
 {
     static int cptScrollBackground = 0;
     backgroundSprite.setTextureRect(sf::IntRect((int)(0.5f * cptScrollBackground++), 0, Game::GAME_WIDTH, Game::GAME_HEIGHT));
@@ -62,7 +62,7 @@ SceneType Level01::update()
 
 
 
-void Level01::fireBullet(const sf::Vector2f& position)
+void Level01Scene::fireBullet(const sf::Vector2f& position)
 {
     /*
     Bullet newBullet;
@@ -73,7 +73,7 @@ void Level01::fireBullet(const sf::Vector2f& position)
     timeSinceLastFire = 0;
     */
 }
-void Level01::draw(sf::RenderWindow& window) const
+void Level01Scene::draw(sf::RenderWindow& window) const
 {
     window.draw(backgroundSprite);
     /*
@@ -85,12 +85,12 @@ void Level01::draw(sf::RenderWindow& window) const
     */
 }
 
-bool Level01::uninit()
+bool Level01Scene::uninit()
 {
     return true;
 }
 
-bool Level01::init()
+bool Level01Scene::init()
 {
     timeSinceLastFire = TIME_BETWEEN_FIRE * 3;
     inputs.reset();
@@ -111,8 +111,9 @@ bool Level01::init()
     }
 
     //return player.init(contentManager);
+    return true;
 }
-bool Level01::handleEvents(sf::RenderWindow& window)
+bool Level01Scene::handleEvents(sf::RenderWindow& window)
 {
     bool retval = false;
     inputs.reset();

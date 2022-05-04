@@ -29,7 +29,7 @@ private:
 	sf::Text scoreText;
 	sf::Text nbKillsText;
 	sf::Text pauseText;
-	sf::Text gameOverText;
+	sf::Text leaderboardText;
 	sf::Text nbLivesRemainingText;
 };
 

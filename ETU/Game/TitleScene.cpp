@@ -3,7 +3,8 @@
 #include "game.h"
 
 TitleScene::TitleScene()
-  : Scene(SceneType::TITLE_SCENE)
+  : Scene(SceneType::TITLE_SCENE),
+    gameStarted(false)
 {
 
 }
@@ -17,7 +18,7 @@ SceneType TitleScene::update()
     SceneType retval = getSceneType();
 
     if (gameStarted)
-        retval = SceneType::GAME_SCENE;
+        retval = SceneType::LEVEL01_SCENE;
 
     return retval;
 }
@@ -74,7 +75,6 @@ bool TitleScene::handleEvents(sf::RenderWindow& window)
     if (event.type == sf::Event::JoystickButtonPressed || event.type == sf::Event::KeyPressed)
     {
         gameStarted = true;
-        titleMusic.stop();
     }
   }
   return retval;

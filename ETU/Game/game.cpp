@@ -2,6 +2,8 @@
 #include "game.h"
 #include "ContentManager.h"
 #include "TitleScene.h"
+#include "Level01Scene.h"
+#include "ScoreboardScene.h"
 #include "scenetype.h"
 
 const unsigned int Game::FRAME_RATE = 60;
@@ -137,16 +139,31 @@ bool Game::uninit()
 
 Scene* Game::getNextScene(SceneType type) const
 {
-  Scene* scene =nullptr;
-  switch (type)
-  {
+    Scene* scene = nullptr;
+    switch (type)
+    {
+    case SceneType::TITLE_SCENE:
+    {
+        scene = new TitleScene();
+        break;
+    }
+    case SceneType::LEVEL01_SCENE:
+    {
+        scene = new Level01Scene();
+        break;
+    }
 
-  default:
-  {
-    scene = nullptr;
-    break;
-  }
-  }
-  return scene;
+    case SceneType::END_GAME_SCENE:
+    {
+        scene = new ScoreboardScene();
+        break;
+    }
+    default:
+    {
+        scene = nullptr;
+        break;
+    }
+    }
+    return scene;
 }
 

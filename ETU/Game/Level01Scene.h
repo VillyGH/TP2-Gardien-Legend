@@ -7,7 +7,7 @@
 #include <list>
 #include "stdafx.h"
 
-class Level01 :
+class Level01Scene :
 	public Scene
 {
 public:
@@ -18,8 +18,8 @@ public:
 	static const float MAX_ENEMIES;
 public:
 	// Héritées via Scene
-	Level01();
-	~Level01();
+	Level01Scene();
+	~Level01Scene();
 	virtual SceneType update() override;
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual bool init() override;
