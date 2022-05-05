@@ -38,8 +38,8 @@ bool AnimatedGameObject::update(float deltaT, const Inputs& inputs)
   return retval;
 }
 
-bool AnimatedGameObject::init(const ContentManager& contentManager)
+bool AnimatedGameObject::init(const Level01ContentManager& contentManager)
 {
-  this->contentManager = const_cast<ContentManager*>(&contentManager);
+  this->contentManager = const_cast<Level01ContentManager*>(&contentManager);
   return true;
 }

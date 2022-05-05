@@ -2,8 +2,9 @@
 #include "Scene.h"
 #include "Inputs.h"
 //#include "Player.h"
-#include "ContentManager.h"
+#include "Level01ContentManager.h"
 //#include "Bullet.h"
+#include "EnemyType1.h"
 #include <list>
 #include "stdafx.h"
 
@@ -30,8 +31,8 @@ private:
 	Inputs inputs;
 	//Player player;
 	sf::Sprite backgroundSprite;
-	ContentManager contentManager;
-	//std::list<LargeEnemy> enemies;
+	Level01ContentManager contentManager;
+	std::list<EnemyType1> enemies;
 	//std::list<Bullet> bullets;
 	float timeSinceLastFire;
 };

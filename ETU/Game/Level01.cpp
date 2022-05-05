@@ -23,13 +23,13 @@ Level01::~Level01()
 SceneType Level01::update()
 {
     static int cptScrollBackground = 0;
-    backgroundSprite.setTextureRect(sf::IntRect((int)(0.5f * cptScrollBackground++), 0, Game::GAME_WIDTH, Game::GAME_HEIGHT));
+    backgroundSprite.setTextureRect(sf::IntRect((int)0, (0.5 * cptScrollBackground--), Game::GAME_WIDTH, Game::GAME_HEIGHT));
     SceneType retval = getSceneType();
     //player.update(1.0f / (float)Game::FRAME_RATE, inputs);
-    /*for (LargeEnemy& e : enemies)
+    for (EnemyType1& e : enemies)
         if (e.update(1.0f / (float)Game::FRAME_RATE, inputs))
             e.deactivate();
-
+    /*
     for (Bullet& e : bullets)
     {
         if (e.update(1.0f / (float)Game::FRAME_RATE))
@@ -76,13 +76,14 @@ void Level01::fireBullet(const sf::Vector2f& position)
 void Level01::draw(sf::RenderWindow& window) const
 {
     window.draw(backgroundSprite);
-    /*
-    player.draw(window);
-    for (const LargeEnemy& e : enemies)
+    
+    //player.draw(window);
+
+    for (const EnemyType1& e : enemies)
         e.draw(window);
-    for (const Bullet& e : bullets)
-        e.draw(window);
-    */
+    //for (const Bullet& e : bullets)
+        //e.draw(window);
+    
 }
 
 bool Level01::uninit()
@@ -101,13 +102,13 @@ bool Level01::init()
     backgroundSprite.setTexture(contentManager.getBackgroundTexture());
     srand((unsigned)time(nullptr));
 
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < MAX_ENEMIES; i++)
     {
-        //EnemyType1 enemy;
-        //enemy.init(contentManager);
-        //enemy.setPosition(sf::Vector2f((i * (float)Game::GAME_WIDTH / 10.0f), (float)Game::GAME_HEIGHT + 50.0f * (float)(rand() % 100)));
-       // enemy.activate();
-        //enemies.push_back(enemy);
+        EnemyType1 enemy;
+        enemy.init(contentManager);
+        enemy.setPosition(sf::Vector2f((float)i * (float)Game::GAME_WIDTH / 20, (0 - 50.0f * (float)(rand() % 100))));
+        enemy.activate();
+        enemies.push_back(enemy);
     }
 
     //return player.init(contentManager);

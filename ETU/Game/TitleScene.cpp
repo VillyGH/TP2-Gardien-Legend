@@ -4,7 +4,7 @@
 
 TitleScene::TitleScene()
     : Scene(SceneType::TITLE_SCENE),
-    gameStarted(false)
+    gameStarted(false) //Mieux de jouer avec les next scenes || Plus conforme avec ce qu'on a vue en cour
 {
 
 }
