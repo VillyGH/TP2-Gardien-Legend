@@ -1,12 +1,18 @@
 #include "stdafx.h"
-#include "MenuContentManager.h"
+#include "TitleSceneContentManager.h"
 
 
-MenuContentManager::MenuContentManager()
+TitleSceneContentManager::TitleSceneContentManager()
 {
 }
 
-bool MenuContentManager::loadContent()
+TitleSceneContentManager& TitleSceneContentManager::getInstance()
+{
+    static TitleSceneContentManager instance;
+    return instance;
+}
+
+bool TitleSceneContentManager::loadContent()
 {
 
     if (!backgroundTexture.loadFromFile("Assets\\Sprites\\Level01\\SpaceBackground.png"))
@@ -23,19 +29,19 @@ bool MenuContentManager::loadContent()
 
     return true;
 }
-const sf::Texture& MenuContentManager::getBackgroundTexture() const
+const sf::Texture& TitleSceneContentManager::getBackgroundTexture() const
 {
     return backgroundTexture;
 }
-const sf::Texture& MenuContentManager::getMiscTexture() const
+const sf::Texture& TitleSceneContentManager::getMiscTexture() const
 {
     return miscTexture;
 }
-const sf::Font& MenuContentManager::getMainFont() const
+const sf::Font& TitleSceneContentManager::getMainFont() const
 {
     return mainFont;
 }
-const sf::Texture& MenuContentManager::getTitleScreenTexture() const
+const sf::Texture& TitleSceneContentManager::getTitleScreenTexture() const
 {
     return titleScreenTexture;
 }

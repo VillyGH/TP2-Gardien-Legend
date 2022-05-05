@@ -90,7 +90,7 @@
     <ClInclude Include="Level01.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="MenuContentManager.h">
+    <ClInclude Include="TitleSceneContentManager.h">
       <Filter>Scenes\ContentManagers</Filter>
     </ClInclude>
     <ClInclude Include="Level01ContentManager.h">
@@ -146,7 +146,7 @@
     <ClCompile Include="ContentManager.cpp">
       <Filter>Scenes\ContentManagers</Filter>
     </ClCompile>
-    <ClCompile Include="MenuContentManager.cpp">
+    <ClCompile Include="TitleSceneContentManager.cpp">
       <Filter>Scenes\ContentManagers</Filter>
     </ClCompile>
     <ClCompile Include="Level01ContentManager.cpp">

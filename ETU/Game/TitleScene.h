@@ -6,6 +6,7 @@ class TitleScene :
 {
 public:
   // Héritées via Scene
+    static const unsigned int TEXT_SIZE;
   TitleScene();
   ~TitleScene();
   virtual SceneType update() override;
@@ -16,5 +17,8 @@ public:
 private:
   sf::Texture menuImageTexture;
   sf::Sprite menuImage;
+  SceneType nextScene;
+  sf::Music spaceGameMusic;
+  sf::Text titleText;
 };
 

@@ -2,6 +2,7 @@
 #include "game.h"
 #include "ContentManager.h"
 #include "TitleScene.h"
+#include "Level01.h"
 #include "scenetype.h"
 
 const unsigned int Game::FRAME_RATE = 60;
@@ -141,10 +142,20 @@ Scene* Game::getNextScene(SceneType type) const
   switch (type)
   {
 
+  case SceneType::TITLE_SCENE:
+  {
+      scene = new TitleScene();
+      break;
+  }
+  case SceneType::LEVEL01:
+  {
+      scene = new Level01();
+      break;
+  }
   default:
   {
-    scene = nullptr;
-    break;
+      scene = nullptr;
+      break;
   }
   }
   return scene;
