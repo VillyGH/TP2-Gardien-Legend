@@ -147,7 +147,7 @@ Scene* Game::getNextScene(SceneType type) const
       scene = new TitleScene();
       break;
   }
-  case SceneType::LEVEL01:
+  case SceneType::LEVEL01_SCENE:
   {
       scene = new Level01();
       break;

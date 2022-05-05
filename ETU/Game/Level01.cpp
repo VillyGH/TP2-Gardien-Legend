@@ -11,7 +11,7 @@ const float Level01::TIME_BETWEEN_FIRE = 0.5f;
 const float Level01::MAX_ENEMIES = 15; 
 
 Level01::Level01()
-    : Scene(SceneType::LEVEL01)
+    : Scene(SceneType::LEVEL01_SCENE)
 {
 }
 

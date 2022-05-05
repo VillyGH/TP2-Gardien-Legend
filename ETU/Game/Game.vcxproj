@@ -167,7 +167,7 @@
     <ClInclude Include="InputBasedAnimation.h" />
     <ClInclude Include="Inputs.h" />
     <ClInclude Include="Level01ContentManager.h" />
-    <ClInclude Include="TitleSceneContentManager.h" />
+    <ClInclude Include="MenuContentManager.h" />
     <ClInclude Include="SceneResult.h" />
     <ClInclude Include="LinearAnimation.h" />
     <ClInclude Include="AnimationState.h" />
@@ -193,7 +193,7 @@
     <ClCompile Include="Level01.cpp" />
     <ClCompile Include="Level01ContentManager.cpp" />
     <ClCompile Include="LinearAnimation.cpp" />
-    <ClCompile Include="TitleSceneContentManager.cpp" />
+    <ClCompile Include="MenuContentManager.cpp" />
     <ClCompile Include="Publisher.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ScoreBoardContentManager.cpp" />

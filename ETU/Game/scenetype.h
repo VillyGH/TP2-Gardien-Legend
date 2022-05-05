@@ -4,6 +4,6 @@
 enum SceneType
 {
   NONE,
-  LEVEL01,
+  LEVEL01_SCENE,
   TITLE_SCENE,
 };

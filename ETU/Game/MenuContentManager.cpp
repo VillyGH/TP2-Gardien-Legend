@@ -1,20 +1,13 @@
 #include "stdafx.h"
-#include "TitleSceneContentManager.h"
+#include "MenuContentManager.h"
 
 
-TitleSceneContentManager::TitleSceneContentManager()
+MenuContentManager::MenuContentManager()
 {
 }
 
-TitleSceneContentManager& TitleSceneContentManager::getInstance()
+bool MenuContentManager::loadContent()
 {
-    static TitleSceneContentManager instance;
-    return instance;
-}
-
-bool TitleSceneContentManager::loadContent()
-{
-
     if (!backgroundTexture.loadFromFile("Assets\\Sprites\\Level01\\SpaceBackground.png"))
         return false;
     else
@@ -23,25 +16,23 @@ bool TitleSceneContentManager::loadContent()
         return false;
     if (!mainFont.loadFromFile("Assets\\Fonts\\Level01\\emulogic.ttf"))
         return false;
-
     if (!titleScreenTexture.loadFromFile("Assets\\Sprites\\Title\\Title.png"))
         return false;
-
     return true;
 }
-const sf::Texture& TitleSceneContentManager::getBackgroundTexture() const
+const sf::Texture& MenuContentManager::getBackgroundTexture() const
 {
     return backgroundTexture;
 }
-const sf::Texture& TitleSceneContentManager::getMiscTexture() const
+const sf::Texture& MenuContentManager::getMiscTexture() const
 {
     return miscTexture;
 }
-const sf::Font& TitleSceneContentManager::getMainFont() const
+const sf::Font& MenuContentManager::getMainFont() const
 {
     return mainFont;
 }
-const sf::Texture& TitleSceneContentManager::getTitleScreenTexture() const
+const sf::Texture& MenuContentManager::getTitleScreenTexture() const
 {
     return titleScreenTexture;
 }
