@@ -9,6 +9,7 @@ public:
 	EnemyType1(const EnemyType1& src);
 	virtual bool init(const Level01ContentManager& contentManager) override;
 	bool update(float deltaT, const Inputs& inputs) override;
+	bool isFiring();
 	void onHit();
 };
 

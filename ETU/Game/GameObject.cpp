@@ -73,7 +73,7 @@ void GameObject::initialize(const sf::Texture& texture, const sf::Vector2f& init
   setOrigin(sf::Vector2f(rect.width / 2.0f, rect.height / 2.0f));
   setPosition(initialPoistion);
 }
-bool GameObject::init(const ContentManager& contentManager)
+bool GameObject::init(const Level01ContentManager& contentManager)
 {
   return true;
 }

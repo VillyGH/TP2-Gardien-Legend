@@ -47,6 +47,12 @@ bool EnemyType1::update(float deltaT, const Inputs& inputs)
     return AnimatedGameObject::update(deltaT, inputs);
 }
 
+bool EnemyType1::isFiring() {
+    if (animations[currentState]->getNextFrame() > 11 && animations[currentState]->getNextFrame() > 13)
+        return true;
+    return false;
+}
+
 void EnemyType1::onHit()
 {
     //currentState = State::EXPLODING;
