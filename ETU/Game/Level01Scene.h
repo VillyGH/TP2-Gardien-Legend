@@ -1,7 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "Inputs.h"
-//#include "Player.h"
+#include "Player.h"
 #include "ContentManager.h"
 //#include "Bullet.h"
 #include <list>
@@ -17,7 +17,6 @@ public:
 	static const float TIME_BETWEEN_FIRE;
 	static const float MAX_ENEMIES;
 public:
-	// Héritées via Scene
 	Level01Scene();
 	~Level01Scene();
 	virtual SceneType update() override;
@@ -28,7 +27,7 @@ public:
 private:
 	void fireBullet(const sf::Vector2f& position);
 	Inputs inputs;
-	//Player player;
+	Player player;
 	sf::Sprite backgroundSprite;
 	ContentManager contentManager;
 	//std::list<LargeEnemy> enemies;

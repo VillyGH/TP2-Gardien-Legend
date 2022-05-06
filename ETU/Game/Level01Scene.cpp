@@ -25,7 +25,7 @@ SceneType Level01Scene::update()
     static int cptScrollBackground = 0;
     backgroundSprite.setTextureRect(sf::IntRect((int)(0.5f * cptScrollBackground++), 0, Game::GAME_WIDTH, Game::GAME_HEIGHT));
     SceneType retval = getSceneType();
-    //player.update(1.0f / (float)Game::FRAME_RATE, inputs);
+    player.update(TIME_PER_FRAME, inputs);
     /*for (LargeEnemy& e : enemies)
         if (e.update(1.0f / (float)Game::FRAME_RATE, inputs))
             e.deactivate();
@@ -76,8 +76,8 @@ void Level01Scene::fireBullet(const sf::Vector2f& position)
 void Level01Scene::draw(sf::RenderWindow& window) const
 {
     window.draw(backgroundSprite);
-    /*
     player.draw(window);
+    /*
     for (const LargeEnemy& e : enemies)
         e.draw(window);
     for (const Bullet& e : bullets)
@@ -110,8 +110,7 @@ bool Level01Scene::init()
         //enemies.push_back(enemy);
     }
 
-    //return player.init(contentManager);
-    return true;
+    return player.init(contentManager);
 }
 bool Level01Scene::handleEvents(sf::RenderWindow& window)
 {
@@ -129,8 +128,8 @@ bool Level01Scene::handleEvents(sf::RenderWindow& window)
     }
     inputs.moveFactorX += sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) ? 3.0f : 0.0f;
     inputs.moveFactorX -= sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) ? 3.0f : 0.0f;
-    inputs.moveFactorY += sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) ? -3.0f : 0.0f;
-    inputs.moveFactorY -= sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) ? -3.0f : 0.0f;
+    inputs.moveFactorY -= sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) ? -3.0f : 0.0f;
+    inputs.moveFactorY += sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) ? -3.0f : 0.0f;
     inputs.fireBullet = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
 
     return retval;

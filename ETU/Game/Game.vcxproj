@@ -170,6 +170,7 @@
     <ClInclude Include="Level01Scene.h" />
     <ClInclude Include="Level01ContentManager.h" />
     <ClInclude Include="MenuContentManager.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="SceneResult.h" />
     <ClInclude Include="LinearAnimation.h" />
     <ClInclude Include="AnimationState.h" />
@@ -178,6 +179,7 @@
     <ClInclude Include="SceneType.h" />
     <ClInclude Include="ScoreboardContentManager.h" />
     <ClInclude Include="ScoreboardScene.h" />
+    <ClInclude Include="ShipAnimation.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Subscriber.h" />
     <ClInclude Include="targetver.h" />
@@ -198,10 +200,12 @@
     <ClCompile Include="Level01ContentManager.cpp" />
     <ClCompile Include="LinearAnimation.cpp" />
     <ClCompile Include="MenuContentManager.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Publisher.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ScoreboardContentManager.cpp" />
     <ClCompile Include="ScoreboardScene.cpp" />
+    <ClCompile Include="ShipAnimation.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

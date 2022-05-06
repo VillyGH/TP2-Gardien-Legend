@@ -1,6 +1,3 @@
-// ppoulin
-// Exercice07
-
 #pragma once
 #include "Animation.h"
 class InputBasedAnimation :

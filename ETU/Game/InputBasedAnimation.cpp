@@ -1,7 +1,3 @@
-// ppoulin
-// Exercice07
-
-
 #include "stdafx.h"
 #include "InputBasedAnimation.h"
 
