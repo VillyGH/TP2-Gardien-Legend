@@ -28,6 +28,7 @@
     </Filter>
     <Filter Include="Hud EXEMPLE ENLEVER FIN">
       <UniqueIdentifier>{7dbb2d32-9f55-40ff-a34c-3671e8f798ae}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Scenes\ContentManagers">
       <UniqueIdentifier>{8c96c7ad-c911-43c8-b71b-daae3f71e4f1}</UniqueIdentifier>
     </Filter>
@@ -93,11 +94,26 @@
     <ClInclude Include="TitleScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="ContentManager.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Hud.h">
       <Filter>Hud EXEMPLE ENLEVER FIN</Filter>
+    </ClInclude>
+    <ClInclude Include="Level01Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Level01ContentManager.h">
+      <Filter>Scenes\ContentManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentManager.h">
+      <Filter>Scenes\ContentManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuContentManager.h">
+      <Filter>Scenes\ContentManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreboardContentManager.h">
+      <Filter>Scenes\ContentManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreboardScene.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -140,24 +156,26 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>GenericFiles</Filter>
     </ClCompile>
-    <ClCompile Include="ContentManager.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Hud.cpp">
       <Filter>Hud EXEMPLE ENLEVER FIN</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="..\extern\SFML\bin\openal32.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-audio-2.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-audio-d-2.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-graphics-2.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-graphics-d-2.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-network-2.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-network-d-2.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-system-2.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-system-d-2.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-window-2.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-window-d-2.dll" />
+    <ClCompile Include="Level01Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Level01ContentManager.cpp">
+      <Filter>Scenes\ContentManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentManager.cpp">
+      <Filter>Scenes\ContentManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuContentManager.cpp">
+      <Filter>Scenes\ContentManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreboardContentManager.cpp">
+      <Filter>Scenes\ContentManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreboardScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

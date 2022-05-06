@@ -210,62 +210,6 @@
     </ClCompile>
     <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="..\extern\SFML\bin\openal32.dll">
-      <FileType>Document</FileType>
-      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)</DestinationFolders>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-audio-2.dll">
-      <FileType>Document</FileType>
-      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)</DestinationFolders>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-audio-d-2.dll">
-      <FileType>Document</FileType>
-      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)</DestinationFolders>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-graphics-2.dll">
-      <FileType>Document</FileType>
-      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)</DestinationFolders>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-graphics-d-2.dll">
-      <FileType>Document</FileType>
-      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)</DestinationFolders>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-network-2.dll">
-      <FileType>Document</FileType>
-      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)</DestinationFolders>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-network-d-2.dll">
-      <FileType>Document</FileType>
-      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)</DestinationFolders>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-system-2.dll">
-      <FileType>Document</FileType>
-      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)</DestinationFolders>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-system-d-2.dll">
-      <FileType>Document</FileType>
-      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)</DestinationFolders>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-window-2.dll">
-      <FileType>Document</FileType>
-      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)</DestinationFolders>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-window-d-2.dll">
-      <FileType>Document</FileType>
-      <DestinationFolders Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)</DestinationFolders>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </CopyFileToFolders>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
