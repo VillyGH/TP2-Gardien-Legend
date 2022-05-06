@@ -1,17 +1,23 @@
 #include "stdafx.h"
 #include "Level01.h"
 #include "game.h"
+#include "CharacterType.h"
+#include "Level01ContentManager.h"
 
-#include "ContentManager.h"
+const float Level01Scene::TIME_PER_FRAME = 1.0f / (float)Game::FRAME_RATE;
+const float Level01Scene::GAMEPAD_SPEEDRATIO = 1000.0f;
+const float Level01Scene::KEYBOARD_SPEED = 0.1f;
+const float Level01Scene::TIME_BETWEEN_FIRE = 0.5f;
+const float Level01Scene::MAX_NB_ENEMIES = 15;
+const float Level01Scene::MAX_NB_BULLETS = 15;
+const float Level01Scene::ENEMY_SPAWN_TIME = 1;
+const float Level01Scene::ENEMY_SPAWN_DISTANCE = 15;
+const float Level01Scene::SPAWN_MARGIN = -50;
 
-const float Level01::TIME_PER_FRAME = 1.0f / (float)Game::FRAME_RATE;
-const float Level01::GAMEPAD_SPEEDRATIO = 1000.0f;
-const float Level01::KEYBOARD_SPEED = 0.1f;
-const float Level01::TIME_BETWEEN_FIRE = 0.5f;
-const float Level01::MAX_ENEMIES = 15; 
-
-Level01::Level01()
-    : Scene(SceneType::LEVEL01)
+Level01Scene::Level01Scene()
+    : Scene(SceneType::LEVEL01_SCENE)
+    , enemySpawnTimer(0)
+    , timeSinceLastFire(0)
 {
 }
 
@@ -25,12 +31,29 @@ SceneType Level01::update()
     static int cptScrollBackground = 0;
     backgroundSprite.setTextureRect(sf::IntRect((int)(0.5f * cptScrollBackground++), 0, Game::GAME_WIDTH, Game::GAME_HEIGHT));
     SceneType retval = getSceneType();
-    //player.update(1.0f / (float)Game::FRAME_RATE, inputs);
-    /*for (LargeEnemy& e : enemies)
+    player.update(TIME_PER_FRAME, inputs);
+    for (StandardEnemy& e : standardEnemies) {
         if (e.update(1.0f / (float)Game::FRAME_RATE, inputs))
             e.deactivate();
+        if (e.isFiring())
+            fireEnemyBullet(e);
+    }
 
-    for (Bullet& e : bullets)
+
+    for (Bullet& b : standardBullets)
+    {
+        if (b.update(1.0f / (float)Game::FRAME_RATE))
+            b.deactivate();
+    }
+
+    enemySpawnTimer += 1.0f / (float)Game::FRAME_RATE;
+
+    if (enemySpawnTimer >= ENEMY_SPAWN_TIME) {
+        spawnStandardEnemy();
+        enemySpawnTimer = 0;
+    }
+
+    for (Bullet& e : standardBullets)
     {
         if (e.update(1.0f / (float)Game::FRAME_RATE))
             e.deactivate();
@@ -38,12 +61,12 @@ SceneType Level01::update()
 
     if (inputs.fireBullet && timeSinceLastFire >= TIME_BETWEEN_FIRE)
     {
-        fireBullet(player.getPosition());
+        firePlayerBullet();
     }
 
-    for (Bullet& b : bullets)
+    for (Bullet& b : standardBullets)
     {
-        for (LargeEnemy& e : enemies)
+        for (StandardEnemy& e : standardEnemies)
         {
             if (b.collidesWith(e))
             {
@@ -52,37 +75,142 @@ SceneType Level01::update()
             }
         }
     }
-    bullets.remove_if([](const GameObject& b) {return !b.isActive();});
-    enemies.remove_if([](const GameObject& b) {return !b.isActive(); });
+    standardBullets.remove_if([](const GameObject& b) {return !b.isActive();});
+    standardEnemies.remove_if([](const GameObject& b) {return !b.isActive(); });
     timeSinceLastFire += 1.0f / (float)Game::FRAME_RATE;
-    */
+
+
+
     return retval;
-    
+
 }
 
 
 
-void Level01::fireBullet(const sf::Vector2f& position)
+#pragma region Enemy
+StandardEnemy& Level01Scene::getAvailableStandardEnemy()
 {
-    /*
-    Bullet newBullet;
-    newBullet.init(contentManager);
-    newBullet.setPosition(position);
-    newBullet.activate();
-    bullets.push_back(newBullet);
-    timeSinceLastFire = 0;
-    */
+    for (StandardEnemy& e : standardEnemies)
+    {
+        if (!e.isActive())
+        {
+            return e;
+        }
+    }
+    addNewStandardEnemies();
+    return standardEnemies.back();
 }
-void Level01::draw(sf::RenderWindow& window) const
+
+StandardEnemy& Level01Scene::getAvailableBossEnemy()
+{
+    for (StandardEnemy& e : bossEnemies)
+    {
+        if (!e.isActive())
+        {
+            return e;
+        }
+    }
+    addNewBossEnemies();
+    return bossEnemies.back();
+}
+
+void Level01Scene::addNewStandardEnemies() {
+    for (size_t i = 0; i < MAX_NB_ENEMIES; i++)
+    {
+        StandardEnemy enemy;
+        enemy.init(contentManager);
+        standardEnemies.push_back(enemy);
+    }
+}
+
+void Level01Scene::addNewBossEnemies() {
+    for (size_t i = 0; i < MAX_NB_ENEMIES; i++)
+    {
+        StandardEnemy enemy;
+        enemy.init(contentManager);
+        bossEnemies.push_back(enemy);
+    }
+}
+
+StandardEnemy Level01Scene::spawnStandardEnemy()
+{
+    return StandardEnemy();
+}
+
+StandardEnemy Level01Scene::spawnBossEnemy()
+{
+    return StandardEnemy();
+}
+
+#pragma endregion
+
+#pragma region Bullet
+void Level01Scene::fireEnemyBullet(StandardEnemy enemy)
+{
+    Bullet& b = getAvailableStandardBullet();
+    b.setPosition(enemy.getPosition());
+}
+
+void Level01Scene::firePlayerBullet()
+{
+    Bullet& b = getAvailableStandardBullet();
+    b.setPosition(player.getPosition());
+}
+
+Bullet& Level01Scene::getAvailableStandardBullet()
+{
+    for (Bullet& b : standardBullets)
+    {
+        if (!b.isActive())
+        {
+            b.activate();
+            return b;
+        }
+    }
+    addNewStandardBullets();
+    return standardBullets.back();
+}
+
+Bullet& Level01Scene::getAvailableBossBullet()
+{
+    for (Bullet& b : bossBullets)
+    {
+        if (!b.isActive())
+        {
+            b.activate();
+            return b;
+        }
+    }
+    addNewBossBullets();
+    return bossBullets.back();
+}
+
+void Level01Scene::addNewStandardBullets() {
+    for (size_t i = 0; i < MAX_NB_BULLETS; i++)
+    {
+        Bullet newBullet;
+        standardBullets.push_back(newBullet);
+    }
+}
+
+void Level01Scene::addNewBossBullets() {
+    for (size_t i = 0; i < MAX_NB_BULLETS; i++)
+    {
+        Bullet newBullet;
+        bossBullets.push_back(newBullet);
+    }
+}
+
+#pragma endregion
+
+void Level01Scene::draw(sf::RenderWindow& window) const
 {
     window.draw(backgroundSprite);
-    /*
     player.draw(window);
-    for (const LargeEnemy& e : enemies)
+
+    for (const StandardEnemy& e : standardEnemies)
         e.draw(window);
-    for (const Bullet& e : bullets)
-        e.draw(window);
-    */
+
 }
 
 bool Level01::uninit()
@@ -101,14 +229,10 @@ bool Level01::init()
     backgroundSprite.setTexture(contentManager.getBackgroundTexture());
     srand((unsigned)time(nullptr));
 
-    for (int i = 0; i < 10; i++)
-    {
-        //EnemyType1 enemy;
-        //enemy.init(contentManager);
-        //enemy.setPosition(sf::Vector2f((i * (float)Game::GAME_WIDTH / 10.0f), (float)Game::GAME_HEIGHT + 50.0f * (float)(rand() % 100)));
-       // enemy.activate();
-        //enemies.push_back(enemy);
-    }
+    addNewStandardEnemies();
+    addNewBossEnemies();
+    addNewStandardBullets();
+    addNewBossBullets();
 
     //return player.init(contentManager);
 }
@@ -119,7 +243,7 @@ bool Level01::handleEvents(sf::RenderWindow& window)
     sf::Event event;
     while (window.pollEvent(event))
     {
-        //x sur la fenêtre
+        //x sur la fenï¿½tre
         if (event.type == sf::Event::Closed)
         {
             window.close();
