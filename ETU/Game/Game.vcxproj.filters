@@ -13,42 +13,51 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{2da220f6-b49f-4d73-8dc9-d5e8db51128f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Characters">
-      <UniqueIdentifier>{88fbd685-f9bd-47a7-bbe5-d699b703812e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GenericFiles">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Bullets">
-      <UniqueIdentifier>{a56334a4-6740-4ea9-a7cc-c0939060e07f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Leaderboard">
-      <UniqueIdentifier>{65cfc19a-2325-4e54-9be7-a38e8bfac50f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Hud EXEMPLE ENLEVER FIN">
-      <UniqueIdentifier>{7dbb2d32-9f55-40ff-a34c-3671e8f798ae}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scenes\ContentManagers">
       <UniqueIdentifier>{8c96c7ad-c911-43c8-b71b-daae3f71e4f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{99e711c9-3346-4b09-8d26-54139f135885}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Animations">
+      <UniqueIdentifier>{8c72a434-5e92-4cca-8682-b2ee7b362803}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Bonus">
+      <UniqueIdentifier>{ec63a94b-fe7b-429c-9378-16ac7f8b738b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\GenericFiles">
+      <UniqueIdentifier>{ee145b2b-c6f5-4f10-b85b-4d2a86ea92b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Scenes">
+      <UniqueIdentifier>{d39c3555-b160-4dec-99ee-59a5157570e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Scenes\ContentMangers">
+      <UniqueIdentifier>{887d7bde-0c44-4faf-ac22-81d4e539ceb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hud">
+      <UniqueIdentifier>{7dbb2d32-9f55-40ff-a34c-3671e8f798ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Hud">
+      <UniqueIdentifier>{06e06f68-ca45-46a7-b44b-63106bf1e56c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects">
+      <UniqueIdentifier>{a56334a4-6740-4ea9-a7cc-c0939060e07f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\GameObjects">
+      <UniqueIdentifier>{7ff0d7e2-0d76-4b32-b5b6-6362bbeec418}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Characters">
+      <UniqueIdentifier>{88fbd685-f9bd-47a7-bbe5-d699b703812e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\GameObjects\Characters">
+      <UniqueIdentifier>{ecdf686b-747d-4e9b-9cf2-90fe401f3661}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="targetver.h">
-      <Filter>GenericFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>GenericFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>GenericFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="Inputs.h">
-      <Filter>GenericFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedGameObject.h">
-      <Filter>GenericFiles</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Animations</Filter>
     </ClInclude>
@@ -60,9 +69,6 @@
     </ClInclude>
     <ClInclude Include="LinearAnimation.h">
       <Filter>Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="ActorType.h">
-      <Filter>GenericFiles</Filter>
     </ClInclude>
     <ClInclude Include="Publisher.h">
       <Filter>PubSub</Filter>
@@ -79,59 +85,77 @@
     <ClInclude Include="AnimationState.h">
       <Filter>Animations</Filter>
     </ClInclude>
-    <ClInclude Include="Scenetype.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneResult.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>GenericFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Hud.h">
-      <Filter>Hud EXEMPLE ENLEVER FIN</Filter>
-    </ClInclude>
-    <ClInclude Include="Level01Scene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Level01ContentManager.h">
-      <Filter>Scenes\ContentManagers</Filter>
-    </ClInclude>
-    <ClInclude Include="ContentManager.h">
-      <Filter>Scenes\ContentManagers</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuContentManager.h">
-      <Filter>Scenes\ContentManagers</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreboardContentManager.h">
-      <Filter>Scenes\ContentManagers</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreboardScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>GenericFiles</Filter>
-    </ClInclude>
     <ClInclude Include="ShipAnimation.h">
       <Filter>Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyType1.h">
-      <Filter>Characters</Filter>
     </ClInclude>
     <ClInclude Include="EnemyType1IdleAnimation.h">
       <Filter>Animations</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Characters</Filter>
+    <ClInclude Include="ContentManager.h">
+      <Filter>Header files\Scenes\ContentMangers</Filter>
+    </ClInclude>
+    <ClInclude Include="Level01ContentManager.h">
+      <Filter>Header files\Scenes\ContentMangers</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuContentManager.h">
+      <Filter>Header files\Scenes\ContentMangers</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreboardContentManager.h">
+      <Filter>Header files\Scenes\ContentMangers</Filter>
+    </ClInclude>
+    <ClInclude Include="Level01Scene.h">
+      <Filter>Header files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneResult.h">
+      <Filter>Header files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneType.h">
+      <Filter>Header files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreboardScene.h">
+      <Filter>Header files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Header files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Hud.h">
+      <Filter>Header files\Hud</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedGameObject.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyType1.h">
+      <Filter>Header files\GameObjects\Characters</Filter>
     </ClInclude>
     <ClInclude Include="CharacterType.h">
-      <Filter>Characters</Filter>
+      <Filter>Header files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Header files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorType.h">
+      <Filter>Header files\GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>Header files\GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Inputs.h">
+      <Filter>Header files\GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header files\GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header files\GenericFiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -159,13 +183,7 @@
     <ClCompile Include="TitleScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="AnimatedGameObject.cpp">
-      <Filter>GenericFiles</Filter>
-    </ClCompile>
     <ClCompile Include="game.cpp">
-      <Filter>GenericFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
       <Filter>GenericFiles</Filter>
     </ClCompile>
     <ClCompile Include="Inputs.cpp">
@@ -175,7 +193,7 @@
       <Filter>GenericFiles</Filter>
     </ClCompile>
     <ClCompile Include="Hud.cpp">
-      <Filter>Hud EXEMPLE ENLEVER FIN</Filter>
+      <Filter>Hud</Filter>
     </ClCompile>
     <ClCompile Include="Level01Scene.cpp">
       <Filter>Scenes</Filter>
@@ -195,11 +213,26 @@
     <ClCompile Include="ScoreboardScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>GenericFiles</Filter>
-    </ClCompile>
     <ClCompile Include="ShipAnimation.cpp">
       <Filter>Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyType1.cpp">
+      <Filter>GameObjects\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyType1IdleAnimation.cpp">
+      <Filter>GameObjects\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedGameObject.cpp">
+      <Filter>Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>GameObjects\Characters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -211,9 +244,6 @@
     </Filter>
     <Filter Include="Characters">
       <UniqueIdentifier>{9f5857e9-2d7c-4be4-9683-afe10bae9b2b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewFilter4">
-      <UniqueIdentifier>{1a4169a1-130c-4021-9c97-986dc5dff5c0}</UniqueIdentifier>
     </Filter>
     <Filter Include="GenericFiles">
       <UniqueIdentifier>{03a3c0c2-7584-4c78-a134-d5ad5075217b}</UniqueIdentifier>

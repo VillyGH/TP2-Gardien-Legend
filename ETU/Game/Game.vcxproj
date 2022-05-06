@@ -169,7 +169,6 @@
     <ClInclude Include="Hud.h" />
     <ClInclude Include="EnemyType1.h" />
     <ClInclude Include="EnemyType1IdleAnimation.h" />
-    <ClInclude Include="Level01.h" />
     <ClInclude Include="InputBasedAnimation.h" />
     <ClInclude Include="Inputs.h" />
     <ClInclude Include="Level01Scene.h" />

@@ -4,14 +4,14 @@
 #include "CharacterType.h"
 #include "ContentManager.h"
 
-const float Level01::TIME_PER_FRAME = 1.0f / (float)Game::FRAME_RATE;
-const float Level01::GAMEPAD_SPEEDRATIO = 1000.0f;
-const float Level01::KEYBOARD_SPEED = 0.1f;
-const float Level01::TIME_BETWEEN_FIRE = 0.5f;
-const float Level01::MAX_ENEMIES = 15;
-const float Level01::ENEMY_SPAWN_TIME = 1;
-const float Level01::ENEMY_SPAWN_DISTANCE = 15;
-const float Level01::SPAWN_MARGIN = -50;
+const float Level01Scene::TIME_PER_FRAME = 1.0f / (float)Game::FRAME_RATE;
+const float Level01Scene::GAMEPAD_SPEEDRATIO = 1000.0f;
+const float Level01Scene::KEYBOARD_SPEED = 0.1f;
+const float Level01Scene::TIME_BETWEEN_FIRE = 0.5f;
+const float Level01Scene::MAX_ENEMIES = 15;
+const float Level01Scene::ENEMY_SPAWN_TIME = 1;
+const float Level01Scene::ENEMY_SPAWN_DISTANCE = 15;
+const float Level01Scene::SPAWN_MARGIN = -50;
 
 Level01Scene::Level01Scene()
     : Scene(SceneType::LEVEL01_SCENE)
@@ -79,7 +79,6 @@ SceneType Level01Scene::update()
 
 
     return retval;
-
 }
 
 
@@ -95,7 +94,7 @@ void Level01Scene::draw(sf::RenderWindow& window) const
     /*
     for (const LargeEnemy& e : enemies)
         e.draw(window);
-
+    */
 }
 
 bool Level01Scene::uninit()

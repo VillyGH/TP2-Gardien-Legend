@@ -4,6 +4,7 @@
 
 Level01ContentManager::Level01ContentManager()
 {
+
 }
 
 bool Level01ContentManager::loadContent()
@@ -32,6 +33,7 @@ bool Level01ContentManager::loadContent()
 
     return true;
 }
+
 const sf::Texture& Level01ContentManager::getEnemiesTexture() const
 {
     return enemiesTexture;

@@ -6,7 +6,6 @@ class TitleScene :
     public Scene
 {
 public:
-    // H�rit�es via Scene
     TitleScene();
     ~TitleScene();
     virtual SceneType update() override;

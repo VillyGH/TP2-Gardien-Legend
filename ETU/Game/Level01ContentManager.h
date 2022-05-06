@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
-class Level01ContentManager
+#include "ContentManager.h"
+class Level01ContentManager : ContentManager
 {
 public:
 	Level01ContentManager();

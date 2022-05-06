@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "ContentManager.h"
 //#include "Bullet.h"
-//#include "Player.h"
+#include "Player.h"
 #include "Level01ContentManager.h"
 #include "Bullet.h"
 #include "EnemyType1.h"
