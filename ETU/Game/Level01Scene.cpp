@@ -3,14 +3,17 @@
 #include "game.h"
 #include "CharacterType.h"
 #include "Level01ContentManager.h"
+#include <iostream>
 
 const float Level01Scene::TIME_PER_FRAME = 1.0f / (float)Game::FRAME_RATE;
 const float Level01Scene::GAMEPAD_SPEEDRATIO = 1000.0f;
 const float Level01Scene::KEYBOARD_SPEED = 0.1f;
 const float Level01Scene::TIME_BETWEEN_FIRE = 0.5f;
-const float Level01Scene::MAX_NB_ENEMIES = 15;
+const float Level01Scene::MAX_NB_STANDARD_ENEMIES = 15;
+const float Level01Scene::MAX_NB_BOSS_ENEMIES = 3;
 const float Level01Scene::MAX_NB_BULLETS = 15;
-const float Level01Scene::ENEMY_SPAWN_TIME = 1;
+const float Level01Scene::STANDARD_ENEMY_SPAWN_TIME = 1;
+const float Level01Scene::BOSS_ENEMY_SPAWN_TIME = 60;
 const float Level01Scene::ENEMY_SPAWN_DISTANCE = 15;
 const float Level01Scene::SPAWN_MARGIN = -50;
 
@@ -48,10 +51,17 @@ SceneType Level01Scene::update()
 
     enemySpawnTimer += 1.0f / (float)Game::FRAME_RATE;
 
-    if (enemySpawnTimer >= ENEMY_SPAWN_TIME) {
+    if (enemySpawnTimer >= STANDARD_ENEMY_SPAWN_TIME) {
         spawnStandardEnemy();
         enemySpawnTimer = 0;
     }
+
+    if (enemySpawnTimer >= BOSS_ENEMY_SPAWN_TIME) {
+        spawnStandardEnemy();
+        enemySpawnTimer = 0;
+    }
+
+
 
     for (Bullet& e : standardBullets)
     {
@@ -88,34 +98,8 @@ SceneType Level01Scene::update()
 
 
 #pragma region Enemy
-StandardEnemy& Level01Scene::getAvailableStandardEnemy()
-{
-    for (StandardEnemy& e : standardEnemies)
-    {
-        if (!e.isActive())
-        {
-            return e;
-        }
-    }
-    addNewStandardEnemies();
-    return standardEnemies.back();
-}
-
-StandardEnemy& Level01Scene::getAvailableBossEnemy()
-{
-    for (StandardEnemy& e : bossEnemies)
-    {
-        if (!e.isActive())
-        {
-            return e;
-        }
-    }
-    addNewBossEnemies();
-    return bossEnemies.back();
-}
-
 void Level01Scene::addNewStandardEnemies() {
-    for (size_t i = 0; i < MAX_NB_ENEMIES; i++)
+    for (size_t i = 0; i < MAX_NB_STANDARD_ENEMIES; i++)
     {
         StandardEnemy enemy;
         enemy.init(contentManager);
@@ -124,7 +108,7 @@ void Level01Scene::addNewStandardEnemies() {
 }
 
 void Level01Scene::addNewBossEnemies() {
-    for (size_t i = 0; i < MAX_NB_ENEMIES; i++)
+    for (size_t i = 0; i < MAX_NB_BOSS_ENEMIES; i++)
     {
         StandardEnemy enemy;
         enemy.init(contentManager);
@@ -134,12 +118,35 @@ void Level01Scene::addNewBossEnemies() {
 
 StandardEnemy Level01Scene::spawnStandardEnemy()
 {
-    return StandardEnemy();
+    for (StandardEnemy& enemy : standardEnemies) {
+        if (!enemy.isActive()) {
+            std::cout << enemy.isActive() << std::endl;
+            enemy.activate();
+            enemy.setPosition(rand() % Game::GAME_WIDTH + SPAWN_MARGIN, 0 - ENEMY_SPAWN_DISTANCE);
+            return enemy;
+        }
+    }
+
+    StandardEnemy newEnemy;
+    newEnemy.init(contentManager);
+    standardEnemies.push_back(newEnemy);
+    return standardEnemies.back();
 }
 
 StandardEnemy Level01Scene::spawnBossEnemy()
 {
-    return StandardEnemy();
+    for (StandardEnemy& enemy : bossEnemies) {
+        if (!enemy.isActive()) {
+            enemy.activate();
+            enemy.setPosition(rand() % Game::GAME_WIDTH + SPAWN_MARGIN, 0 - ENEMY_SPAWN_DISTANCE);
+            return enemy;
+        }
+    }
+
+    StandardEnemy newEnemy;
+    newEnemy.init(contentManager);
+    standardEnemies.push_back(newEnemy);
+    return standardEnemies.back();
 }
 
 #pragma endregion
@@ -208,8 +215,14 @@ void Level01Scene::draw(sf::RenderWindow& window) const
     window.draw(backgroundSprite);
     player.draw(window);
 
-    for (const StandardEnemy& e : standardEnemies)
-        e.draw(window);
+    for (const StandardEnemy& e : standardEnemies) {
+        if(e.isActive())
+            e.draw(window);
+    }
+        
+    for (const StandardEnemy& e : bossEnemies)
+        if (e.isActive())
+            e.draw(window);
 
 }
 

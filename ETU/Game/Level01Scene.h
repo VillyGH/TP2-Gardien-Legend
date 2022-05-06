@@ -16,9 +16,11 @@ public:
 	static const float GAMEPAD_SPEEDRATIO;
 	static const float KEYBOARD_SPEED;
 	static const float TIME_BETWEEN_FIRE;
-	static const float MAX_NB_ENEMIES;
+	static const float MAX_NB_STANDARD_ENEMIES;
+	static const float MAX_NB_BOSS_ENEMIES;
 	static const float MAX_NB_BULLETS;
-	static const float ENEMY_SPAWN_TIME;
+	static const float STANDARD_ENEMY_SPAWN_TIME;
+	static const float BOSS_ENEMY_SPAWN_TIME;
 	static const float ENEMY_SPAWN_DISTANCE;
 	static const float SPAWN_MARGIN;
 
