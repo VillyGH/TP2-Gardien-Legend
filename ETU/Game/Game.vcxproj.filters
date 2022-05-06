@@ -58,18 +58,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animation.h">
-      <Filter>Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="CyclicAnimation.h">
-      <Filter>Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="InputBasedAnimation.h">
-      <Filter>Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="LinearAnimation.h">
-      <Filter>Animations</Filter>
-    </ClInclude>
     <ClInclude Include="Publisher.h">
       <Filter>PubSub</Filter>
     </ClInclude>
@@ -79,20 +67,65 @@
     <ClInclude Include="Subscriber.h">
       <Filter>PubSub</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationFrame.h">
-      <Filter>Animations</Filter>
+    <ClInclude Include="ContentManager.h">
+      <Filter>Header files\Scenes\ContentMangers</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationState.h">
-      <Filter>Animations</Filter>
+    <ClInclude Include="Level01ContentManager.h">
+      <Filter>Header files\Scenes\ContentMangers</Filter>
     </ClInclude>
-    <ClInclude Include="ShipAnimation.h">
-      <Filter>Animations</Filter>
+    <ClInclude Include="MenuContentManager.h">
+      <Filter>Header files\Scenes\ContentMangers</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreboardContentManager.h">
+      <Filter>Header files\Scenes\ContentMangers</Filter>
+    </ClInclude>
+    <ClInclude Include="Level01Scene.h">
+      <Filter>Header files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="EnemyType1IdleAnimation.h">
       <Filter>Animations</Filter>
     </ClInclude>
-    <ClInclude Include="ContentManager.h">
-      <Filter>Header files\Scenes\ContentMangers</Filter>
+    <ClInclude Include="Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Header files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Hud.h">
+      <Filter>Header files\Hud</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedGameObject.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="StandardEnemy.h">
+      <Filter>Header files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterType.h">
+      <Filter>Header files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Header files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorType.h">
+      <Filter>Header files\GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Level01.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuContentManager.h">
+      <Filter>Scenes\ContentManagers</Filter>
     </ClInclude>
     <ClInclude Include="Level01ContentManager.h">
       <Filter>Header files\Scenes\ContentMangers</Filter>
@@ -157,6 +190,30 @@
     <ClInclude Include="targetver.h">
       <Filter>Header files\GenericFiles</Filter>
     </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationFrame.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationState.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="CyclicAnimation.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="StandardEnemyIdleAnimation.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="InputBasedAnimation.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="LinearAnimation.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipAnimation.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Publisher.cpp">
@@ -216,10 +273,7 @@
     <ClCompile Include="ShipAnimation.cpp">
       <Filter>Animations</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyType1.cpp">
-      <Filter>GameObjects\Characters</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyType1IdleAnimation.cpp">
+    <ClCompile Include="StandardEnemy.cpp">
       <Filter>GameObjects\Characters</Filter>
     </ClCompile>
     <ClCompile Include="AnimatedGameObject.cpp">
@@ -233,6 +287,9 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>GameObjects\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="StandardEnemyIdleAnimation.cpp">
+      <Filter>Animations</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

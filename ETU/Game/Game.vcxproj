@@ -167,8 +167,8 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Hud.h" />
-    <ClInclude Include="EnemyType1.h" />
-    <ClInclude Include="EnemyType1IdleAnimation.h" />
+    <ClInclude Include="StandardEnemy.h" />
+    <ClInclude Include="StandardEnemyIdleAnimation.h" />
     <ClInclude Include="InputBasedAnimation.h" />
     <ClInclude Include="Inputs.h" />
     <ClInclude Include="Level01Scene.h" />
@@ -196,8 +196,8 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="ContentManager.cpp" />
     <ClCompile Include="CyclicAnimation.cpp" />
-    <ClCompile Include="EnemyType1.cpp" />
-    <ClCompile Include="EnemyType1IdleAnimation.cpp" />
+    <ClCompile Include="StandardEnemy.cpp" />
+    <ClCompile Include="StandardEnemyIdleAnimation.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Hud.cpp" />

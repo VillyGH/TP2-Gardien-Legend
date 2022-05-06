@@ -2,17 +2,16 @@
 #include "Player.h"
 #include "Inputs.h"
 #include "game.h"
-#include "ContentManager.h"
 #include "ShipAnimation.h"
 
-const float Player::PLAYER_MOVE_SPEED = 5.0f;
+const float Player::PLAYER_MOVE_SPEED = 3.0f;
 
 Player::Player()
 {
 
 }
 
-bool Player::init(const ContentManager& contentManager)
+bool Player::init(const Level01ContentManager& contentManager)
 {
 	setScale(2.5f, 2.5f);
     activate();

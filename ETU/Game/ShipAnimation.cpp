@@ -1,18 +1,17 @@
 #include "stdafx.h"
 #include "ShipAnimation.h"
-#include "ContentManager.h"
 #include "Inputs.h"
 
 const int ShipAnimation::DEFAULT_FRAME_STATE = 24;
 
-ShipAnimation::ShipAnimation(sf::Sprite& sprite) 
+ShipAnimation::ShipAnimation(sf::Sprite& sprite)
     : InputBasedAnimation(sprite)
     , nbFrameInState(DEFAULT_FRAME_STATE)
 {
 
 }
 
-bool ShipAnimation::init(const ContentManager& contentManager)
+bool ShipAnimation::init(const Level01ContentManager& contentManager)
 {
     const sf::Texture& texture = contentManager.getMainCharacterTexture();
     frames.push_back(AnimationFrame(texture, sf::IntRect(227, 47, 14, 28)));
