@@ -16,6 +16,3 @@ private:
 	sf::Texture titleScreenTexture;
 	sf::Font mainFont;
 };
-
-
-

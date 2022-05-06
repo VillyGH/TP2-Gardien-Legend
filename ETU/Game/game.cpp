@@ -55,11 +55,11 @@ bool Game::update()
   if (!gameMustEnd)
   {
     SceneType nextSceneType = scenes.top()->update();
-    // Si la nouvelle scène attendue est différente de l'ancienne...
+    // Si la nouvelle scï¿½ne attendue est diffï¿½rente de l'ancienne...
     if (nextSceneType != scenes.top()->getSceneType())
     {
       Scene* nextScene = nullptr;
-      // ... soit on veut retirer la scène courant de la pile
+      // ... soit on veut retirer la scï¿½ne courant de la pile
       if (SceneType::NONE== nextSceneType)
       {
         popScene(false);
@@ -123,7 +123,7 @@ bool Game::init()
 {
   window.create(sf::VideoMode(Game::GAME_WIDTH, Game::GAME_HEIGHT, 32), gameName);
   window.setFramerateLimit(FRAME_RATE);
-  
+
   return pushScene(new InitialScene());
 }
 
@@ -153,17 +153,22 @@ Scene* Game::getNextScene(SceneType type) const
         break;
     }
 
-    case SceneType::END_GAME_SCENE:
-    {
-        scene = new ScoreboardScene();
-        break;
-    }
-    default:
-    {
-        scene = nullptr;
-        break;
-    }
-    }
-    return scene;
+  case SceneType::TITLE_SCENE:
+  {
+      scene = new TitleScene();
+      break;
+  }
+  case SceneType::LEVEL01_SCENE:
+  {
+      scene = new Level01();
+      break;
+  }
+  default:
+  {
+      scene = nullptr;
+      break;
+  }
+  }
+  return scene;
 }
 
