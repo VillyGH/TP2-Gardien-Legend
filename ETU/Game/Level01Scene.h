@@ -24,8 +24,8 @@ public:
 
 public:
 	// H�rit�es via Scene
-	Level01();
-	~Level01();
+	Level01Scene();
+	~Level01Scene();
 	virtual SceneType update() override;
 	StandardEnemy spawnStandardEnemy();
 	StandardEnemy spawnBossEnemy();
