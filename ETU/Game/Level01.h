@@ -2,8 +2,9 @@
 #include "Scene.h"
 #include "Inputs.h"
 //#include "Player.h"
-#include "ContentManager.h"
-//#include "Bullet.h"
+#include "Level01ContentManager.h"
+#include "Bullet.h"
+#include "EnemyType1.h"
 #include <list>
 #include "stdafx.h"
 
@@ -16,11 +17,19 @@ public:
 	static const float KEYBOARD_SPEED;
 	static const float TIME_BETWEEN_FIRE;
 	static const float MAX_ENEMIES;
+	static const float ENEMY_SPAWN_TIME;
+	static const float ENEMY_SPAWN_DISTANCE;
+	static const float SPAWN_MARGIN;
+
 public:
 	// Héritées via Scene
 	Level01();
 	~Level01();
 	virtual SceneType update() override;
+	void fireEnemyBullet(EnemyType1 enemy);
+	Bullet& getAvailableEnemyBullet();
+	EnemyType1 spawnEnemy();
+	EnemyType1& getAvailableEnemy();
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual bool init() override;
 	virtual bool uninit() override;
@@ -30,9 +39,12 @@ private:
 	Inputs inputs;
 	//Player player;
 	sf::Sprite backgroundSprite;
-	ContentManager contentManager;
-	//std::list<LargeEnemy> enemies;
+	Level01ContentManager contentManager;
+	std::list<EnemyType1> enemies;
 	//std::list<Bullet> bullets;
+	std::list<Bullet> enemyBullets;
 	float timeSinceLastFire;
+	sf::Music music; 
+	float enemySpawnTimer; 
 };
 
