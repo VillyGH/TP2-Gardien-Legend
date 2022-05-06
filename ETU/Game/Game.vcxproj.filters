@@ -121,6 +121,18 @@
     <ClInclude Include="ShipAnimation.h">
       <Filter>Animations</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyType1.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyType1IdleAnimation.h">
+      <Filter>Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterType.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Publisher.cpp">
@@ -189,5 +201,31 @@
     <ClCompile Include="ShipAnimation.cpp">
       <Filter>Animations</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Animations">
+      <UniqueIdentifier>{f89a43d4-a6fd-45a6-809b-d8228dbd1e9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bonus">
+      <UniqueIdentifier>{a6a4f9e7-54d1-46ee-bc06-41b374ebb544}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Characters">
+      <UniqueIdentifier>{9f5857e9-2d7c-4be4-9683-afe10bae9b2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewFilter4">
+      <UniqueIdentifier>{1a4169a1-130c-4021-9c97-986dc5dff5c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GenericFiles">
+      <UniqueIdentifier>{03a3c0c2-7584-4c78-a134-d5ad5075217b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PubSub">
+      <UniqueIdentifier>{206749cd-2ab4-47ed-ba6b-a1fdeb801ecc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{f7b2a6d1-21de-4d75-813e-4b8e6954156a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\ContentManagers">
+      <UniqueIdentifier>{bc1397e4-98ad-4506-be36-482b23c93fb7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

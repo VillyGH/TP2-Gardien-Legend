@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "AnimationState.h"
 
-class ContentManager;
+class Level01ContentManager;
 class Animation;
 struct Inputs;
 class AnimatedGameObject :
@@ -15,12 +15,12 @@ public:
 
   virtual bool update(float deltaT, const Inputs& inputs) ;
   virtual void draw(sf::RenderWindow& window) const override;
-  virtual bool init(const ContentManager& contentManager);
+  virtual bool init(const Level01ContentManager& contentManager);
 
 protected:
   State currentState;
   std::map<State, Animation*> animations;
-  ContentManager* contentManager;
+  Level01ContentManager* contentManager;
 private:
   AnimatedGameObject& operator=(const AnimatedGameObject&);
 

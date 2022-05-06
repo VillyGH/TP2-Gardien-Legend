@@ -1,14 +1,17 @@
 #include "stdafx.h"
 #include "Level01Scene.h"
 #include "game.h"
-
+#include "CharacterType.h"
 #include "ContentManager.h"
 
-const float Level01Scene::TIME_PER_FRAME = 1.0f / (float)Game::FRAME_RATE;
-const float Level01Scene::GAMEPAD_SPEEDRATIO = 1000.0f;
-const float Level01Scene::KEYBOARD_SPEED = 0.1f;
-const float Level01Scene::TIME_BETWEEN_FIRE = 0.5f;
-const float Level01Scene::MAX_ENEMIES = 15;
+const float Level01::TIME_PER_FRAME = 1.0f / (float)Game::FRAME_RATE;
+const float Level01::GAMEPAD_SPEEDRATIO = 1000.0f;
+const float Level01::KEYBOARD_SPEED = 0.1f;
+const float Level01::TIME_BETWEEN_FIRE = 0.5f;
+const float Level01::MAX_ENEMIES = 15;
+const float Level01::ENEMY_SPAWN_TIME = 1;
+const float Level01::ENEMY_SPAWN_DISTANCE = 15;
+const float Level01::SPAWN_MARGIN = -50;
 
 Level01Scene::Level01Scene()
     : Scene(SceneType::LEVEL01_SCENE)
@@ -23,13 +26,30 @@ Level01Scene::~Level01Scene()
 SceneType Level01Scene::update()
 {
     static int cptScrollBackground = 0;
-    backgroundSprite.setTextureRect(sf::IntRect((int)(0.5f * cptScrollBackground++), 0, Game::GAME_WIDTH, Game::GAME_HEIGHT));
+    backgroundSprite.setTextureRect(sf::IntRect((int)0, (0.5 * cptScrollBackground--), Game::GAME_WIDTH, Game::GAME_HEIGHT));
     SceneType retval = getSceneType();
     player.update(TIME_PER_FRAME, inputs);
     /*for (LargeEnemy& e : enemies)
         if (e.update(1.0f / (float)Game::FRAME_RATE, inputs))
             e.deactivate();
+        if (e.isFiring())
+            fireEnemyBullet(e);
+    }
 
+
+    for (Bullet& e : enemyBullets)
+    {
+        if (e.update(1.0f / (float)Game::FRAME_RATE))
+            e.deactivate();
+    }
+
+    enemySpawnTimer += 1.0f / (float)Game::FRAME_RATE;
+
+    if (enemySpawnTimer >= ENEMY_SPAWN_TIME) {
+        spawnEnemy();
+        enemySpawnTimer = 0;
+    }
+    /*
     for (Bullet& e : bullets)
     {
         if (e.update(1.0f / (float)Game::FRAME_RATE))
@@ -56,22 +76,17 @@ SceneType Level01Scene::update()
     enemies.remove_if([](const GameObject& b) {return !b.isActive(); });
     timeSinceLastFire += 1.0f / (float)Game::FRAME_RATE;
     */
+
+
     return retval;
 
 }
 
 
-
-void Level01Scene::fireBullet(const sf::Vector2f& position)
+void Level01::fireEnemyBullet(EnemyType1 enemy)
 {
-    /*
-    Bullet newBullet;
-    newBullet.init(contentManager);
-    newBullet.setPosition(position);
-    newBullet.activate();
-    bullets.push_back(newBullet);
-    timeSinceLastFire = 0;
-    */
+    Bullet& b = getAvailableEnemyBullet();
+    b.setPosition(enemy.getPosition());
 }
 void Level01Scene::draw(sf::RenderWindow& window) const
 {
@@ -80,9 +95,7 @@ void Level01Scene::draw(sf::RenderWindow& window) const
     /*
     for (const LargeEnemy& e : enemies)
         e.draw(window);
-    for (const Bullet& e : bullets)
-        e.draw(window);
-    */
+
 }
 
 bool Level01Scene::uninit()
@@ -101,13 +114,18 @@ bool Level01Scene::init()
     backgroundSprite.setTexture(contentManager.getBackgroundTexture());
     srand((unsigned)time(nullptr));
 
-    for (int i = 0; i < 10; i++)
+    if (!music.openFromFile("Assets\\Music\\Title\\SkyFire (Title Screen).ogg"))
+        return false;
+    music.setVolume(10);
+    music.setLoop(true);
+    music.play();
+
+
+    for (int i = 0; i < MAX_ENEMIES; i++)
     {
-        //EnemyType1 enemy;
-        //enemy.init(contentManager);
-        //enemy.setPosition(sf::Vector2f((i * (float)Game::GAME_WIDTH / 10.0f), (float)Game::GAME_HEIGHT + 50.0f * (float)(rand() % 100)));
-       // enemy.activate();
-        //enemies.push_back(enemy);
+        EnemyType1 enemy;
+        enemy.init(contentManager);
+        enemies.push_back(enemy);
     }
 
     return player.init(contentManager);

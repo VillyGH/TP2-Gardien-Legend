@@ -1,6 +1,6 @@
 #pragma once
 struct Inputs;
-class ContentManager;
+class Level01ContentManager;
 class GameObject : public sf::Sprite
 {
 public:
@@ -9,7 +9,7 @@ public:
 	
 	virtual void draw(sf::RenderWindow& window) const;
 	virtual void initialize(const sf::Texture& texture, const sf::Vector2f& initialPosition);
-	virtual bool init(const ContentManager& manager);
+	virtual bool init(const Level01ContentManager& manager);
 	virtual bool update(float deltaT);
 	virtual bool update(float deltaT, const Inputs& inputs);
 	virtual void activate();
