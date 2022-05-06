@@ -81,7 +81,5 @@ bool TitleScene::handleEvents(sf::RenderWindow& window)
     {
         gameStarted = true;
     }
-  }
-  return retval;
-
+    return retval;
 }

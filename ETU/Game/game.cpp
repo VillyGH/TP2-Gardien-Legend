@@ -153,21 +153,17 @@ Scene* Game::getNextScene(SceneType type) const
         break;
     }
 
-  case SceneType::TITLE_SCENE:
-  {
-      scene = new TitleScene();
-      break;
-  }
-  case SceneType::LEVEL01_SCENE:
-  {
-      scene = new Level01();
-      break;
-  }
-  default:
-  {
-      scene = nullptr;
-      break;
-  }
+    case SceneType::SCOREBOARD_SCENE:
+    {
+        scene = new ScoreboardScene();
+        break;
+    }
+
+    default:
+    {
+        scene = nullptr;
+        break;
+    }
   }
   return scene;
 }

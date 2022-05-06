@@ -6,5 +6,5 @@ enum class SceneType
   NONE,
   TITLE_SCENE,
   LEVEL01_SCENE,
-  END_GAME_SCENE
+  SCOREBOARD_SCENE
 };

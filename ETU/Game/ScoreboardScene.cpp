@@ -6,7 +6,7 @@
 const float ScoreboardScene::TIME_PER_FRAME = 1.0f / (float)Game::FRAME_RATE;
 
 ScoreboardScene::ScoreboardScene()
-    : Scene(SceneType::END_GAME_SCENE)
+    : Scene(SceneType::SCOREBOARD_SCENE)
     , gameEnded(false)
 {
 }
