@@ -5,6 +5,7 @@
 #include "ShipAnimation.h"
 
 const float Player::PLAYER_MOVE_SPEED = 3.0f;
+const float Player::INITIAL_LIFE_COUNT = 500;
 
 Player::Player()
 {
@@ -14,22 +15,22 @@ Player::Player()
 bool Player::init(const Level01ContentManager& contentManager)
 {
 	setScale(2.5f, 2.5f);
-    activate();
+	activate();
 	setPosition(Game::GAME_WIDTH / 2.0f, Game::GAME_HEIGHT - 100);
 
-    currentState = State::SHIP;
-    Animation* shipAnimation = new ShipAnimation(*this);
+	currentState = State::SHIP;
+	Animation* shipAnimation = new ShipAnimation(*this);
 
-    bool retval = shipAnimation->init(contentManager);
-    if (retval)
-        animations[State::SHIP] = shipAnimation;
+	bool retval = shipAnimation->init(contentManager);
+	if (retval)
+		animations[State::SHIP] = shipAnimation;
 
-    return retval && AnimatedGameObject::init(contentManager);
+	return retval && AnimatedGameObject::init(contentManager);
 }
 
 bool Player::update(float deltaT, const Inputs& inputs)
 {
-	move(inputs.moveFactorX *- PLAYER_MOVE_SPEED, inputs.moveFactorY *- PLAYER_MOVE_SPEED);
+	move(inputs.moveFactorX * -PLAYER_MOVE_SPEED, inputs.moveFactorY * -PLAYER_MOVE_SPEED);
 
 	handleOutOfBoundsPosition();
 	return AnimatedGameObject::update(deltaT, inputs);

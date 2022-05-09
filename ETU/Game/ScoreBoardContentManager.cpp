@@ -9,22 +9,22 @@ ScoreboardContentManager::ScoreboardContentManager()
 bool ScoreboardContentManager::loadContent()
 {
 
-    if (!backgroundTexture.loadFromFile("Assets\\Sprites\\Level01\\SpaceBackground.png"))
-        return false;
-    else
-        backgroundTexture.setRepeated(true);
-    if (!mainFont.loadFromFile("Assets\\Fonts\\Level01\\emulogic.ttf"))
-        return false;
+	if (!backgroundTexture.loadFromFile("Assets\\Sprites\\Level01\\SpaceBackground.png"))
+		return false;
+	else
+		backgroundTexture.setRepeated(true);
+	if (!mainFont.loadFromFile("Assets\\Fonts\\Level01\\emulogic.ttf"))
+		return false;
 
-    return true;
+	return true;
 }
 
 const sf::Texture& ScoreboardContentManager::getBackgroundTexture() const
 {
-    return backgroundTexture;
+	return backgroundTexture;
 }
 
 const sf::Font& ScoreboardContentManager::getMainFont() const
 {
-    return mainFont;
+	return mainFont;
 }

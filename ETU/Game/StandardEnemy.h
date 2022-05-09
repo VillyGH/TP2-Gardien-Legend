@@ -5,7 +5,7 @@ class StandardEnemy :
 	public AnimatedGameObject
 {
 public:
-	static const float MAX_ENEMY_HEALTH; 
+	static const float MAX_ENEMY_HEALTH;
 	StandardEnemy();
 	StandardEnemy(const StandardEnemy& src);
 	virtual bool init(const Level01ContentManager& contentManager) override;

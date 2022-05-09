@@ -3,11 +3,11 @@
 #include "CyclicAnimation.h"
 class Level01ContentManager;
 class BossIdleAnimation :
-    public CyclicAnimation
+	public CyclicAnimation
 {
-    static const float ANIMATION_LENGTH;
+	static const float ANIMATION_LENGTH;
 public:
-    BossIdleAnimation(sf::Sprite& s);
-    virtual bool init(const Level01ContentManager& contentManager) override;
+	BossIdleAnimation(sf::Sprite& s);
+	virtual bool init(const Level01ContentManager& contentManager) override;
 };
 

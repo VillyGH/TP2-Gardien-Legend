@@ -11,6 +11,6 @@ struct Inputs
 	bool fireBullet;
 	float moveFactorX;
 	float moveFactorY;
-	
+
 };
 

@@ -16,6 +16,6 @@ public:
 
 private:
 	Bullet& operator=(const Bullet& rhs);
-	sf::Texture texture; 
+	sf::Texture texture;
 };
 

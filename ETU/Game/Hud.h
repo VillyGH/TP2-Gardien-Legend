@@ -1,12 +1,12 @@
 #pragma once
-#include "ContentManager.h"
+#include "Level01ContentManager.h"
+#include "game.h"
 class Hud
 {
 public:
 	Hud();
 	void draw(sf::RenderWindow& window)  const;
-	void initialize(const ContentManager& contentManager);
-	void addMenuStartText();
+	void initialize(const Level01ContentManager& contentManager);
 	void addScoreText();
 	void addNbKillsText();
 	void addNbLivesRemainingText();

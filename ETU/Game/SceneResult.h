@@ -2,11 +2,11 @@
 
 struct TitleSceneResult
 {
-  int dummy;
+	int dummy;
 };
 
 
 union SceneResult
 {
-  TitleSceneResult titleSceneResult;
+	TitleSceneResult titleSceneResult;
 };

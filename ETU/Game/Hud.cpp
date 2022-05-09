@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Hud.h"
-#include "ContentManager.h"
-#include "game.h"
+
 #include <iostream>
 
 Hud::Hud()
@@ -9,10 +8,9 @@ Hud::Hud()
 
 }
 
-void Hud::initialize(const ContentManager& contentManager)
+void Hud::initialize(const Level01ContentManager& contentManager)
 {
 	hudView = sf::View(sf::FloatRect(0, 0, (float)Game::GAME_WIDTH, (float)Game::GAME_HEIGHT));
-	addMenuStartText();
 	addScoreText();
 	addNbKillsText();
 	addNbLivesRemainingText();
@@ -20,8 +18,6 @@ void Hud::initialize(const ContentManager& contentManager)
 }
 
 // Ajout de texte
-
-
 
 void Hud::addScoreText()
 {
@@ -58,7 +54,7 @@ void Hud::addGameOverText(int score)
 	const std::string gameOverString = "Game Over ! Votre score : " + std::to_string(score);
 	leaderboardText.setFont(contentManager.getMainFont());
 	leaderboardText.setCharacterSize(64);
-	leaderboardText.setFillColor(sf::Color(42,2,2,255));
+	leaderboardText.setFillColor(sf::Color(42, 2, 2, 255));
 	leaderboardText.setPosition(Game::GAME_WIDTH / 2.0f - leaderboardText.getLocalBounds().width / 2.0f, Game::GAME_HEIGHT / 2.0f - leaderboardText.getLocalBounds().height / 2.0f);
 	leaderboardText.setString(gameOverString);
 }
@@ -66,7 +62,7 @@ void Hud::addGameOverText(int score)
 
 // Mise à jour du texte
 
-void Hud::updateScoreText(int score) 
+void Hud::updateScoreText(int score)
 {
 	const std::string scoreString = "Score : " + std::to_string(score);
 	scoreText.setString(scoreString);
@@ -92,7 +88,7 @@ void Hud::updatePauseText()
 	pauseText.setString(pauseString);
 }
 
-void Hud::updateGameInfo(int score, int nbKills, int nbLivesRemaining) 
+void Hud::updateGameInfo(int score, int nbKills, int nbLivesRemaining)
 {
 	updateScoreText(score);
 	updateNbKillsText(nbKills);
@@ -122,11 +118,11 @@ void Hud::removePauseText()
 
 void Hud::draw(sf::RenderWindow& window)  const
 {
-  window.setView(hudView);
-  window.draw(menuStartText);
-  window.draw(scoreText);
-  window.draw(nbKillsText);
-  window.draw(nbLivesRemainingText);
-  window.draw(pauseText);
-  window.draw(leaderboardText);
+	window.setView(hudView);
+	window.draw(menuStartText);
+	window.draw(scoreText);
+	window.draw(nbKillsText);
+	window.draw(nbLivesRemainingText);
+	window.draw(pauseText);
+	window.draw(leaderboardText);
 }

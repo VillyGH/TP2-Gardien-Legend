@@ -9,6 +9,7 @@
 #include "stdafx.h"
 #include "Boss.h"
 #include "Subscriber.h"
+#include "Hud.h"
 
 class Level01Scene :
 	public Scene
@@ -27,9 +28,10 @@ public:
 	static const float ENEMY_SPAWN_DISTANCE;
 	static const float SPAWN_MARGIN;
 	static const float PLAYER_BULLET_DAMAGE;
+	static const float NB_FIRED_PLAYER_BULLETS;
+	static const float NB_BONUS_FIRED_PLAYER_BULLETS;
 
 public:
-	// H�rit�es via Scene
 	Level01Scene();
 	~Level01Scene();
 	virtual SceneType update() override;
@@ -44,7 +46,7 @@ public:
 	Bullet& getAvailableStandardBullet();
 	Bullet& getAvailableEnemyBullet();
 	Bullet& getAvailableBossBullet();
-	void addNewStandardBullets();
+	void addNewPlayerBullets();
 	void addNewEnemyBullets();
 	void addNewBossBullets();
 	virtual void draw(sf::RenderWindow& window) const override;
@@ -54,17 +56,23 @@ public:
 private:
 	Inputs inputs;
 	Player player;
-	Boss boss; 
+	Boss boss;
 	sf::Sprite backgroundSprite;
 	Level01ContentManager contentManager;
 	std::list<StandardEnemy> standardEnemies;
-	std::list<Bullet> standardBullets;
+	std::list<Bullet> playerBullets;
 	std::list<Bullet> enemyBullets;
 	std::list<Bullet> bossBullets;
 	float timeSinceLastFire;
 	sf::Music music;
 	sf::SoundBuffer enemyDeathSound;
 	float enemySpawnTimer;
-	bool allEnemiesKilled; 
+	bool allEnemiesKilled;
+	int score;
+	int livesRemaining;
+	int bonusTime;
+	int nbKills;
+	int timer;
+	Hud hud;
 };
 

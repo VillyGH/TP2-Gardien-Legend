@@ -12,59 +12,59 @@ StandardEnemy::StandardEnemy()
 
 }
 StandardEnemy::StandardEnemy(const StandardEnemy& src)
-    : AnimatedGameObject(src)
+	: AnimatedGameObject(src)
 {
-    init(*contentManager);
-    setPosition(src.getPosition());
-    if (src.isActive())
-        activate();
-    else
-        deactivate();
+	init(*contentManager);
+	setPosition(src.getPosition());
+	if (src.isActive())
+		activate();
+	else
+		deactivate();
 }
 bool StandardEnemy::init(const Level01ContentManager& contentManager)
 {
-    currentState = State::STANDARD_ENEMY;
-    health = MAX_ENEMY_HEALTH;
-    soundBuffer = contentManager.getEnemyKilledSoundBuffer();
-    Animation* idleAnimation = new StandardEnemyIdleAnimation(*this);
-    bool retval = idleAnimation->init(contentManager);
-    if (retval)
-        animations[State::STANDARD_ENEMY] = idleAnimation;
+	currentState = State::STANDARD_ENEMY;
+	health = MAX_ENEMY_HEALTH;
+	soundBuffer = contentManager.getEnemyKilledSoundBuffer();
+	Animation* idleAnimation = new StandardEnemyIdleAnimation(*this);
+	bool retval = idleAnimation->init(contentManager);
+	if (retval)
+		animations[State::STANDARD_ENEMY] = idleAnimation;
 
-    return retval && AnimatedGameObject::init(contentManager);
+	return retval && AnimatedGameObject::init(contentManager);
 }
 
 bool StandardEnemy::update(float deltaT, const Inputs& inputs)
 {
-    move(sf::Vector2f(0, 5));
+	move(sf::Vector2f(0, 5));
 
-    checkOutOfBounds();
+	checkOutOfBounds();
 
-    if (animations[currentState]->isOver())
-        return true;
-    return AnimatedGameObject::update(deltaT, inputs);
+	if (animations[currentState]->isOver())
+		return true;
+	return AnimatedGameObject::update(deltaT, inputs);
 }
 
 bool StandardEnemy::isFiring() {
-    if (animations[currentState]->getNextFrame() > 11 && animations[currentState]->getNextFrame() > 13)
-        return true;
-    return false;
+	if (animations[currentState]->getNextFrame() > 11 && animations[currentState]->getNextFrame() > 13)
+		return true;
+	return false;
 }
 
 void StandardEnemy::onHit(float damage)
 {
-    health -= damage;
-    if (health <= 0) {
-        // Publisher::notifySubscribers(Event::ENEMY_KILLED, this);
-        sound.setBuffer(soundBuffer);
-        sound.play();
-        deactivate();
-    }
+	health -= damage;
+	if (health <= 0) {
+		// Publisher::notifySubscribers(Event::ENEMY_KILLED, this);
+		sound.setBuffer(soundBuffer);
+		sound.play();
+		deactivate();
+	}
 
 }
 
 void StandardEnemy::checkOutOfBounds() {
-    if (getPosition().y > Game::GAME_HEIGHT  /** && currentState != State::EXPLODING*/)
-        setPosition((getPosition().x), 0);
+	if (getPosition().y > Game::GAME_HEIGHT  /** && currentState != State::EXPLODING*/)
+		setPosition((getPosition().x), 0);
 }
 
