@@ -11,7 +11,8 @@ public:
 	Bullet(const sf::Vector2f& initialPosition = sf::Vector2f(0, 0), const sf::Vector2f& initialThrust = sf::Vector2f(0, 0));
 	Bullet(const Bullet& src);
 	virtual bool init(const Level01ContentManager& manager, CharacterType type);
-	bool update(float elapsedTime);
+	void checkOutOfBounds();
+	bool update(float elapsedTime, CharacterType type);
 
 private:
 	Bullet& operator=(const Bullet& rhs);

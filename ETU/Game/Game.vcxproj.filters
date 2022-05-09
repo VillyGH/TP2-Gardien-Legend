@@ -85,9 +85,6 @@
     <ClInclude Include="Scene.h">
       <Filter>Header files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyType1IdleAnimation.h">
-      <Filter>Animations</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
@@ -120,9 +117,6 @@
     </ClInclude>
     <ClInclude Include="ActorType.h">
       <Filter>Header files\GenericFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="Level01.h">
-      <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="MenuContentManager.h">
       <Filter>Scenes\ContentManagers</Filter>
@@ -165,9 +159,6 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Header files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyType1.h">
-      <Filter>Header files\GameObjects\Characters</Filter>
     </ClInclude>
     <ClInclude Include="CharacterType.h">
       <Filter>Header files\GameObjects\Characters</Filter>
@@ -212,6 +203,12 @@
       <Filter>Header files\Animations</Filter>
     </ClInclude>
     <ClInclude Include="ShipAnimation.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Header files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="BossIdleAnimation.h">
       <Filter>Header files\Animations</Filter>
     </ClInclude>
   </ItemGroup>
@@ -289,6 +286,12 @@
       <Filter>GameObjects\Characters</Filter>
     </ClCompile>
     <ClCompile Include="StandardEnemyIdleAnimation.cpp">
+      <Filter>Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>GameObjects\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="BossIdleAnimation.cpp">
       <Filter>Animations</Filter>
     </ClCompile>
   </ItemGroup>

@@ -23,14 +23,14 @@ bool StandardEnemyIdleAnimation::init(const Level01ContentManager& contentManage
 	frames.push_back(AnimationFrame(texture, sf::IntRect(463, 913, 73, 110)));
 	frames.push_back(AnimationFrame(texture, sf::IntRect(538, 913, 73, 110)));
 	frames.push_back(AnimationFrame(texture, sf::IntRect(613, 913, 73, 110)));
-	frames.push_back(AnimationFrame(texture, sf::IntRect(18, 1030, 73, 110)));
-	frames.push_back(AnimationFrame(texture, sf::IntRect(93, 1030, 73, 110)));
-	frames.push_back(AnimationFrame(texture, sf::IntRect(238, 1030, 73, 110)));
-	frames.push_back(AnimationFrame(texture, sf::IntRect(313, 1030, 73, 110)));
-	frames.push_back(AnimationFrame(texture, sf::IntRect(388, 1030, 73, 110)));
-	frames.push_back(AnimationFrame(texture, sf::IntRect(463, 1030, 73, 110)));
-	frames.push_back(AnimationFrame(texture, sf::IntRect(536, 1030, 73, 110)));
-	frames.push_back(AnimationFrame(texture, sf::IntRect(611, 1030, 73, 110)));
+	frames.push_back(AnimationFrame(texture, sf::IntRect(18, 1032, 76, 112)));
+	frames.push_back(AnimationFrame(texture, sf::IntRect(93, 1032, 76, 112)));
+	frames.push_back(AnimationFrame(texture, sf::IntRect(236, 1032, 76, 112)));
+	frames.push_back(AnimationFrame(texture, sf::IntRect(313, 1032, 76, 112)));
+	frames.push_back(AnimationFrame(texture, sf::IntRect(388, 1032, 76, 112)));
+	frames.push_back(AnimationFrame(texture, sf::IntRect(463, 1032, 76, 112)));
+	frames.push_back(AnimationFrame(texture, sf::IntRect(538, 1032, 76, 112)));
+	frames.push_back(AnimationFrame(texture, sf::IntRect(613, 1032, 76, 112)));
 
 	return true;
 }

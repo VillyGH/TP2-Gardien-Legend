@@ -159,6 +159,8 @@
     <ClInclude Include="AnimatedGameObject.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationFrame.h" />
+    <ClInclude Include="Boss.h" />
+    <ClInclude Include="BossIdleAnimation.h" />
     <ClInclude Include="ContentManager.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CharacterType.h" />
@@ -193,6 +195,8 @@
     <ClCompile Include="AnimatedGameObject.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationFrame.cpp" />
+    <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="BossIdleAnimation.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="ContentManager.cpp" />
     <ClCompile Include="CyclicAnimation.cpp" />

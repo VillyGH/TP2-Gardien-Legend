@@ -5,6 +5,7 @@
 //#include "EnemyType1ExplosionAnimation.h"
 #include "StandardEnemyIdleAnimation.h"
 
+const float StandardEnemy::MAX_ENEMY_HEALTH = 5;
 
 StandardEnemy::StandardEnemy()
 {
@@ -22,25 +23,22 @@ StandardEnemy::StandardEnemy(const StandardEnemy& src)
 }
 bool StandardEnemy::init(const Level01ContentManager& contentManager)
 {
-    setPosition(sf::Vector2f(Game::GAME_WIDTH * 0.5f, Game::GAME_HEIGHT));
     currentState = State::STANDARD_ENEMY;
+    health = MAX_ENEMY_HEALTH;
+    soundBuffer = contentManager.getEnemyKilledSoundBuffer();
     Animation* idleAnimation = new StandardEnemyIdleAnimation(*this);
     bool retval = idleAnimation->init(contentManager);
     if (retval)
         animations[State::STANDARD_ENEMY] = idleAnimation;
-    //Animation* explosionAnimation = new EnemyType1ExplosionAnimation(*this);
-    //retval = explosionAnimation->init(contentManager);
-    //if (retval)
-        //animations[State::EXPLODING] = explosionAnimation;
+
     return retval && AnimatedGameObject::init(contentManager);
 }
 
 bool StandardEnemy::update(float deltaT, const Inputs& inputs)
 {
     move(sf::Vector2f(0, 5));
-    if (getGlobalBounds().height < -getGlobalBounds().height * 0.5f /** && currentState != State::EXPLODING*/)
-        setPosition(sf::Vector2f((float)Game::GAME_WIDTH, getPosition().y));
 
+    checkOutOfBounds();
 
     if (animations[currentState]->isOver())
         return true;
@@ -53,7 +51,20 @@ bool StandardEnemy::isFiring() {
     return false;
 }
 
-void StandardEnemy::onHit()
+void StandardEnemy::onHit(float damage)
 {
-    //currentState = State::EXPLODING;
+    health -= damage;
+    if (health <= 0) {
+        // Publisher::notifySubscribers(Event::ENEMY_KILLED, this);
+        sound.setBuffer(soundBuffer);
+        sound.play();
+        deactivate();
+    }
+
 }
+
+void StandardEnemy::checkOutOfBounds() {
+    if (getPosition().y > Game::GAME_HEIGHT  /** && currentState != State::EXPLODING*/)
+        setPosition((getPosition().x), 0);
+}
+

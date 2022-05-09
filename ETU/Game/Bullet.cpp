@@ -21,11 +21,28 @@ Bullet::Bullet(const Bullet& src)
 
 }
 
-bool Bullet::update(float elapsedTime)
+bool Bullet::update(float elapsedTime, CharacterType type)
 {
-    move(sf::Vector2f(0, BULLET_SPEED * elapsedTime));
-    if (getPosition().x > Game::GAME_WIDTH)
-        return true;
+    switch (type)
+    {
+    case CharacterType::ENEMY_TYPE_1:
+        move(sf::Vector2f(0, BULLET_SPEED * elapsedTime));
+        if (getPosition().y > Game::GAME_HEIGHT)
+            return true;
+        break;
+    case CharacterType::BOSS:
+        break;
+    case CharacterType::PLAYER:
+        move(sf::Vector2f(0, - BULLET_SPEED * elapsedTime));
+        if (getPosition().y < 0)
+            return true;
+        break;
+    default:
+        break;
+    }
+    
+    checkOutOfBounds();
+    
     return false;
 }
 
@@ -41,5 +58,10 @@ bool Bullet::init(const Level01ContentManager& contentManager, CharacterType typ
     this->rotate(90);
     this->scale(BULLET_SCALING_SIZE);
     return true;
+}
+
+void Bullet::checkOutOfBounds() {
+    if (getPosition().y > Game::GAME_HEIGHT + getGlobalBounds().top * 0.5  /** && currentState != State::EXPLODING*/)
+        deactivate();
 }
 
