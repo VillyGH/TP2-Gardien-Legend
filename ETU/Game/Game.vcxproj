@@ -169,6 +169,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Hud.h" />
+    <ClInclude Include="PlayerStats.h" />
     <ClInclude Include="StandardEnemy.h" />
     <ClInclude Include="StandardEnemyIdleAnimation.h" />
     <ClInclude Include="InputBasedAnimation.h" />

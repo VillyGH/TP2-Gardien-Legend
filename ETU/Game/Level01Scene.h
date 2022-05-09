@@ -30,6 +30,7 @@ public:
 	static const float PLAYER_BULLET_DAMAGE;
 	static const float NB_FIRED_PLAYER_BULLETS;
 	static const float NB_BONUS_FIRED_PLAYER_BULLETS;
+	static const float SCORE_GAINED_ENEMY_KILLED;
 
 public:
 	Level01Scene();
@@ -54,9 +55,14 @@ public:
 	virtual bool uninit() override;
 	virtual bool handleEvents(sf::RenderWindow& window) override;
 private:
+	/// <summary>
+	/// View dans laquelle sont dessinés les acteurs du jeu
+	/// </summary>
+	sf::View view;
 	Inputs inputs;
 	Player player;
 	Boss boss;
+	Hud hud;
 	sf::Sprite backgroundSprite;
 	Level01ContentManager contentManager;
 	std::list<StandardEnemy> standardEnemies;
@@ -68,11 +74,11 @@ private:
 	sf::SoundBuffer enemyDeathSound;
 	float enemySpawnTimer;
 	bool allEnemiesKilled;
+	bool gameEnded;
 	int score;
 	int livesRemaining;
 	int bonusTime;
 	int nbKills;
 	int timer;
-	Hud hud;
 };
 

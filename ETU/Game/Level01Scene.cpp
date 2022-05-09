@@ -20,6 +20,7 @@ const float Level01Scene::SPAWN_MARGIN = -50;
 const float Level01Scene::PLAYER_BULLET_DAMAGE = 1;
 const float Level01Scene::NB_FIRED_PLAYER_BULLETS = 1;
 const float Level01Scene::NB_BONUS_FIRED_PLAYER_BULLETS = 2;
+const float Level01Scene::SCORE_GAINED_ENEMY_KILLED = 1000;
 
 
 
@@ -30,6 +31,9 @@ Level01Scene::Level01Scene()
 	, allEnemiesKilled(false)
 	, bonusTime(0)
 	, livesRemaining(0)
+	, score(0)
+	, timer(0)
+	, nbKills(0)
 {
 }
 
@@ -97,9 +101,12 @@ SceneType Level01Scene::update()
 	/* playerBullets.remove_if([](const GameObject& b) {return !b.isActive(); });
 	 standardEnemies.remove_if([](const GameObject& b) {return !b.isActive(); });*/
 
-	hud.updateGameInfo(score, nbKills, livesRemaining);
+	hud.updateGameInfo(score, livesRemaining);
 
 	timeSinceLastFire += 1.0f / (float)Game::FRAME_RATE;
+
+	if (gameEnded)
+		retval = SceneType::SCOREBOARD_SCENE;
 
 	return retval;
 }
@@ -254,7 +261,7 @@ void Level01Scene::draw(sf::RenderWindow& window) const
 
 	for (const Bullet& e : bossBullets)
 		e.draw(window);
-
+	hud.draw(window);
 }
 
 bool Level01Scene::uninit()
