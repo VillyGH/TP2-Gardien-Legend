@@ -211,6 +211,9 @@
     <ClInclude Include="BossIdleAnimation.h">
       <Filter>Header files\Animations</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerStats.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Publisher.cpp">
