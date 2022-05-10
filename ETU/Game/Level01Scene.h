@@ -61,7 +61,6 @@ private:
 	Inputs inputs;
 	Player player;
 	Boss boss;
-	Hud hud;
 	sf::Sprite backgroundSprite;
 	Level01ContentManager contentManager;
 	std::list<StandardEnemy> standardEnemies;
@@ -80,7 +79,6 @@ private:
 	int nbKills;
 	int timer;
 	Hud hud;
-	bool gameEnded; 
 	virtual void notify(Event event, const void* data) override;
 
 };
