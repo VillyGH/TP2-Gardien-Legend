@@ -55,7 +55,7 @@ bool ScoreboardScene::init()
 		return false;
 	}
 
-	if (!scoreboardMusic.openFromFile("Assets\\Music\\GameTheme.ogg"))
+	if (!scoreboardMusic.openFromFile("Assets\\Music\\Title\\SkyFire (Title Screen).ogg"))
 		return false;
 
 	scoreboardMusic.setVolume(10);

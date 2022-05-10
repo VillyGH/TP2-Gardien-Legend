@@ -4,10 +4,19 @@
 #include "game.h"
 //#include "EnemyType1ExplosionAnimation.h"
 #include "BossIdleAnimation.h"
+#include "Publisher.h"
 
-//const float BOSS_SPAWN_Y_POSITION = -15;
+const float Boss::BOSS_SPAWN_Y_POSITION = -15;
+const float Boss::BOSS_Y_MAX_POSITION = 160;
+const float Boss::BOSS_VERTICAL_SPEED = 4;
+const float Boss::BOSS_HORIZONTAL_SPEED = 13;
+
+const sf::Vector2f Boss::BOSS_SCALING_SIZE(1.5, 1.5); 
+const float Boss::MAX_BOSS_HEALTH = 30;
+
 
 Boss::Boss()
+	 :moveAngle(0)
 {
 
 }
@@ -23,25 +32,29 @@ Boss::Boss(const Boss& src)
 }
 bool Boss::init(const Level01ContentManager& contentManager)
 {
-	setPosition(sf::Vector2f(Game::GAME_WIDTH * 0.5f, 50));
+	setPosition(sf::Vector2f(Game::GAME_WIDTH * 0.5f, BOSS_SPAWN_Y_POSITION));
+	health = MAX_BOSS_HEALTH; 
 	currentState = State::BOSS;
 	Animation* idleAnimation = new BossIdleAnimation(*this);
 	bool retval = idleAnimation->init(contentManager);
 	if (retval)
 		animations[State::BOSS] = idleAnimation;
-	//Animation* explosionAnimation = new EnemyType1ExplosionAnimation(*this);
-	//retval = explosionAnimation->init(contentManager);
-	//if (retval)
-		//animations[State::EXPLODING] = explosionAnimation;
+	this->scale(BOSS_SCALING_SIZE);
 	return retval && AnimatedGameObject::init(contentManager);
 }
 
-bool Boss::update(float deltaT, const Inputs& inputs)
+bool Boss::update(float deltaT, const Inputs& inputs, sf::Vector2f destination)
 {
-	move(sf::Vector2f(0, 5));
+	if(getPosition().y < BOSS_Y_MAX_POSITION)
+		move(sf::Vector2f(0, BOSS_VERTICAL_SPEED));
+	else 
+	{
+		setDestination(destination);
+		move(cos(moveAngle) * BOSS_HORIZONTAL_SPEED, 0);
+	}
+
 	if (getGlobalBounds().height < -getGlobalBounds().height * 0.5f /** && currentState != State::EXPLODING*/)
 		setPosition(getPosition().x, 0);
-
 
 	if (animations[currentState]->isOver())
 		return true;
@@ -49,12 +62,24 @@ bool Boss::update(float deltaT, const Inputs& inputs)
 }
 
 bool Boss::isFiring() {
-	if (animations[currentState]->getNextFrame() > 11 && animations[currentState]->getNextFrame() > 13)
+	if (animations[currentState]->getNextFrame() > 2 && animations[currentState]->getNextFrame() < 10)
 		return true;
 	return false;
 }
 
-void Boss::onHit()
+void Boss::setDestination(const sf::Vector2f& dest) 
 {
-	//currentState = State::EXPLODING;
+	destination.x = dest.x;
+	destination.y = dest.y;
+	moveAngle = atan2f((destination.y - getPosition().y), (destination.x - getPosition().x));
+}
+
+
+void Boss::onHit()
+ {
+ 	health--;
+	if (health <= 0) {
+		Publisher::notifySubscribers(Event::BOSS_KILLED, this);
+ 		deactivate();
+	}
 }

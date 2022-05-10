@@ -12,7 +12,7 @@
 #include "Hud.h"
 
 class Level01Scene :
-	public Scene
+	public Scene, public Subscriber
 {
 
 public:
@@ -30,6 +30,8 @@ public:
 	static const float PLAYER_BULLET_DAMAGE;
 	static const float NB_FIRED_PLAYER_BULLETS;
 	static const float NB_BONUS_FIRED_PLAYER_BULLETS;
+	static const float BOSS_SPAWN_KILL_COUNT;
+
 
 public:
 	Level01Scene();
@@ -42,6 +44,7 @@ public:
 	void addNewBossEnemies();
 	void addNewStandardEnemies();
 	void fireEnemyBullet(StandardEnemy enemy);
+	void fireBossBullet();
 	void firePlayerBullet();
 	Bullet& getAvailableStandardBullet();
 	Bullet& getAvailableEnemyBullet();
@@ -74,5 +77,9 @@ private:
 	int nbKills;
 	int timer;
 	Hud hud;
+	bool bossKilled; 
+
+	virtual void notify(Event event, const void* data) override;
+
 };
 
