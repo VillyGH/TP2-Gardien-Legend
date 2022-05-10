@@ -25,7 +25,8 @@ StandardEnemy::StandardEnemy(const StandardEnemy& src)
 bool StandardEnemy::init(const Level01ContentManager& contentManager)
 {
 	currentState = State::STANDARD_ENEMY;
-	soundBuffer = contentManager.getEnemyKilledSoundBuffer();
+	deathSoundBuffer = contentManager.getEnemyKilledSoundBuffer();
+	firingSoundBuffer = contentManager.getEnemyGunSoundBuffer();
 	health = MAX_ENEMY_HEALTH;
 	Animation* idleAnimation = new StandardEnemyIdleAnimation(*this);
 	bool retval = idleAnimation->init(contentManager);
@@ -48,6 +49,8 @@ bool StandardEnemy::update(float deltaT, const Inputs& inputs)
 
 bool StandardEnemy::isFiring() {
 	if (animations[currentState]->getNextFrame() > 11 && animations[currentState]->getNextFrame() > 13)
+		sound.setBuffer(firingSoundBuffer);
+		sound.play();
 		return true;
 	return false;
 }
@@ -57,7 +60,7 @@ void StandardEnemy::onHit(float damage)
 	health -= damage;
 	if (health <= 0) {
 		Publisher::notifySubscribers(Event::ENEMY_KILLED, this);
-		sound.setBuffer(soundBuffer);
+		sound.setBuffer(deathSoundBuffer);
 		sound.play();
 		deactivate();
 	}

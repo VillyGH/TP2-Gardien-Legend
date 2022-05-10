@@ -8,11 +8,16 @@ class Player :
 
 public:
 	static const float PLAYER_MOVE_SPEED;
-	static const float INITIAL_LIFE_COUNT;
+	static const int INITIAL_LIFE_COUNT;
 	Player();
 	virtual bool init(const Level01ContentManager& contentManager);
 
 	bool update(float deltaT, const Inputs& inputs) override;
+	void fireBullet();
 	void handleOutOfBoundsPosition();
+private:
+	sf::SoundBuffer deathSoundBuffer;
+	sf::Sound sound;
+	sf::SoundBuffer firingSoundBuffer;
 };
 

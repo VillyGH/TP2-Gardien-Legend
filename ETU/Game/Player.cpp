@@ -5,7 +5,7 @@
 #include "ShipAnimation.h"
 
 const float Player::PLAYER_MOVE_SPEED = 3.0f;
-const float Player::INITIAL_LIFE_COUNT = 500;
+const int Player::INITIAL_LIFE_COUNT = 500;
 
 Player::Player()
 {
@@ -21,6 +21,9 @@ bool Player::init(const Level01ContentManager& contentManager)
 	currentState = State::SHIP;
 	Animation* shipAnimation = new ShipAnimation(*this);
 
+	deathSoundBuffer = contentManager.getEnemyKilledSoundBuffer();
+	firingSoundBuffer = contentManager.getEnemyGunSoundBuffer();
+
 	bool retval = shipAnimation->init(contentManager);
 	if (retval)
 		animations[State::SHIP] = shipAnimation;
@@ -34,6 +37,11 @@ bool Player::update(float deltaT, const Inputs& inputs)
 
 	handleOutOfBoundsPosition();
 	return AnimatedGameObject::update(deltaT, inputs);
+}
+
+void Player::fireBullet() {
+	sound.setBuffer(firingSoundBuffer);
+	sound.play();
 }
 
 void Player::handleOutOfBoundsPosition()

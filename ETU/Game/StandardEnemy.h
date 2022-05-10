@@ -16,7 +16,8 @@ public:
 
 private:
 	float health;
+	sf::SoundBuffer deathSoundBuffer;
 	sf::Sound sound;
-	sf::SoundBuffer soundBuffer;
+	sf::SoundBuffer firingSoundBuffer;
 };
 

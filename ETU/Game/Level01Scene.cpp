@@ -178,6 +178,7 @@ void Level01Scene::firePlayerBullet()
 		b.setPosition(player.getPosition().x - player.getTextureRect().width / 2 - i, player.getPosition().y);
 		Bullet& b2 = getAvailableStandardBullet();
 		b2.setPosition(player.getPosition().x + player.getTextureRect().width / 2 + i, player.getPosition().y);
+		player.fireBullet();
 	}
 }
 

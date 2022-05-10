@@ -2,6 +2,7 @@
 #include "AnimatedGameObject.h"
 #include "Level01ContentManager.h"
 #include "stdafx.h"
+class Player;
 class Boss :
 	public AnimatedGameObject
 {
@@ -17,7 +18,7 @@ public:
 	Boss();
 	Boss(const Boss& src);
 	virtual bool init(const Level01ContentManager& contentManager) override;
-	bool update(float deltaT, const Inputs& inputs, sf::Vector2f destination);
+	bool update(float deltaT, const Inputs& inputs, const sf::Vector2f& dest);
 	bool isFiring();
 	void setDestination(const sf::Vector2f& destination);
 	void onHit();

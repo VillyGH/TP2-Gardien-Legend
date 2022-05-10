@@ -44,8 +44,7 @@ private:
 
 	PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD];
 
-	bool gameEnded;
-	int score;
+	bool hasExited;
 };
 
 
