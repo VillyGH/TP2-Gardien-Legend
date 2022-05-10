@@ -31,6 +31,10 @@ bool Bullet::update(float elapsedTime, CharacterType type)
 			return true;
 		break;
 	case CharacterType::BOSS:
+		move(sf::Vector2f(0, BULLET_SPEED * elapsedTime));
+		if (getPosition().y > Game::GAME_HEIGHT)
+			return true;
+		break;
 		break;
 	case CharacterType::PLAYER:
 		move(sf::Vector2f(0, -BULLET_SPEED * elapsedTime));
@@ -50,18 +54,32 @@ bool Bullet::init(const Level01ContentManager& contentManager, CharacterType typ
 {
 	GameObject::init(contentManager);
 	setTexture(contentManager.getMainCharacterTexture());
-	if (type == CharacterType::PLAYER)
-		setTextureRect(sf::IntRect(265, 106, 16, 5));
-
-	if (type == CharacterType::STANDARD_ENEMY || type == CharacterType::BOSS)
+	switch (type)
+	{
+	case CharacterType::STANDARD_ENEMY:
 		setTextureRect(sf::IntRect(287, 106, 16, 5));
+		break;
+	case CharacterType::BOSS:
+		setTextureRect(sf::IntRect(287, 106, 16, 5));
+		this->scale(BULLET_SCALING_SIZE);
+		break;
+	case CharacterType::PLAYER:
+		setTextureRect(sf::IntRect(265, 106, 16, 5));
+		break;
+	default:
+		break;
+	}
+
 	this->rotate(90);
 	this->scale(BULLET_SCALING_SIZE);
 	return true;
 }
 
 void Bullet::checkOutOfBounds() {
-	if (getPosition().y > Game::GAME_HEIGHT + getGlobalBounds().top * 0.5  /** && currentState != State::EXPLODING*/)
+	
+	if (getPosition().y > Game::GAME_HEIGHT - getLocalBounds().height * 0.5f)
 		deactivate();
+	if (getPosition().y < 0 + getLocalBounds().height * 0.5f)
+ 		deactivate();
 }
 

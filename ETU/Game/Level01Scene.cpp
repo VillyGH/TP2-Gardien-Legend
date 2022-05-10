@@ -4,6 +4,7 @@
 #include "CharacterType.h"
 #include "Level01ContentManager.h"
 #include "Event.h"
+#include "Publisher.h"
 #include <iostream>
 
 const float Level01Scene::TIME_PER_FRAME = 1.0f / (float)Game::FRAME_RATE;
@@ -14,15 +15,13 @@ const float Level01Scene::MAX_NB_STANDARD_ENEMIES = 15;
 const float Level01Scene::MAX_NB_BOSS_ENEMIES = 3;
 const float Level01Scene::MAX_NB_BULLETS = 30;
 const float Level01Scene::STANDARD_ENEMY_SPAWN_TIME = 1;
-const float Level01Scene::BOSS_ENEMY_SPAWN_TIME = 60;
 const float Level01Scene::ENEMY_SPAWN_DISTANCE = 15;
 const float Level01Scene::SPAWN_MARGIN = -50;
 const float Level01Scene::PLAYER_BULLET_DAMAGE = 1;
 const float Level01Scene::NB_FIRED_PLAYER_BULLETS = 1;
 const float Level01Scene::NB_BONUS_FIRED_PLAYER_BULLETS = 2;
+const float Level01Scene::BOSS_SPAWN_KILL_COUNT = 15;
 const float Level01Scene::SCORE_GAINED_ENEMY_KILLED = 1000;
-
-
 
 Level01Scene::Level01Scene()
 	: Scene(SceneType::LEVEL01_SCENE)
@@ -31,6 +30,7 @@ Level01Scene::Level01Scene()
 	, allEnemiesKilled(false)
 	, bonusTime(0)
 	, livesRemaining(0)
+	, gameEnded(false)
 	, score(0)
 	, timer(0)
 	, nbKills(0)
@@ -57,27 +57,34 @@ SceneType Level01Scene::update()
 
 	enemySpawnTimer += TIME_PER_FRAME;
 
-	if (enemySpawnTimer >= STANDARD_ENEMY_SPAWN_TIME && !allEnemiesKilled) {
+	if (enemySpawnTimer >= STANDARD_ENEMY_SPAWN_TIME && nbKills < BOSS_SPAWN_KILL_COUNT) {
 
 		spawnStandardEnemy();
 		enemySpawnTimer = 0;
 	}
 
-	if (allEnemiesKilled) //À changer pour un compteur de Enemies Killed
+	if (nbKills >= BOSS_SPAWN_KILL_COUNT && !boss.isActive()) //À changer pour un compteur de Enemies Killed
 		spawnBoss();
 
-	if (boss.isActive())
-		boss.update(TIME_PER_FRAME, inputs);
+	if (boss.isActive()) {
+		boss.update(TIME_PER_FRAME, inputs, player.getPosition());
+		if (boss.isFiring())
+			fireBossBullet();
+		for (Bullet& e : bossBullets) {
+			if (e.isActive() && e.update(TIME_PER_FRAME, CharacterType::BOSS))
+				e.deactivate();
+		}
+	}
 
 	for (Bullet& e : enemyBullets)
 	{
-		if (e.update(TIME_PER_FRAME, CharacterType::STANDARD_ENEMY))
+		if (e.isActive() && e.update(TIME_PER_FRAME, CharacterType::STANDARD_ENEMY))
 			e.deactivate();
 	}
 
 	for (Bullet& e : playerBullets)
 	{
-		if (e.update(TIME_PER_FRAME, CharacterType::PLAYER))
+		if (e.isActive() && e.update(TIME_PER_FRAME, CharacterType::PLAYER))
 			e.deactivate();
 	}
 
@@ -96,8 +103,15 @@ SceneType Level01Scene::update()
 				b.deactivate();
 				e.onHit(1);
 			}
+
+			if (b.collidesWith(boss) && boss.isActive()) {
+				b.deactivate();
+				boss.onHit();
+			}
+
 		}
 	}
+
 	/* playerBullets.remove_if([](const GameObject& b) {return !b.isActive(); });
 	 standardEnemies.remove_if([](const GameObject& b) {return !b.isActive(); });*/
 
@@ -106,7 +120,7 @@ SceneType Level01Scene::update()
 	timeSinceLastFire += 1.0f / (float)Game::FRAME_RATE;
 
 	if (gameEnded)
-		retval = SceneType::SCOREBOARD_SCENE;
+		retval = SceneType::SCOREBOARD_SCENE; 
 
 	return retval;
 }
@@ -131,14 +145,12 @@ bool Level01Scene::spawnStandardEnemy()
 			return false;
 		}
 	}
-	allEnemiesKilled = true; //À CHANGER
 	return true;
 }
 
 bool Level01Scene::spawnBoss()
 {
 	boss.activate();
-	boss.setPosition(Game::GAME_WIDTH * 0.5, 50);
 	return true;
 }
 
@@ -150,6 +162,12 @@ void Level01Scene::fireEnemyBullet(StandardEnemy enemy)
 {
 	Bullet& b = getAvailableEnemyBullet();
 	b.setPosition(enemy.getPosition());
+}
+
+void Level01Scene::fireBossBullet()
+{
+	Bullet& b = getAvailableBossBullet();
+	b.setPosition(boss.getPosition());
 }
 
 void Level01Scene::firePlayerBullet()
@@ -207,7 +225,7 @@ Bullet& Level01Scene::getAvailableBossBullet()
 		}
 	}
 	Bullet newBullet;
-	newBullet.init(contentManager, CharacterType::STANDARD_ENEMY);
+	newBullet.init(contentManager, CharacterType::BOSS);
 	bossBullets.push_back(newBullet);
 	return bossBullets.back();
 }
@@ -290,9 +308,40 @@ bool Level01Scene::init()
 	boss.init(contentManager);
 	addNewBossBullets();
 
+	//Subscribers
+	Publisher::addSubscriber(*this, Event::ENEMY_KILLED);
+	Publisher::addSubscriber(*this, Event::BOSS_KILLED);
+	Publisher::addSubscriber(*this, Event::GUN_PICKED_UP);
+
+
 	return player.init(contentManager);
 }
 
+
+void Level01Scene::notify(Event event, const void* data)
+{
+	switch (event)
+	{
+	case Event::NONE:
+		break;
+	case Event::ENEMY_KILLED:
+	{
+		nbKills++; 
+		break;
+	}
+	case Event::GUN_PICKED_UP:
+	{
+		break;
+	}
+	case::Event::BOSS_KILLED: 
+	{
+		gameEnded = true; 
+	}
+	default:
+		break;
+	}
+
+}
 
 bool Level01Scene::handleEvents(sf::RenderWindow& window)
 {

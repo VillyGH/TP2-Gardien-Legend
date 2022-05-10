@@ -12,7 +12,7 @@
 #include "Hud.h"
 
 class Level01Scene :
-	public Scene
+	public Scene, public Subscriber
 {
 
 public:
@@ -30,6 +30,7 @@ public:
 	static const float PLAYER_BULLET_DAMAGE;
 	static const float NB_FIRED_PLAYER_BULLETS;
 	static const float NB_BONUS_FIRED_PLAYER_BULLETS;
+	static const float BOSS_SPAWN_KILL_COUNT;
 	static const float SCORE_GAINED_ENEMY_KILLED;
 
 public:
@@ -43,6 +44,7 @@ public:
 	void addNewBossEnemies();
 	void addNewStandardEnemies();
 	void fireEnemyBullet(StandardEnemy enemy);
+	void fireBossBullet();
 	void firePlayerBullet();
 	Bullet& getAvailableStandardBullet();
 	Bullet& getAvailableEnemyBullet();
@@ -55,9 +57,6 @@ public:
 	virtual bool uninit() override;
 	virtual bool handleEvents(sf::RenderWindow& window) override;
 private:
-	/// <summary>
-	/// View dans laquelle sont dessinés les acteurs du jeu
-	/// </summary>
 	sf::View view;
 	Inputs inputs;
 	Player player;
@@ -80,5 +79,9 @@ private:
 	int bonusTime;
 	int nbKills;
 	int timer;
+	Hud hud;
+	bool gameEnded; 
+	virtual void notify(Event event, const void* data) override;
+
 };
 

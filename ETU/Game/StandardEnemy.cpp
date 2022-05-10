@@ -4,6 +4,7 @@
 #include "game.h"
 //#include "EnemyType1ExplosionAnimation.h"
 #include "StandardEnemyIdleAnimation.h"
+#include "Publisher.h"
 
 const float StandardEnemy::MAX_ENEMY_HEALTH = 5;
 
@@ -24,8 +25,8 @@ StandardEnemy::StandardEnemy(const StandardEnemy& src)
 bool StandardEnemy::init(const Level01ContentManager& contentManager)
 {
 	currentState = State::STANDARD_ENEMY;
-	health = MAX_ENEMY_HEALTH;
 	soundBuffer = contentManager.getEnemyKilledSoundBuffer();
+	health = MAX_ENEMY_HEALTH;
 	Animation* idleAnimation = new StandardEnemyIdleAnimation(*this);
 	bool retval = idleAnimation->init(contentManager);
 	if (retval)
@@ -55,7 +56,7 @@ void StandardEnemy::onHit(float damage)
 {
 	health -= damage;
 	if (health <= 0) {
-		// Publisher::notifySubscribers(Event::ENEMY_KILLED, this);
+		Publisher::notifySubscribers(Event::ENEMY_KILLED, this);
 		sound.setBuffer(soundBuffer);
 		sound.play();
 		deactivate();
