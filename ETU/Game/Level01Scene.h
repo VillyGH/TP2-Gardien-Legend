@@ -61,6 +61,7 @@ private:
 	Inputs inputs;
 	Player player;
 	Boss boss;
+	Hud hud;
 	sf::Sprite backgroundSprite;
 	Level01ContentManager contentManager;
 	std::list<StandardEnemy> standardEnemies;
@@ -72,6 +73,7 @@ private:
 	sf::SoundBuffer enemyDeathSound;
 	float enemySpawnTimer;
 	bool allEnemiesKilled;
+	bool gameEnded;
 	int score;
 	int livesRemaining;
 	int bonusTime;
