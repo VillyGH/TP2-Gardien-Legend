@@ -21,8 +21,7 @@ const float Level01Scene::PLAYER_BULLET_DAMAGE = 1;
 const float Level01Scene::NB_FIRED_PLAYER_BULLETS = 1;
 const float Level01Scene::NB_BONUS_FIRED_PLAYER_BULLETS = 2;
 const float Level01Scene::BOSS_SPAWN_KILL_COUNT = 15;
-
-
+const float Level01Scene::SCORE_GAINED_ENEMY_KILLED = 1000;
 
 Level01Scene::Level01Scene()
 	: Scene(SceneType::LEVEL01_SCENE)
@@ -31,7 +30,10 @@ Level01Scene::Level01Scene()
 	, allEnemiesKilled(false)
 	, bonusTime(0)
 	, livesRemaining(0)
-	, bossKilled(false)
+	, gameEnded(false)
+	, score(0)
+	, timer(0)
+	, nbKills(0)
 {
 }
 
@@ -98,8 +100,8 @@ SceneType Level01Scene::update()
 		{
 			if (b.collidesWith(e))
 			{
-				e.onHit(1);
 				b.deactivate();
+				e.onHit(1);
 			}
 
 			if (b.collidesWith(boss) && boss.isActive()) {
@@ -113,11 +115,11 @@ SceneType Level01Scene::update()
 	/* playerBullets.remove_if([](const GameObject& b) {return !b.isActive(); });
 	 standardEnemies.remove_if([](const GameObject& b) {return !b.isActive(); });*/
 
-	hud.updateGameInfo(score, nbKills, livesRemaining);
+	hud.updateGameInfo(score, livesRemaining);
 
 	timeSinceLastFire += 1.0f / (float)Game::FRAME_RATE;
 
-	if (bossKilled)
+	if (gameEnded)
 		retval = SceneType::SCOREBOARD_SCENE; 
 
 	return retval;
@@ -277,7 +279,7 @@ void Level01Scene::draw(sf::RenderWindow& window) const
 
 	for (const Bullet& e : bossBullets)
 		e.draw(window);
-
+	hud.draw(window);
 }
 
 bool Level01Scene::uninit()
@@ -333,7 +335,7 @@ void Level01Scene::notify(Event event, const void* data)
 	}
 	case::Event::BOSS_KILLED: 
 	{
-		bossKilled = true; 
+		gameEnded = true; 
 	}
 	default:
 		break;

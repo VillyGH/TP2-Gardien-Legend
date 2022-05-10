@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Hud.h"
-
 #include <iostream>
 
 Hud::Hud()
@@ -10,9 +9,7 @@ Hud::Hud()
 
 void Hud::initialize(const Level01ContentManager& contentManager)
 {
-	hudView = sf::View(sf::FloatRect(0, 0, (float)Game::GAME_WIDTH, (float)Game::GAME_HEIGHT));
 	addScoreText();
-	addNbKillsText();
 	addNbLivesRemainingText();
 	addPauseText();
 }
@@ -25,13 +22,6 @@ void Hud::addScoreText()
 	scoreText.setCharacterSize(16);
 	scoreText.setFillColor(sf::Color::Cyan);
 	scoreText.setPosition(scoreText.getLocalBounds().width, scoreText.getLocalBounds().height);
-}
-
-void Hud::addNbKillsText()
-{
-	nbKillsText.setFont(contentManager.getMainFont());
-	nbKillsText.setCharacterSize(16);
-	nbKillsText.setFillColor(sf::Color::Cyan);
 }
 
 void Hud::addNbLivesRemainingText()
@@ -68,13 +58,6 @@ void Hud::updateScoreText(int score)
 	scoreText.setString(scoreString);
 }
 
-void Hud::updateNbKillsText(int numberKills)
-{
-	const std::string numberKillsString = "Kills : " + std::to_string(numberKills);
-	nbKillsText.setString(numberKillsString);
-	nbKillsText.setPosition(0, nbKillsText.getLocalBounds().height + scoreText.getLocalBounds().height);
-}
-
 void Hud::updateNbLivesText(int nbLivesRemaining)
 {
 	nbLivesRemainingText.setPosition(Game::GAME_WIDTH - nbLivesRemainingText.getLocalBounds().width, nbLivesRemainingText.getLocalBounds().height / 2.0f);
@@ -88,25 +71,17 @@ void Hud::updatePauseText()
 	pauseText.setString(pauseString);
 }
 
-void Hud::updateGameInfo(int score, int nbKills, int nbLivesRemaining)
+void Hud::updateGameInfo(int score, int nbLivesRemaining)
 {
 	updateScoreText(score);
-	updateNbKillsText(nbKills);
 	updateNbLivesText(nbLivesRemaining);
 }
 
-
 // Reset du texte
-
-void Hud::removeMenuStartText()
-{
-	menuStartText.setString("");
-}
 
 void Hud::removeGameInfoText()
 {
 	scoreText.setString("");
-	nbKillsText.setString("");
 	nbLivesRemainingText.setString("");
 }
 
@@ -118,10 +93,7 @@ void Hud::removePauseText()
 
 void Hud::draw(sf::RenderWindow& window)  const
 {
-	window.setView(hudView);
-	window.draw(menuStartText);
 	window.draw(scoreText);
-	window.draw(nbKillsText);
 	window.draw(nbLivesRemainingText);
 	window.draw(pauseText);
 	window.draw(leaderboardText);

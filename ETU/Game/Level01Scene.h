@@ -31,7 +31,7 @@ public:
 	static const float NB_FIRED_PLAYER_BULLETS;
 	static const float NB_BONUS_FIRED_PLAYER_BULLETS;
 	static const float BOSS_SPAWN_KILL_COUNT;
-
+	static const float SCORE_GAINED_ENEMY_KILLED;
 
 public:
 	Level01Scene();
@@ -57,6 +57,7 @@ public:
 	virtual bool uninit() override;
 	virtual bool handleEvents(sf::RenderWindow& window) override;
 private:
+	sf::View view;
 	Inputs inputs;
 	Player player;
 	Boss boss;
@@ -77,8 +78,7 @@ private:
 	int nbKills;
 	int timer;
 	Hud hud;
-	bool bossKilled; 
-
+	bool gameEnded; 
 	virtual void notify(Event event, const void* data) override;
 
 };
