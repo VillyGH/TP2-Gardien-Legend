@@ -15,6 +15,7 @@ public:
 public:
 	ScoreboardScene();
 	~ScoreboardScene();
+	void fillPlayerStatsWithRandomValues(PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD]);
 	virtual SceneType update() override;
 	virtual void pause()override;
 	virtual void unPause() override;

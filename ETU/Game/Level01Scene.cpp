@@ -144,7 +144,7 @@ SceneType Level01Scene::update()
 	 standardEnemies.remove_if([](const GameObject& b) {return !b.isActive(); });*/
 
 	hud.updateGameInfo(score, bonusTimeRemaining,livesRemaining);
-
+	gameEnded = true;
 	timeSinceLastFire += 1.0f / (float)Game::FRAME_RATE;
 
 	if (gameEnded)
@@ -416,7 +416,7 @@ void Level01Scene::notify(Event event, const void* data)
 	}
 	case Event::GUN_BONUS_DROPPED:
 	{
- 		const StandardEnemy* enemy = static_cast<const StandardEnemy*>(data);
+		const StandardEnemy* enemy = static_cast<const StandardEnemy*>(data);
 		GunBonus& bonus = getAvailableGunBonus();
 		bonus.setPosition(enemy->getPosition());
 		break;
