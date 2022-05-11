@@ -43,11 +43,17 @@ bool Player::update(float deltaT, const Inputs& inputs)
 {
 	move(inputs.moveFactorX * -PLAYER_MOVE_SPEED, inputs.moveFactorY * -PLAYER_MOVE_SPEED);
 
-	gunBonusTimer -= deltaT;
-	isGunBonusActive();
-
+	if(isGunBonusActive())
+		gunBonusTimer -= deltaT;
+	
 	handleOutOfBoundsPosition();
 	return AnimatedGameObject::update(deltaT, inputs);
+}
+
+bool Player::onHit() {
+	if (isGunBonusActive()) {
+		gunBonusTimer = 0;
+	}	 
 }
 
 void Player::handleOutOfBoundsPosition()

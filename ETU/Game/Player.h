@@ -15,6 +15,7 @@ public:
 	virtual bool init(const Level01ContentManager& contentManager);
 
 	bool update(float deltaT, const Inputs& inputs) override;
+	bool onHit();
 	void handleOutOfBoundsPosition();
 
 	bool isGunBonusActive();
