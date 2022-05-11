@@ -64,7 +64,6 @@ public:
 	virtual bool uninit() override;
 	virtual bool handleEvents(sf::RenderWindow& window) override;
 private:
-	virtual void notify(Event event, const void* data) override;
 
 	sf::View view;
 	Inputs inputs;
@@ -90,7 +89,7 @@ private:
 	int timer;
 	Hud hud;
 	sf::Text scoreText;
-	virtual void notify(Event event, const void* data) override;
 
+	virtual void notify(Event event, const void* data) override;
 };
 

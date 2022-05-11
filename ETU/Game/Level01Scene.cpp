@@ -202,7 +202,6 @@ void Level01Scene::fireBossBullet()
 
 void Level01Scene::firePlayerBullet()
 {
-<<<<<<< HEAD
 	Bullet& b = getAvailableStandardBullet();
 	b.setPosition(player.getPosition().x - player.getTextureRect().width / 2, player.getPosition().y);
 	Bullet& b2 = getAvailableStandardBullet();
@@ -210,20 +209,10 @@ void Level01Scene::firePlayerBullet()
 
 	if (player.isGunBonusActive()) {
 		Bullet& b3 = getAvailableStandardBullet();
-		b3.setPosition(player.getPosition().x - player.getTextureRect().width, player.getPosition().y + player.getTextureRect().top /2);
+		b3.setPosition(player.getPosition().x - player.getTextureRect().width, player.getPosition().y + player.getTextureRect().height);
 		Bullet& b4 = getAvailableStandardBullet();
-		b4.setPosition(player.getPosition().x + player.getTextureRect().width, player.getPosition().y + player.getTextureRect().top / 2);
-=======
-	for (size_t i = 0; i < 1; i++)
-	{
-		Bullet& b = getAvailableStandardBullet();
-		b.setPosition(player.getPosition().x - player.getTextureRect().width / 2 - i, player.getPosition().y);
-		Bullet& b2 = getAvailableStandardBullet();
-		b2.setPosition(player.getPosition().x + player.getTextureRect().width / 2 + i, player.getPosition().y);
-		player.fireBullet();
->>>>>>> 468c5f04c5eed3370900669890a25d3ca415c81e
+		b4.setPosition(player.getPosition().x + player.getTextureRect().width, player.getPosition().y + player.getTextureRect().height);
 	}
-
 }
 
 Bullet& Level01Scene::getAvailableStandardBullet()

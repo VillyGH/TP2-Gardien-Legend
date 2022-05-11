@@ -11,11 +11,11 @@ public:
 public:
 	static const float PLAYER_MOVE_SPEED;
 	static const int INITIAL_LIFE_COUNT;
-	static const int MAX_IMMUNE_TIME = 3;
-	static const int MAX_BONUS_TIME = 3;
+	static const float MAX_IMMUNE_TIME;
+	static const float MAX_BONUS_TIME;
 	Player();
 	virtual bool init(const Level01ContentManager& contentManager);
-
+	bool isGunBonusActive();
 	bool update(float deltaT, const Inputs& inputs) override;
 	void fireBullet();
 	bool onHit();
@@ -24,9 +24,6 @@ private:
 	sf::SoundBuffer deathSoundBuffer;
 	sf::Sound sound;
 	sf::SoundBuffer firingSoundBuffer;
-
-	bool isGunBonusActive();
-
 	float gunBonusTimer;
 	bool gunBonusIsActive; 
 };

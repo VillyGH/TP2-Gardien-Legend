@@ -9,8 +9,8 @@
 
 const float Player::PLAYER_MOVE_SPEED = 3.0f;
 const int Player::INITIAL_LIFE_COUNT = 500;
-const int Player::MAX_IMMUNE_TIME = 3;
-const int Player::MAX_BONUS_TIME = 3;
+const float Player::MAX_IMMUNE_TIME = 3.f;
+const float Player::MAX_BONUS_TIME = 3.f;
 
 
 Player::Player():
@@ -90,7 +90,8 @@ void Player::fireBullet() {
 bool Player::onHit() {
 	if (isGunBonusActive()) {
 		gunBonusTimer = 0;
-	}	 
+	}
+	return true;
 }
 
 void Player::handleOutOfBoundsPosition()
