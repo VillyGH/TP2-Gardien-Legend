@@ -85,6 +85,7 @@ private:
 	bool gameEnded;
 	int score;
 	int livesRemaining;
+	int bonusTimeRemaining;
 	int nbKills;
 	int timer;
 	Hud hud;
