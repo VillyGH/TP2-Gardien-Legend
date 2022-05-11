@@ -9,8 +9,8 @@ class Player :
 public:
 	static const float PLAYER_MOVE_SPEED;
 	static const int INITIAL_LIFE_COUNT;
-	static const int MAX_IMMUNE_TIME = 3;
-	static const int MAX_BONUS_TIME = 3;
+	static const int MAX_IMMUNE_TIME;
+	static const int MAX_BONUS_TIME;
 	Player();
 	virtual bool init(const Level01ContentManager& contentManager);
 

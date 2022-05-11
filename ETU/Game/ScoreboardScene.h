@@ -25,7 +25,7 @@ public:
 	bool writeToFile(const PlayerStats stats[ScoreboardScene::MAX_NB_PLAYERS_LEADERBOARD]);
 	bool readFromFile(PlayerStats stats[ScoreboardScene::MAX_NB_PLAYERS_LEADERBOARD]);
 	void setInitialsText();
-	void addInitialsText(std::string intial);
+	void addInitialsText(char intial);
 	void removeInitialsText();
 	void setLeaderboardText();
 	void setGameOverText();
@@ -39,8 +39,6 @@ private:
 	sf::Text initialsText;
 	sf::Text scoresText;
 	sf::Sprite endGameImage;
-
-	sf::Music scoreboardMusic;
 
 	PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD];
 

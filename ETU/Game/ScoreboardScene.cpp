@@ -22,7 +22,7 @@ SceneType ScoreboardScene::update()
 	SceneType retval = getSceneType();
 
 	if (hasExited)
-		retval = SceneType::NONE;
+		retval = SceneType::TITLE_SCENE;
 
 	return retval;
 }
@@ -42,6 +42,8 @@ void ScoreboardScene::draw(sf::RenderWindow& window) const
 	window.draw(endGameImage);
 	window.draw(gameOverText);
 	window.draw(leaderboardText);
+	window.draw(initialsText);
+	window.draw(scoresText);
 }
 
 bool ScoreboardScene::uninit()
@@ -112,7 +114,7 @@ void ScoreboardScene::setInitialsText()
 	initialsText.setPosition(Game::GAME_WIDTH / 2.0f, Game::GAME_HEIGHT / 4.0f - 5);
 }
 
-void ScoreboardScene::addInitialsText(std::string intial)
+void ScoreboardScene::addInitialsText(char intial)
 {
 	if (initialsText.getString().getSize() < NAME_LENGTH) {
 		initialsText.setString(initialsText.getString() + '\d' + intial);
@@ -178,9 +180,10 @@ bool ScoreboardScene::handleEvents(sf::RenderWindow& window)
 			window.close();
 			retval = true;
 		}
-		if (event.key.code == sf::Event::TextEntered) {
-			if (event.text.unicode < 128)
-				addInitialsText(std::to_string(event.text.unicode));
+		if (event.type == sf::Event::TextEntered) {
+			if (event.text.unicode < 128) {
+				addInitialsText((char)event.text.unicode);
+			}
 		}
 		if (event.type == sf::Event::KeyPressed)
 		{
