@@ -212,7 +212,7 @@
       <Filter>Header files\Animations</Filter>
     </ClInclude>
     <ClInclude Include="PlayerStats.h">
-      <Filter>Scenes</Filter>
+      <Filter>Header files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="GunBonus.h">
       <Filter>Header files\GameObjects</Filter>

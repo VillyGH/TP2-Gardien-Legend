@@ -8,7 +8,9 @@
 
 
 const float Player::PLAYER_MOVE_SPEED = 3.0f;
-const float Player::INITIAL_LIFE_COUNT = 500;
+const int Player::INITIAL_LIFE_COUNT = 500;
+const int Player::MAX_IMMUNE_TIME = 3;
+const int Player::MAX_BONUS_TIME = 3;
 
 
 Player::Player():
@@ -28,6 +30,12 @@ bool Player::init(const Level01ContentManager& contentManager)
 	currentState = State::SHIP;
 	Animation* shipAnimation = new ShipAnimation(*this);
 
+	deathSoundBuffer = contentManager.getEnemyKilledSoundBuffer();
+	firingSoundBuffer = contentManager.getEnemyGunSoundBuffer();
+
+	sound.setMinDistance(10);
+	sound.setVolume(10);
+
 	bool retval = shipAnimation->init(contentManager);
 	if (retval)
 		animations[State::SHIP] = shipAnimation;
@@ -42,12 +50,41 @@ bool Player::init(const Level01ContentManager& contentManager)
 bool Player::update(float deltaT, const Inputs& inputs)
 {
 	move(inputs.moveFactorX * -PLAYER_MOVE_SPEED, inputs.moveFactorY * -PLAYER_MOVE_SPEED);
+	/*
+	if (isImmuneMode()) {
+		timeInImmune += elapsedTime;
+		setColor(sf::Color(255, 255, 255, 128));
+	}
+	else if (isBonusMode()) {
+		timeInBonus += elapsedTime;
+		setColor(sf::Color::Yellow);
+	}
+	else {
+		setColor(sf::Color(255, 255, 255, 255));
+	}
+		
+	if (timeInImmune >= MAX_IMMUNE_TIME) {
+		timeInImmune = 0;
+		setImmuneMode(false);
+	}
+
+	if (timeInBonus >= MAX_BONUS_TIME) {
+		timeInBonus = 0;
+		setBonusMode(false);
+	}
+
+	}*/
 
 	if(isGunBonusActive())
 		gunBonusTimer -= deltaT;
 	
 	handleOutOfBoundsPosition();
 	return AnimatedGameObject::update(deltaT, inputs);
+}
+
+void Player::fireBullet() {
+	sound.setBuffer(firingSoundBuffer);
+	sound.play();
 }
 
 bool Player::onHit() {
@@ -59,22 +96,22 @@ bool Player::onHit() {
 void Player::handleOutOfBoundsPosition()
 {
 	sf::Vector2f newPosition = getPosition();
-	if (newPosition.x > Game::GAME_WIDTH + getGlobalBounds().width / 2.0f)
+	if (newPosition.x > Game::GAME_WIDTH)
 	{
-		newPosition.x -= Game::GAME_WIDTH + getGlobalBounds().width;
+		newPosition.x = Game::GAME_WIDTH;
 	}
-	else if (newPosition.x < -getGlobalBounds().width * 0.5f)
+	else if (newPosition.x < 0)
 	{
-		newPosition.x += Game::GAME_WIDTH + getGlobalBounds().width;
+		newPosition.x = 0;
 	}
 
-	if (newPosition.y > Game::GAME_HEIGHT + getGlobalBounds().height / 2.0f)
+	if (newPosition.y > Game::GAME_HEIGHT)
 	{
-		newPosition.y -= Game::GAME_HEIGHT + getGlobalBounds().height;
+		newPosition.y = Game::GAME_HEIGHT;
 	}
-	else if (newPosition.y < -getGlobalBounds().height * 0.5f)
+	else if (newPosition.y < 0)
 	{
-		newPosition.y += Game::GAME_HEIGHT + getGlobalBounds().height;
+		newPosition.y = 0;
 	}
 
 	GameObject::setPosition(newPosition);

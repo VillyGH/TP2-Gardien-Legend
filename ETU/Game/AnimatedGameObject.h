@@ -4,6 +4,7 @@
 
 class Level01ContentManager;
 class Animation;
+class Game;
 struct Inputs;
 class AnimatedGameObject :
 	public GameObject

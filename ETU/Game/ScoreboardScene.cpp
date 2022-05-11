@@ -7,7 +7,8 @@ const std::string ScoreboardScene::PATH_TO_BIN_FILE = "stats.bin";
 
 ScoreboardScene::ScoreboardScene()
 	: Scene(SceneType::SCOREBOARD_SCENE)
-	, gameEnded(false)
+	, hasExited(false)
+	, stats()
 {
 }
 
@@ -20,7 +21,7 @@ SceneType ScoreboardScene::update()
 {
 	SceneType retval = getSceneType();
 
-	if (gameEnded)
+	if (hasExited)
 		retval = SceneType::NONE;
 
 	return retval;
@@ -55,8 +56,7 @@ bool ScoreboardScene::init()
 		return false;
 	}
 
-	if (!scoreboardMusic.openFromFile("Assets\\Music\\Title\\SkyFire (Title Screen).ogg"))
-		return false;
+	
 
 	setGameOverText();
 	setLeaderboardText();
@@ -115,7 +115,7 @@ void ScoreboardScene::setInitialsText()
 void ScoreboardScene::addInitialsText(std::string intial)
 {
 	if (initialsText.getString().getSize() < NAME_LENGTH) {
-		initialsText.setString(initialsText.getString() + intial);
+		initialsText.setString(initialsText.getString() + '\d' + intial);
 	}
 	initialsText.setPosition(Game::GAME_WIDTH / 2.0f, Game::GAME_HEIGHT / 4.0f - 5);
 }
@@ -132,17 +132,17 @@ void ScoreboardScene::removeInitialsText()
 void ScoreboardScene::setScoreText()
 {
 
-	const std::string scoresTextString = "";
+	const std::string scoresTextString = std::to_string(result.level01SceneResult.score);
 	scoresText.setFont(contentManager.getMainFont());
 	scoresText.setCharacterSize(36);
-	scoresText.setString("");
+	scoresText.setString(scoresTextString);
 	scoresText.setPosition(Game::GAME_WIDTH / 2.0f, Game::GAME_HEIGHT / 4.0f - 5);
 }
 
 void ScoreboardScene::saveStats(std::string initials)
 {
 	sprintf_s(stats[0].name, initials.c_str());
-	stats[0].score = score;
+	stats[0].score = result.level01SceneResult.score;
 }
 
 
@@ -186,7 +186,7 @@ bool ScoreboardScene::handleEvents(sf::RenderWindow& window)
 		{
 			if (event.key.code == sf::Keyboard::Escape)
 			{
-				gameEnded = true;
+				hasExited = true;
 			}
 			if (event.key.code == sf::Keyboard::BackSpace)
 			{

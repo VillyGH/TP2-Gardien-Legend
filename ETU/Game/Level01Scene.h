@@ -85,15 +85,11 @@ private:
 	bool gameEnded;
 	int score;
 	int livesRemaining;
-	int bonusTime;
 	int nbKills;
 	int timer;
 	Hud hud;
-	sf::Sound standardEnemyDeathSound;
-	sf::SoundBuffer standardEnemyDeathSoundBuffer;
-	sf::Sound enemyBulletSound;
-	sf::SoundBuffer enemyBulletSoundBuffer;
-	sf::Sound playerBulletSound;
-	sf::SoundBuffer playerBulletSoundBuffer;
+	sf::Text scoreText;
+	virtual void notify(Event event, const void* data) override;
+
 };
 

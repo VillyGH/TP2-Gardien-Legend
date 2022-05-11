@@ -24,6 +24,8 @@ bool Level01ContentManager::loadContent()
 		return false;
 	if (!enemyGunSoundBuffer.loadFromFile("Assets\\SoundFX\\Level01\\enemyGun.wav"))
 		return false;
+	if (!mainFont.loadFromFile("Assets\\Fonts\\Level01\\emulogic.ttf"))
+		return false;
 	if (!healthBonusSoundBuffer.loadFromFile("Assets\\SoundFX\\Level01\\healthBonus.wav"))
 		return false;
 	if (!gunBonusSoundBuffer.loadFromFile("Assets\\SoundFX\\Level01\\gunBonus.wav"))
@@ -37,6 +39,11 @@ bool Level01ContentManager::loadContent()
 const sf::Texture& Level01ContentManager::getEnemiesTexture() const
 {
 	return enemiesTexture;
+}
+
+const sf::Font& Level01ContentManager::getMainFont() const
+{
+	return mainFont;
 }
 
 const sf::Texture& Level01ContentManager::getBackgroundTexture() const

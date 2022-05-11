@@ -32,11 +32,11 @@ const float Level01Scene::MAX_LIFE_BONUS = 5;
 
 
 Level01Scene::Level01Scene()
-	: Scene(SceneType::LEVEL01_SCENE)
+	: Scene(SceneType::TITLE_SCENE)
 	, enemySpawnTimer(0)
 	, timeSinceLastFire(0)
 	, allEnemiesKilled(false)
-	, bonusTime(0)
+	, bonusTimeRemaining(0)
 	, livesRemaining(0)
 	, gameEnded(false)
 	, score(0)
@@ -143,7 +143,7 @@ SceneType Level01Scene::update()
 	/* playerBullets.remove_if([](const GameObject& b) {return !b.isActive(); });
 	 standardEnemies.remove_if([](const GameObject& b) {return !b.isActive(); });*/
 
-	hud.updateGameInfo(score, livesRemaining);
+	hud.updateGameInfo(score, bonusTimeRemaining,livesRemaining);
 
 	timeSinceLastFire += 1.0f / (float)Game::FRAME_RATE;
 
@@ -202,6 +202,7 @@ void Level01Scene::fireBossBullet()
 
 void Level01Scene::firePlayerBullet()
 {
+<<<<<<< HEAD
 	Bullet& b = getAvailableStandardBullet();
 	b.setPosition(player.getPosition().x - player.getTextureRect().width / 2, player.getPosition().y);
 	Bullet& b2 = getAvailableStandardBullet();
@@ -212,6 +213,15 @@ void Level01Scene::firePlayerBullet()
 		b3.setPosition(player.getPosition().x - player.getTextureRect().width, player.getPosition().y + player.getTextureRect().top /2);
 		Bullet& b4 = getAvailableStandardBullet();
 		b4.setPosition(player.getPosition().x + player.getTextureRect().width, player.getPosition().y + player.getTextureRect().top / 2);
+=======
+	for (size_t i = 0; i < 1; i++)
+	{
+		Bullet& b = getAvailableStandardBullet();
+		b.setPosition(player.getPosition().x - player.getTextureRect().width / 2 - i, player.getPosition().y);
+		Bullet& b2 = getAvailableStandardBullet();
+		b2.setPosition(player.getPosition().x + player.getTextureRect().width / 2 + i, player.getPosition().y);
+		player.fireBullet();
+>>>>>>> 468c5f04c5eed3370900669890a25d3ca415c81e
 	}
 
 }

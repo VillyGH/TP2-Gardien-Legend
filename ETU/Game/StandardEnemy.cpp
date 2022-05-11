@@ -78,6 +78,7 @@ void StandardEnemy::onHit(float damage)
 		checkBonusDrop();
 		sound.setBuffer(deathSoundBuffer);
 		sound.play();
+		sound.setVolume(10);
 		deactivate();
 	}
 }

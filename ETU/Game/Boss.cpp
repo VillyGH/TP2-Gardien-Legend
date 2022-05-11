@@ -17,6 +17,7 @@ const float Boss::MAX_BOSS_HEALTH = 30;
 
 Boss::Boss()
 	 :moveAngle(0)
+	, health(0)
 {
 
 }
@@ -43,13 +44,13 @@ bool Boss::init(const Level01ContentManager& contentManager)
 	return retval && AnimatedGameObject::init(contentManager);
 }
 
-bool Boss::update(float deltaT, const Inputs& inputs, sf::Vector2f destination)
+bool Boss::update(float deltaT, const Inputs& inputs, const sf::Vector2f& dest)
 {
 	if(getPosition().y < BOSS_Y_MAX_POSITION)
 		move(sf::Vector2f(0, BOSS_VERTICAL_SPEED));
 	else 
 	{
-		setDestination(destination);
+		setDestination(dest);
 		move(cos(moveAngle) * BOSS_HORIZONTAL_SPEED, 0);
 	}
 
@@ -77,9 +78,9 @@ void Boss::setDestination(const sf::Vector2f& dest)
 
 void Boss::onHit()
  {
- 	health--;
+	health--;
 	if (health <= 0) {
 		Publisher::notifySubscribers(Event::BOSS_KILLED, this);
- 		deactivate();
+		deactivate();
 	}
 }
