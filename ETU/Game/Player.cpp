@@ -3,11 +3,18 @@
 #include "Inputs.h"
 #include "game.h"
 #include "ShipAnimation.h"
+#include "Publisher.h"
+#include "GunBonus.h"
+
 
 const float Player::PLAYER_MOVE_SPEED = 3.0f;
 const float Player::INITIAL_LIFE_COUNT = 500;
 
-Player::Player()
+
+Player::Player():
+	gunBonusTimer(0),
+	gunBonusIsActive(false)
+
 {
 
 }
@@ -25,12 +32,19 @@ bool Player::init(const Level01ContentManager& contentManager)
 	if (retval)
 		animations[State::SHIP] = shipAnimation;
 
+	Publisher::addSubscriber(*this, Event::GUN_PICKED_UP);
+	Publisher::addSubscriber(*this, Event::LIFE_PICKED_UP);
+
+
 	return retval && AnimatedGameObject::init(contentManager);
 }
 
 bool Player::update(float deltaT, const Inputs& inputs)
 {
 	move(inputs.moveFactorX * -PLAYER_MOVE_SPEED, inputs.moveFactorY * -PLAYER_MOVE_SPEED);
+
+	gunBonusTimer -= deltaT;
+	isGunBonusActive();
 
 	handleOutOfBoundsPosition();
 	return AnimatedGameObject::update(deltaT, inputs);
@@ -58,4 +72,31 @@ void Player::handleOutOfBoundsPosition()
 	}
 
 	GameObject::setPosition(newPosition);
+}
+
+bool Player::isGunBonusActive() {
+	if (gunBonusTimer >= 0)
+		return true;
+	return false;
+}
+
+
+void Player::notify(Event event, const void* data)
+{
+	switch (event)
+	{
+	case Event::NONE:
+		break;
+	case Event::LIFE_PICKED_UP:
+	{
+		break;
+	}
+	case Event::GUN_PICKED_UP:
+	{
+		const GunBonus* bonus = static_cast<const GunBonus*>(data);
+		gunBonusIsActive = true;
+		gunBonusTimer = bonus->BONUS_DURATION;
+		break;
+	}
+	}
 }
