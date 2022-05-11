@@ -12,7 +12,7 @@ const float Boss::BOSS_VERTICAL_SPEED = 4;
 const float Boss::BOSS_HORIZONTAL_SPEED = 13;
 
 const sf::Vector2f Boss::BOSS_SCALING_SIZE(1.5, 1.5); 
-const float Boss::MAX_BOSS_HEALTH = 30;
+const float Boss::MAX_BOSS_HEALTH = 200;
 
 
 Boss::Boss()

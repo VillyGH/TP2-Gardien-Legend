@@ -5,8 +5,8 @@ class Level01ContentManager;
 class StandardEnemyIdleAnimation :
 	public CyclicAnimation
 {
-	static const float ANIMATION_LENGTH;
 public:
+	static const float ANIMATION_LENGTH;
 	StandardEnemyIdleAnimation(sf::Sprite& s);
 	virtual bool init(const Level01ContentManager& contentManager) override;
 };

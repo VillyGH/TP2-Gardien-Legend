@@ -6,15 +6,16 @@
 #include "Event.h"
 #include "Publisher.h"
 #include <iostream>
+#include "GunBonus.h"
 
 const float Level01Scene::TIME_PER_FRAME = 1.0f / (float)Game::FRAME_RATE;
 const float Level01Scene::GAMEPAD_SPEEDRATIO = 1000.0f;
 const float Level01Scene::KEYBOARD_SPEED = 0.1f;
-const float Level01Scene::TIME_BETWEEN_FIRE = 0.2f;
+const float Level01Scene::TIME_BETWEEN_FIRE = 0.5f;
 const float Level01Scene::MAX_NB_STANDARD_ENEMIES = 15;
 const float Level01Scene::MAX_NB_BOSS_ENEMIES = 3;
 const float Level01Scene::MAX_NB_BULLETS = 30;
-const float Level01Scene::STANDARD_ENEMY_SPAWN_TIME = 1;
+const float Level01Scene::STANDARD_ENEMY_SPAWN_TIME = 2;
 const float Level01Scene::ENEMY_SPAWN_DISTANCE = 15;
 const float Level01Scene::SPAWN_MARGIN = -50;
 const float Level01Scene::PLAYER_BULLET_DAMAGE = 1;
@@ -22,6 +23,13 @@ const float Level01Scene::NB_FIRED_PLAYER_BULLETS = 1;
 const float Level01Scene::NB_BONUS_FIRED_PLAYER_BULLETS = 2;
 const float Level01Scene::BOSS_SPAWN_KILL_COUNT = 15;
 const float Level01Scene::SCORE_GAINED_ENEMY_KILLED = 1000;
+const float Level01Scene::COLLISION_DAMAGE = 5; 
+const float Level01Scene::ENEMY_BULLETS_PER_SHOT = 2;
+const float Level01Scene::MAX_GUN_BONUS = 5;
+const float Level01Scene::MAX_LIFE_BONUS = 5;
+
+
+
 
 Level01Scene::Level01Scene()
 	: Scene(SceneType::TITLE_SCENE)
@@ -49,10 +57,17 @@ SceneType Level01Scene::update()
 	SceneType retval = getSceneType();
 	player.update(TIME_PER_FRAME, inputs);
 	for (StandardEnemy& e : standardEnemies) {
-		if (e.update(TIME_PER_FRAME, inputs))
-			e.deactivate();
-		if (e.isFiring() && e.isActive())
-			fireEnemyBullet(e);
+		if(e.isActive())
+		{
+			if (e.update(TIME_PER_FRAME, inputs))
+				e.deactivate();
+			if (e.isFiring(TIME_PER_FRAME) && e.isActive())
+				fireEnemyBullet(e);
+			if (e.collidesWith(player)) {
+				e.onHit(COLLISION_DAMAGE);
+				//player.onHit(); 
+			}
+		}
 	}
 
 	enemySpawnTimer += TIME_PER_FRAME;
@@ -94,6 +109,7 @@ SceneType Level01Scene::update()
 		timeSinceLastFire = 0;
 	}
 
+	//Collision des balles du joueur
 	for (Bullet& b : playerBullets)
 	{
 		for (StandardEnemy& e : standardEnemies)
@@ -108,9 +124,21 @@ SceneType Level01Scene::update()
 				b.deactivate();
 				boss.onHit();
 			}
-
 		}
 	}
+
+	for (GunBonus& e : gunBonus) {
+		if (e.isActive())
+		{
+			if (e.update(TIME_PER_FRAME, inputs))
+				e.deactivate();
+			if (e.collidesWith(player)) {
+				e.deactivate();
+				e.onPickUp();
+			}
+		}
+	}
+
 
 	/* playerBullets.remove_if([](const GameObject& b) {return !b.isActive(); });
 	 standardEnemies.remove_if([](const GameObject& b) {return !b.isActive(); });*/
@@ -160,25 +188,30 @@ bool Level01Scene::spawnBoss()
 #pragma region Bullet
 void Level01Scene::fireEnemyBullet(StandardEnemy enemy)
 {
-	Bullet& b = getAvailableEnemyBullet();
-	b.setPosition(enemy.getPosition());
+		Bullet& b = getAvailableEnemyBullet();
+		b.setPosition(enemy.getPosition().x - enemy.getTextureRect().width / 4, enemy.getPosition().y);
+		Bullet& b2 = getAvailableEnemyBullet();
+		b2.setPosition(enemy.getPosition().x + enemy.getTextureRect().width / 4, enemy.getPosition().y);
 }
 
 void Level01Scene::fireBossBullet()
 {
-	Bullet& b = getAvailableBossBullet();
+	Bullet& b = getAvailableStandardBullet();
 	b.setPosition(boss.getPosition());
 }
 
 void Level01Scene::firePlayerBullet()
 {
-	for (size_t i = 0; i < 1; i++)
-	{
-		Bullet& b = getAvailableStandardBullet();
-		b.setPosition(player.getPosition().x - player.getTextureRect().width / 2 - i, player.getPosition().y);
-		Bullet& b2 = getAvailableStandardBullet();
-		b2.setPosition(player.getPosition().x + player.getTextureRect().width / 2 + i, player.getPosition().y);
-		player.fireBullet();
+	Bullet& b = getAvailableStandardBullet();
+	b.setPosition(player.getPosition().x - player.getTextureRect().width / 2, player.getPosition().y);
+	Bullet& b2 = getAvailableStandardBullet();
+	b2.setPosition(player.getPosition().x + player.getTextureRect().width / 2, player.getPosition().y);
+
+	if (player.isGunBonusActive()) {
+		Bullet& b3 = getAvailableStandardBullet();
+		b3.setPosition(player.getPosition().x - player.getTextureRect().width, player.getPosition().y + player.getTextureRect().height);
+		Bullet& b4 = getAvailableStandardBullet();
+		b4.setPosition(player.getPosition().x + player.getTextureRect().width, player.getPosition().y + player.getTextureRect().height);
 	}
 }
 
@@ -209,9 +242,7 @@ Bullet& Level01Scene::getAvailableEnemyBullet()
 			return b;
 		}
 	}
-	Bullet newBullet;
-	newBullet.init(contentManager, CharacterType::STANDARD_ENEMY);
-	enemyBullets.push_back(newBullet);
+	addNewEnemyBullets();
 	return enemyBullets.back();
 }
 
@@ -225,9 +256,7 @@ Bullet& Level01Scene::getAvailableBossBullet()
 			return b;
 		}
 	}
-	Bullet newBullet;
-	newBullet.init(contentManager, CharacterType::BOSS);
-	bossBullets.push_back(newBullet);
+	addNewBossBullets();
 	return bossBullets.back();
 }
 
@@ -261,6 +290,40 @@ void Level01Scene::addNewBossBullets() {
 
 #pragma endregion
 
+#pragma region Bonus
+
+void Level01Scene::addNewGunBonus() {
+	for (size_t i = 0; i < MAX_GUN_BONUS; i++)
+	{
+		GunBonus newGunBonus;
+		newGunBonus.init(contentManager);
+		gunBonus.push_back(newGunBonus);
+	}
+}
+
+GunBonus& Level01Scene::getAvailableGunBonus()
+{
+	for (GunBonus& g : gunBonus)
+	{
+		if (!g.isActive())
+		{
+			g.activate();
+			return g;
+		}
+	}
+	GunBonus newGunBonus;
+	newGunBonus.init(contentManager);
+	gunBonus.push_back(newGunBonus);
+
+	return gunBonus.back();
+}
+/*
+void Level01Scene::addNewLifeBonus() {
+
+}
+*/
+#pragma endregion
+
 void Level01Scene::draw(sf::RenderWindow& window) const
 {
 	window.draw(backgroundSprite);
@@ -280,6 +343,13 @@ void Level01Scene::draw(sf::RenderWindow& window) const
 
 	for (const Bullet& e : bossBullets)
 		e.draw(window);
+
+	for (const GunBonus& e : gunBonus) {
+		if (e.isActive())
+			e.draw(window);
+	}
+
+
 	hud.draw(window);
 }
 
@@ -300,21 +370,31 @@ bool Level01Scene::init()
 	backgroundSprite.setTexture(contentManager.getBackgroundTexture());
 	srand((unsigned)time(nullptr));
 
+	//Enemies
 	addNewStandardEnemies();
-	addNewPlayerBullets();
 	addNewEnemyBullets();
-
-	hud.initialize(contentManager);
-
+	addNewEnemyBullets();
+	
+	//Boss
 	boss.init(contentManager);
 	addNewBossBullets();
+	
+	//Bonus
+	addNewGunBonus();
+	//addNewLifeBonus();
+
+	//Hud
+	hud.initialize(contentManager);
 
 	//Subscribers
 	Publisher::addSubscriber(*this, Event::ENEMY_KILLED);
 	Publisher::addSubscriber(*this, Event::BOSS_KILLED);
 	Publisher::addSubscriber(*this, Event::GUN_PICKED_UP);
+	Publisher::addSubscriber(*this, Event::GUN_BONUS_DROPPED);
+	Publisher::addSubscriber(*this, Event::LIFE_BONUS_DROPPED);
 
-
+	//Player
+	addNewPlayerBullets();;
 	return player.init(contentManager);
 }
 
@@ -332,6 +412,13 @@ void Level01Scene::notify(Event event, const void* data)
 	}
 	case Event::GUN_PICKED_UP:
 	{
+		break;
+	}
+	case Event::GUN_BONUS_DROPPED:
+	{
+ 		const StandardEnemy* enemy = static_cast<const StandardEnemy*>(data);
+		GunBonus& bonus = getAvailableGunBonus();
+		bonus.setPosition(enemy->getPosition());
 		break;
 	}
 	case::Event::BOSS_KILLED: 

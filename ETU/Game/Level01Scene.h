@@ -10,6 +10,7 @@
 #include "Boss.h"
 #include "Subscriber.h"
 #include "Hud.h"
+#include "GunBonus.h"
 
 class Level01Scene :
 	public Scene, public Subscriber
@@ -32,6 +33,10 @@ public:
 	static const float NB_BONUS_FIRED_PLAYER_BULLETS;
 	static const float BOSS_SPAWN_KILL_COUNT;
 	static const float SCORE_GAINED_ENEMY_KILLED;
+	static const float COLLISION_DAMAGE;
+	static const float ENEMY_BULLETS_PER_SHOT;
+	static const float MAX_GUN_BONUS;
+	static const float MAX_LIFE_BONUS;
 
 public:
 	Level01Scene();
@@ -52,11 +57,14 @@ public:
 	void addNewPlayerBullets();
 	void addNewEnemyBullets();
 	void addNewBossBullets();
+	void addNewGunBonus();
+	GunBonus& getAvailableGunBonus();
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual bool init() override;
 	virtual bool uninit() override;
 	virtual bool handleEvents(sf::RenderWindow& window) override;
 private:
+
 	sf::View view;
 	Inputs inputs;
 	Player player;
@@ -67,6 +75,7 @@ private:
 	std::list<Bullet> playerBullets;
 	std::list<Bullet> enemyBullets;
 	std::list<Bullet> bossBullets;
+	std::list<GunBonus> gunBonus;
 	float timeSinceLastFire;
 	sf::Music music;
 	sf::SoundBuffer enemyDeathSound;
@@ -80,7 +89,7 @@ private:
 	int timer;
 	Hud hud;
 	sf::Text scoreText;
-	virtual void notify(Event event, const void* data) override;
 
+	virtual void notify(Event event, const void* data) override;
 };
 

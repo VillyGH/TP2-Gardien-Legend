@@ -214,6 +214,9 @@
     <ClInclude Include="PlayerStats.h">
       <Filter>Header files\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="GunBonus.h">
+      <Filter>Header files\GameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Publisher.cpp">
@@ -296,6 +299,9 @@
     </ClCompile>
     <ClCompile Include="BossIdleAnimation.cpp">
       <Filter>Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="GunBonus.cpp">
+      <Filter>GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
