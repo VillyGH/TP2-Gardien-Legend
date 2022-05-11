@@ -75,10 +75,11 @@ private:
 	bool gameEnded;
 	int score;
 	int livesRemaining;
-	int bonusTime;
+	int bonusTimeRemaining;
 	int nbKills;
 	int timer;
 	Hud hud;
+	sf::Text scoreText;
 	virtual void notify(Event event, const void* data) override;
 
 };

@@ -49,8 +49,8 @@ bool StandardEnemy::update(float deltaT, const Inputs& inputs)
 
 bool StandardEnemy::isFiring() {
 	if (animations[currentState]->getNextFrame() > 11 && animations[currentState]->getNextFrame() > 13)
-		sound.setBuffer(firingSoundBuffer);
-		sound.play();
+		//sound.setBuffer(firingSoundBuffer);
+		//sound.play();
 		return true;
 	return false;
 }

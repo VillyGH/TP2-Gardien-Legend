@@ -24,6 +24,9 @@ bool Player::init(const Level01ContentManager& contentManager)
 	deathSoundBuffer = contentManager.getEnemyKilledSoundBuffer();
 	firingSoundBuffer = contentManager.getEnemyGunSoundBuffer();
 
+	sound.setMinDistance(10);
+	sound.setVolume(10);
+
 	bool retval = shipAnimation->init(contentManager);
 	if (retval)
 		animations[State::SHIP] = shipAnimation;

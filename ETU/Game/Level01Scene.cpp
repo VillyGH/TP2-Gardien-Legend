@@ -24,11 +24,11 @@ const float Level01Scene::BOSS_SPAWN_KILL_COUNT = 15;
 const float Level01Scene::SCORE_GAINED_ENEMY_KILLED = 1000;
 
 Level01Scene::Level01Scene()
-	: Scene(SceneType::LEVEL01_SCENE)
+	: Scene(SceneType::TITLE_SCENE)
 	, enemySpawnTimer(0)
 	, timeSinceLastFire(0)
 	, allEnemiesKilled(false)
-	, bonusTime(0)
+	, bonusTimeRemaining(0)
 	, livesRemaining(0)
 	, gameEnded(false)
 	, score(0)
@@ -115,7 +115,7 @@ SceneType Level01Scene::update()
 	/* playerBullets.remove_if([](const GameObject& b) {return !b.isActive(); });
 	 standardEnemies.remove_if([](const GameObject& b) {return !b.isActive(); });*/
 
-	hud.updateGameInfo(score, livesRemaining);
+	hud.updateGameInfo(score, bonusTimeRemaining,livesRemaining);
 
 	timeSinceLastFire += 1.0f / (float)Game::FRAME_RATE;
 
