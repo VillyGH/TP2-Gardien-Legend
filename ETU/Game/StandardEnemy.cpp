@@ -62,6 +62,7 @@ void StandardEnemy::onHit(float damage)
 		Publisher::notifySubscribers(Event::ENEMY_KILLED, this);
 		sound.setBuffer(deathSoundBuffer);
 		sound.play();
+		sound.setVolume(10);
 		deactivate();
 	}
 
