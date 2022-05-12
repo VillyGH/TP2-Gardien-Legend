@@ -17,12 +17,23 @@ ScoreboardScene::~ScoreboardScene()
 
 }
 
+void ScoreboardScene::fillPlayerStatsWithRandomValues(PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD])
+{
+	srand((unsigned)time(nullptr));
+	std::string names[] = { "SSD", "MAD", "SKT" };
+	for (int i = 0; i < 3; i++)
+	{
+		sprintf_s(stats[i].name, "%s", names[rand() % (sizeof(names) / sizeof(names[0]))].c_str());
+		stats[i].score = 10000 + rand() % 1000;
+	}
+}
+
 SceneType ScoreboardScene::update()
 {
 	SceneType retval = getSceneType();
 
 	if (hasExited)
-		retval = SceneType::NONE;
+		retval = SceneType::TITLE_SCENE;
 
 	return retval;
 }
@@ -42,6 +53,8 @@ void ScoreboardScene::draw(sf::RenderWindow& window) const
 	window.draw(endGameImage);
 	window.draw(gameOverText);
 	window.draw(leaderboardText);
+	window.draw(initialsText);
+	window.draw(scoresText);
 }
 
 bool ScoreboardScene::uninit()
@@ -60,24 +73,30 @@ bool ScoreboardScene::init()
 
 	setGameOverText();
 	setLeaderboardText();
-	setInitialsText();
-	setScoreText();
+
 
 	PlayerStats outStats[MAX_NB_PLAYERS_LEADERBOARD];
+	fillPlayerStatsWithRandomValues(outStats);
 
-	PlayerStats inStats[MAX_NB_PLAYERS_LEADERBOARD];
-	if (readFromFile(inStats))
+	if (writeToFile(outStats))
 	{
-		if (0 == ::memcmp(outStats, inStats, MAX_NB_PLAYERS_LEADERBOARD * sizeof(PlayerStats)))
+		PlayerStats inStats[MAX_NB_PLAYERS_LEADERBOARD];
+		if (readFromFile(inStats))
 		{
-			std::cout << "La désérialisation est similaire à la sérialisation" << std::endl;
-		}
-		else
-		{
-			std::cout << "Il y a eu un problème" << std::endl;
-		}
+			if (0 == ::memcmp(outStats, inStats, MAX_NB_PLAYERS_LEADERBOARD * sizeof(PlayerStats)))
+			{
+				std::cout << "La désérialisation est similaire à la sérialisation" << std::endl;
+			}
+			else
+			{
+				std::cout << "Il y a eu un problème" << std::endl;
+			}
 
+		}
 	}
+
+	setInitialsText();
+	setScoreText();
 
 	return true;
 }
@@ -99,44 +118,43 @@ void ScoreboardScene::setLeaderboardText()
 	leaderboardText.setFont(contentManager.getMainFont());
 	leaderboardText.setCharacterSize(48);
 	leaderboardText.setString(leaderboardTextString);
-	leaderboardText.setPosition(Game::GAME_WIDTH / 2.0f, Game::GAME_HEIGHT / 3.0f - 5);
+	leaderboardText.setPosition(Game::GAME_WIDTH / 2.0f, Game::GAME_HEIGHT / 3.0f);
 	leaderboardText.setOrigin(leaderboardText.getGlobalBounds().width / 2, leaderboardText.getGlobalBounds().width / 2);
 }
 
 void ScoreboardScene::setInitialsText()
 {
-	const std::string intialsTextString = "";
 	initialsText.setFont(contentManager.getMainFont());
-	initialsText.setCharacterSize(36);
+	initialsText.setCharacterSize(24);
 	initialsText.setString("");
-	initialsText.setPosition(Game::GAME_WIDTH / 2.0f, Game::GAME_HEIGHT / 4.0f - 5);
+	initialsText.setPosition(Game::GAME_WIDTH / 4.0f, Game::GAME_HEIGHT / 3.0f);
+	initialsText.setOrigin(initialsText.getGlobalBounds().width / 2, initialsText.getGlobalBounds().width / 2);
 }
 
-void ScoreboardScene::addInitialsText(std::string intial)
+void ScoreboardScene::addInitialsText(char intial)
 {
 	if (initialsText.getString().getSize() < NAME_LENGTH) {
-		initialsText.setString(initialsText.getString() + '\d' + intial);
+		initialsText.setString(initialsText.getString() + intial);
 	}
-	initialsText.setPosition(Game::GAME_WIDTH / 2.0f, Game::GAME_HEIGHT / 4.0f - 5);
 }
 
 void ScoreboardScene::removeInitialsText()
 {
 	if (initialsText.getString().getSize() > 0) {
 		std::string text = initialsText.getString();
+		std::cout << text.substr(0, text.size() - 1) << std::endl;
 		initialsText.setString(text.substr(0, text.size() - 1));
 	}
-	initialsText.setPosition(Game::GAME_WIDTH / 2.0f, Game::GAME_HEIGHT / 4.0f - 5);
 }
 
 void ScoreboardScene::setScoreText()
 {
-
 	const std::string scoresTextString = std::to_string(result.level01SceneResult.score);
 	scoresText.setFont(contentManager.getMainFont());
-	scoresText.setCharacterSize(36);
+	scoresText.setCharacterSize(24);
 	scoresText.setString(scoresTextString);
-	scoresText.setPosition(Game::GAME_WIDTH / 2.0f, Game::GAME_HEIGHT / 4.0f - 5);
+	scoresText.setPosition(Game::GAME_WIDTH / 1.5f, initialsText.getPosition().y);
+	scoresText.setOrigin(scoresText.getGlobalBounds().width / 2, scoresText.getGlobalBounds().width / 2);
 }
 
 void ScoreboardScene::saveStats(std::string initials)
@@ -178,9 +196,10 @@ bool ScoreboardScene::handleEvents(sf::RenderWindow& window)
 			window.close();
 			retval = true;
 		}
-		if (event.key.code == sf::Event::TextEntered) {
-			if (event.text.unicode < 128)
-				addInitialsText(std::to_string(event.text.unicode));
+		if (event.type == sf::Event::TextEntered) {
+			if (event.text.unicode > 61 && event.text.unicode < 116) {
+				addInitialsText((char)event.text.unicode);
+			}
 		}
 		if (event.type == sf::Event::KeyPressed)
 		{
@@ -196,6 +215,7 @@ bool ScoreboardScene::handleEvents(sf::RenderWindow& window)
 			{
 				std::string initials = initialsText.getString();
 				saveStats(initials);
+				writeToFile(stats);
 			}
 		}
 		

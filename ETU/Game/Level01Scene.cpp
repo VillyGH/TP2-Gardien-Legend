@@ -473,7 +473,7 @@ void Level01Scene::notify(Event event, const void* data)
 	}
 	case Event::GUN_BONUS_DROPPED:
 	{
- 		const StandardEnemy* enemy = static_cast<const StandardEnemy*>(data);
+		const StandardEnemy* enemy = static_cast<const StandardEnemy*>(data);
 		GunBonus& bonus = getAvailableGunBonus();
 		bonus.setPosition(enemy->getPosition());
 		break;

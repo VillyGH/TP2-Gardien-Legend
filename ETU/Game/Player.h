@@ -6,7 +6,7 @@ struct Inputs;
 class Player :
 	public AnimatedGameObject, public Subscriber
 {
-public: 
+public:
 	virtual void notify(Event event, const void* data) override;
 public:
 	static const float PLAYER_MOVE_SPEED;
