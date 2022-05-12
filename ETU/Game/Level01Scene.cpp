@@ -19,14 +19,19 @@ const float Level01Scene::STANDARD_ENEMY_SPAWN_TIME = 2;
 const float Level01Scene::ENEMY_SPAWN_DISTANCE = 15;
 const float Level01Scene::SPAWN_MARGIN = -50;
 const float Level01Scene::PLAYER_BULLET_DAMAGE = 1;
+const float Level01Scene::COLLISION_DAMAGE = 5;
+const float Level01Scene::ENEMY_BULLET_DAMAGE = 25; //TODO
 const float Level01Scene::NB_FIRED_PLAYER_BULLETS = 1;
 const float Level01Scene::NB_BONUS_FIRED_PLAYER_BULLETS = 2;
 const float Level01Scene::BOSS_SPAWN_KILL_COUNT = 15;
 const float Level01Scene::SCORE_GAINED_ENEMY_KILLED = 1000;
-const float Level01Scene::COLLISION_DAMAGE = 5; 
 const float Level01Scene::ENEMY_BULLETS_PER_SHOT = 2;
 const float Level01Scene::MAX_GUN_BONUS = 5;
 const float Level01Scene::MAX_LIFE_BONUS = 5;
+
+
+
+
 
 
 
@@ -63,9 +68,9 @@ SceneType Level01Scene::update()
 				e.deactivate();
 			if (e.isFiring(TIME_PER_FRAME) && e.isActive())
 				fireEnemyBullet(e);
-			if (e.collidesWith(player)) {
+			if (e.collidesWith(player) && !player.isImmune()) {
 				e.onHit(COLLISION_DAMAGE);
-				//player.onHit(); 
+				player.onHit(COLLISION_DAMAGE);
 			}
 		}
 	}
@@ -95,12 +100,30 @@ SceneType Level01Scene::update()
 	{
 		if (e.isActive() && e.update(TIME_PER_FRAME, CharacterType::STANDARD_ENEMY))
 			e.deactivate();
+		if (e.collidesWith(player)) {
+			e.deactivate();
+			player.onHit(ENEMY_BULLET_DAMAGE);
+		}
+			
 	}
 
-	for (Bullet& e : playerBullets)
+	for (Bullet& b : playerBullets)
 	{
-		if (e.isActive() && e.update(TIME_PER_FRAME, CharacterType::PLAYER))
-			e.deactivate();
+		if (b.isActive() && b.update(TIME_PER_FRAME, CharacterType::PLAYER))
+			b.deactivate();
+		for (StandardEnemy& e : standardEnemies)
+		{
+			if (b.collidesWith(e))
+			{
+				b.deactivate();
+				e.onHit(PLAYER_BULLET_DAMAGE);
+			}
+
+			if (b.collidesWith(boss) && boss.isActive()) {
+				b.deactivate();
+				boss.onHit();
+			}
+		}
 	}
 
 	if (inputs.fireBullet && timeSinceLastFire >= TIME_BETWEEN_FIRE)
@@ -112,22 +135,22 @@ SceneType Level01Scene::update()
 	//Collision des balles du joueur
 	for (Bullet& b : playerBullets)
 	{
-		for (StandardEnemy& e : standardEnemies)
-		{
-			if (b.collidesWith(e))
-			{
-				b.deactivate();
-				e.onHit(1);
-			}
 
-			if (b.collidesWith(boss) && boss.isActive()) {
-				b.deactivate();
-				boss.onHit();
+	}
+
+	for (GunBonus& e : gunBonus) {
+		if (e.isActive())
+		{
+			if (e.update(TIME_PER_FRAME, inputs))
+				e.deactivate();
+			if (e.collidesWith(player)) {
+				e.deactivate();
+				e.onPickUp();
 			}
 		}
 	}
 
-	for (GunBonus& e : gunBonus) {
+	for (LifeBonus& e : lifeBonus) {
 		if (e.isActive())
 		{
 			if (e.update(TIME_PER_FRAME, inputs))
@@ -143,8 +166,8 @@ SceneType Level01Scene::update()
 	/* playerBullets.remove_if([](const GameObject& b) {return !b.isActive(); });
 	 standardEnemies.remove_if([](const GameObject& b) {return !b.isActive(); });*/
 
-	hud.updateGameInfo(score, bonusTimeRemaining,livesRemaining);
-	gameEnded = true;
+	hud.updateGameInfo(score, bonusTimeRemaining, player.getLivesRemaining());
+
 	timeSinceLastFire += 1.0f / (float)Game::FRAME_RATE;
 
 	if (gameEnded)
@@ -317,6 +340,33 @@ GunBonus& Level01Scene::getAvailableGunBonus()
 
 	return gunBonus.back();
 }
+
+void Level01Scene::addNewLifeBonus() {
+	for (size_t i = 0; i < MAX_LIFE_BONUS; i++)
+	{
+		LifeBonus newLifeBonus;
+		newLifeBonus.init(contentManager);
+		lifeBonus.push_back(newLifeBonus);
+	}
+}
+
+LifeBonus& Level01Scene::getAvailableLifeBonus()
+{
+	for (LifeBonus& b : lifeBonus)
+	{
+		if (!b.isActive())
+		{
+			b.activate();
+			return b;
+		}
+	}
+	GunBonus newGunBonus;
+	newGunBonus.init(contentManager);
+	gunBonus.push_back(newGunBonus);
+
+	return lifeBonus.back();
+}
+
 /*
 void Level01Scene::addNewLifeBonus() {
 
@@ -348,6 +398,11 @@ void Level01Scene::draw(sf::RenderWindow& window) const
 		if (e.isActive())
 			e.draw(window);
 	}
+	for (const LifeBonus& e : lifeBonus) {
+		if (e.isActive())
+			e.draw(window);
+	}
+
 
 
 	hud.draw(window);
@@ -381,7 +436,7 @@ bool Level01Scene::init()
 	
 	//Bonus
 	addNewGunBonus();
-	//addNewLifeBonus();
+	addNewLifeBonus();
 
 	//Hud
 	hud.initialize(contentManager);
@@ -389,6 +444,7 @@ bool Level01Scene::init()
 	//Subscribers
 	Publisher::addSubscriber(*this, Event::ENEMY_KILLED);
 	Publisher::addSubscriber(*this, Event::BOSS_KILLED);
+	Publisher::addSubscriber(*this, Event::PLAYER_KILLED);
 	Publisher::addSubscriber(*this, Event::GUN_PICKED_UP);
 	Publisher::addSubscriber(*this, Event::GUN_BONUS_DROPPED);
 	Publisher::addSubscriber(*this, Event::LIFE_BONUS_DROPPED);
@@ -410,14 +466,22 @@ void Level01Scene::notify(Event event, const void* data)
 		nbKills++; 
 		break;
 	}
-	case Event::GUN_PICKED_UP:
+	case Event::PLAYER_KILLED:
 	{
+		gameEnded = true;
 		break;
 	}
 	case Event::GUN_BONUS_DROPPED:
 	{
 		const StandardEnemy* enemy = static_cast<const StandardEnemy*>(data);
 		GunBonus& bonus = getAvailableGunBonus();
+		bonus.setPosition(enemy->getPosition());
+		break;
+	}
+	case Event::LIFE_BONUS_DROPPED:
+	{
+		const StandardEnemy* enemy = static_cast<const StandardEnemy*>(data);
+		LifeBonus& bonus = getAvailableLifeBonus();
 		bonus.setPosition(enemy->getPosition());
 		break;
 	}

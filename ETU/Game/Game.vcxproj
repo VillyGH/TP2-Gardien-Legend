@@ -169,6 +169,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Hud.h" />
+    <ClInclude Include="LifeBonus.h" />
     <ClInclude Include="PlayerStats.h" />
     <ClInclude Include="StandardEnemy.h" />
     <ClInclude Include="StandardEnemyIdleAnimation.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="ContentManager.cpp" />
     <ClCompile Include="CyclicAnimation.cpp" />
+    <ClCompile Include="LifeBonus.cpp" />
     <ClCompile Include="StandardEnemy.cpp" />
     <ClCompile Include="StandardEnemyIdleAnimation.cpp" />
     <ClCompile Include="game.cpp" />

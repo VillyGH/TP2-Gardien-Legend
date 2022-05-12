@@ -7,7 +7,7 @@
 #include "Publisher.h"
 
 const float StandardEnemy::MAX_ENEMY_HEALTH = 5;
-const int StandardEnemy::ENEMY_BONUS_DROP_CHANCE = 10; 
+const int StandardEnemy::ENEMY_BONUS_DROP_CHANCE = 20;
 const float StandardEnemy::FIRING_TIME = StandardEnemyIdleAnimation::ANIMATION_LENGTH / 2;
 const float StandardEnemy::MIN_FIRING_FRAME = 15;
 const float StandardEnemy::MAX_FIRING_FRAME = 16;
@@ -85,11 +85,12 @@ void StandardEnemy::onHit(float damage)
 
 bool StandardEnemy::checkBonusDrop() 
 {
-	if (1 + (std::rand() % (ENEMY_BONUS_DROP_CHANCE - 1 + 1)) > 0) {
+	if (1 + (std::rand() % (100 - 1 + 1)) <= ENEMY_BONUS_DROP_CHANCE) {
 		Publisher::notifySubscribers(Event::GUN_BONUS_DROPPED, this);
 		return true;
 	}
-	else if (1 + (std::rand() % (10 - 1 + 1)) > 7)
+	
+	else if (1 + (std::rand() % (100 - 1 + 1)) <= ENEMY_BONUS_DROP_CHANCE)
 	{
 		Publisher::notifySubscribers(Event::LIFE_BONUS_DROPPED, this);
 		return true;
