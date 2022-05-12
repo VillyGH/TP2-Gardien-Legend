@@ -5,6 +5,7 @@
 #include "ShipAnimation.h"
 #include "Publisher.h"
 #include "GunBonus.h"
+#include "LifeBonus.h"
 
 
 const float Player::PLAYER_MOVE_SPEED = 3.0f;
@@ -16,7 +17,6 @@ const float Player::MAX_BONUS_TIME = 3.f;
 Player::Player():
 	gunBonusTimer(0),
 	gunBonusIsActive(false)
-
 {
 
 }
@@ -30,6 +30,7 @@ bool Player::init(const Level01ContentManager& contentManager)
 	currentState = State::SHIP;
 	Animation* shipAnimation = new ShipAnimation(*this);
 
+	lives = INITIAL_LIFE_COUNT;
 	deathSoundBuffer = contentManager.getEnemyKilledSoundBuffer();
 	firingSoundBuffer = contentManager.getEnemyGunSoundBuffer();
 
@@ -50,31 +51,15 @@ bool Player::init(const Level01ContentManager& contentManager)
 bool Player::update(float deltaT, const Inputs& inputs)
 {
 	move(inputs.moveFactorX * -PLAYER_MOVE_SPEED, inputs.moveFactorY * -PLAYER_MOVE_SPEED);
-	/*
-	if (isImmuneMode()) {
-		timeInImmune += elapsedTime;
+	if (isImmune()) {
+		immuneTimer -= deltaT;
 		setColor(sf::Color(255, 255, 255, 128));
 	}
-	else if (isBonusMode()) {
-		timeInBonus += elapsedTime;
-		setColor(sf::Color::Yellow);
-	}
-	else {
+	else 
+	{
 		setColor(sf::Color(255, 255, 255, 255));
 	}
 		
-	if (timeInImmune >= MAX_IMMUNE_TIME) {
-		timeInImmune = 0;
-		setImmuneMode(false);
-	}
-
-	if (timeInBonus >= MAX_BONUS_TIME) {
-		timeInBonus = 0;
-		setBonusMode(false);
-	}
-
-	}*/
-
 	if(isGunBonusActive())
 		gunBonusTimer -= deltaT;
 	
@@ -87,11 +72,26 @@ void Player::fireBullet() {
 	sound.play();
 }
 
-bool Player::onHit() {
+bool Player::onHit(float damage) {
 	if (isGunBonusActive()) {
 		gunBonusTimer = 0;
+		return false;
 	}
+	else if (!isImmune()) {
+		lives -= damage;
+		immuneTimer = MAX_IMMUNE_TIME;
+		sound.setBuffer(deathSoundBuffer);
+		sound.play();
+
+		if (lives <= 0)
+			Publisher::notifySubscribers(Event::PLAYER_KILLED, this);
+	}
+
 	return true;
+}
+
+float Player::getLivesRemaining() {
+	return lives;
 }
 
 void Player::handleOutOfBoundsPosition()
@@ -124,6 +124,12 @@ bool Player::isGunBonusActive() {
 	return false;
 }
 
+bool Player::isImmune() {
+	if (immuneTimer <= 0)
+		return false;
+	return true;
+}
+
 
 void Player::notify(Event event, const void* data)
 {
@@ -133,6 +139,8 @@ void Player::notify(Event event, const void* data)
 		break;
 	case Event::LIFE_PICKED_UP:
 	{
+		const LifeBonus* bonus = static_cast<const LifeBonus*>(data);
+		lives += bonus->BONUS_LIFE;
 		break;
 	}
 	case Event::GUN_PICKED_UP:
