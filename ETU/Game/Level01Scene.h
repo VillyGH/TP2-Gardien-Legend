@@ -11,6 +11,7 @@
 #include "Subscriber.h"
 #include "Hud.h"
 #include "GunBonus.h"
+#include "LifeBonus.h"
 
 class Level01Scene :
 	public Scene, public Subscriber
@@ -29,6 +30,7 @@ public:
 	static const float ENEMY_SPAWN_DISTANCE;
 	static const float SPAWN_MARGIN;
 	static const float PLAYER_BULLET_DAMAGE;
+	static const float ENEMY_BULLET_DAMAGE;
 	static const float NB_FIRED_PLAYER_BULLETS;
 	static const float NB_BONUS_FIRED_PLAYER_BULLETS;
 	static const float BOSS_SPAWN_KILL_COUNT;
@@ -59,6 +61,8 @@ public:
 	void addNewBossBullets();
 	void addNewGunBonus();
 	GunBonus& getAvailableGunBonus();
+	void addNewLifeBonus();
+	LifeBonus& getAvailableLifeBonus();
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual bool init() override;
 	virtual bool uninit() override;
@@ -76,6 +80,8 @@ private:
 	std::list<Bullet> enemyBullets;
 	std::list<Bullet> bossBullets;
 	std::list<GunBonus> gunBonus;
+	std::list<LifeBonus> lifeBonus;
+
 	float timeSinceLastFire;
 	sf::Music music;
 	sf::SoundBuffer enemyDeathSound;

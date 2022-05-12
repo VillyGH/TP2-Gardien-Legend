@@ -9,6 +9,8 @@ class StandardEnemy :
 public:
 	static const float MAX_ENEMY_HEALTH;
 	static const int ENEMY_BONUS_DROP_CHANCE;
+	static const int GUN_BONUS_DROP_CHANCE;
+	static const int LIFE_BONUS_DROP_CHANCE;
 	static const float FIRING_TIME;
 	static const float MIN_FIRING_FRAME;
 	static const float MAX_FIRING_FRAME;

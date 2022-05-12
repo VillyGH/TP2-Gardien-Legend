@@ -16,15 +16,19 @@ public:
 	Player();
 	virtual bool init(const Level01ContentManager& contentManager);
 	bool isGunBonusActive();
+	bool isImmune();
 	bool update(float deltaT, const Inputs& inputs) override;
 	void fireBullet();
-	bool onHit();
+	bool onHit(float damage);
+	float getLivesRemaining();
 	void handleOutOfBoundsPosition();
 private:
 	sf::SoundBuffer deathSoundBuffer;
 	sf::Sound sound;
 	sf::SoundBuffer firingSoundBuffer;
 	float gunBonusTimer;
+	float immuneTimer;
 	bool gunBonusIsActive; 
+	float lives; 
 };
 

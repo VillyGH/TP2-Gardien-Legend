@@ -56,6 +56,12 @@
     <Filter Include="Header files\GameObjects\Characters">
       <UniqueIdentifier>{ecdf686b-747d-4e9b-9cf2-90fe401f3661}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header files\GameObjects\Bonus">
+      <UniqueIdentifier>{12438821-faa8-4ba6-b01e-8340e778cbeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Bonus">
+      <UniqueIdentifier>{45e69786-f6fa-4d4c-9bb8-bee63cb1d49d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Publisher.h">
@@ -215,7 +221,10 @@
       <Filter>Header files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="GunBonus.h">
-      <Filter>Header files\GameObjects</Filter>
+      <Filter>Header files\GameObjects\Bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeBonus.h">
+      <Filter>Header files\GameObjects\Bonus</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -300,8 +309,11 @@
     <ClCompile Include="BossIdleAnimation.cpp">
       <Filter>Animations</Filter>
     </ClCompile>
+    <ClCompile Include="LifeBonus.cpp">
+      <Filter>GameObjects\Bonus</Filter>
+    </ClCompile>
     <ClCompile Include="GunBonus.cpp">
-      <Filter>GameObjects</Filter>
+      <Filter>GameObjects\Bonus</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
