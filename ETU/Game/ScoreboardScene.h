@@ -12,6 +12,8 @@ public:
 	static const float TIME_PER_FRAME;
 	static const std::string PATH_TO_BIN_FILE;
 	static const int MAX_NB_PLAYERS_LEADERBOARD = 5;
+	static const int NB_INITIAL_PLAYERS;
+	static const int MAX_NB_CHARS_INITIALS;
 public:
 	ScoreboardScene();
 	~ScoreboardScene();
@@ -30,20 +32,23 @@ public:
 	void removeInitialsText();
 	void setLeaderboardText();
 	void setGameOverText();
+	void setEnterNameText();
+	void changeEnterNameText();
 	virtual bool uninit() override;
 	virtual bool handleEvents(sf::RenderWindow& window) override;
 private:
 	ScoreboardContentManager contentManager;
-
+	sf::Sprite backgroundSprite;
 	sf::Text leaderboardText;
 	sf::Text gameOverText;
+	sf::Text enterNameText;
 	sf::Text initialsText;
 	sf::Text scoresText;
 	sf::Sprite endGameImage;
-
 	PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD];
-
+	int currentInitials;
 	bool hasExited;
+	bool canExit;
 };
 
 
