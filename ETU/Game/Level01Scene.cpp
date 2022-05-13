@@ -34,7 +34,6 @@ Level01Scene::Level01Scene()
 	, enemySpawnTimer(0)
 	, timeSinceLastFire(0)
 	, allEnemiesKilled(false)
-	, bonusTimeRemaining(0)
 	, livesRemaining(0)
 	, gameEnded(false)
 	, score(0)
@@ -190,12 +189,13 @@ SceneType Level01Scene::update()
 			}
 		}
 	}
+	gameEnded = true;
 
 
 	/* playerBullets.remove_if([](const GameObject& b) {return !b.isActive(); });
 	 standardEnemies.remove_if([](const GameObject& b) {return !b.isActive(); });*/
 
-	hud.updateGameInfo(score, player.getLivesRemaining(), bonusTimeRemaining);
+	hud.updateGameInfo(score, player.getLivesRemaining(), player.getGunBonusTimer());
 
 	if (gameEnded)
 		retval = SceneType::SCOREBOARD_SCENE;
@@ -524,6 +524,7 @@ void Level01Scene::notify(Event event, const void* data)
 	}
 	case::Event::BOSS_KILLED:
 	{
+		result.level01SceneResult.score = score;
 		gameEnded = true;
 	}
 	default:

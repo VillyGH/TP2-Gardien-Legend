@@ -47,6 +47,7 @@ private:
 	sf::Sprite endGameImage;
 	PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD];
 	int currentInitials;
+	int currentIndex;
 	bool hasExited;
 	bool canExit;
 };

@@ -13,7 +13,7 @@ const int Player::INITIAL_LIFE_COUNT = 500;
 const float Player::MAX_IMMUNE_TIME = 0.75f;
 const float Player::MAX_BONUS_TIME = 3.f;
 const float Player::NORMAL_FIRE_RATE = 0.3f;
-const float Player::BONUS_FIRE_RATE = 0.25f;
+const float Player::BONUS_FIRE_RATE = 0.2f;
 
 
 Player::Player():
@@ -105,6 +105,10 @@ float Player::getLivesRemaining() {
 
 float Player::getFireRate() {
 	return fireRate;
+}
+
+float Player::getGunBonusTimer() {
+	return gunBonusTimer;
 }
 
 void Player::handleOutOfBoundsPosition()

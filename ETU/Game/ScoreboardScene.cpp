@@ -13,6 +13,7 @@ ScoreboardScene::ScoreboardScene()
 	, stats()
 	, currentInitials(0)
 	, canExit(false)
+	, currentIndex(0)
 {
 }
 
@@ -154,8 +155,10 @@ void ScoreboardScene::setInitialsText()
 	initialsText.setOrigin(initialsText.getGlobalBounds().width / 2, initialsText.getGlobalBounds().width / 2);
 	for (const PlayerStats& stat : stats)
 	{
-		if (stat.name != "")
-			initialsText.setString(initialsText.getString() + "\n" + stat.name);
+		std::string text = initialsText.getString();
+		initialsText.setString(initialsText.getString() + "\n" + stat.name);
+		remove(text.begin(), text.end(), ' ');
+		std::cout << text;
 	}
 	initialsText.setString(initialsText.getString() + "\n" + "");
 }
@@ -163,8 +166,19 @@ void ScoreboardScene::setInitialsText()
 void ScoreboardScene::addInitialsText(char intial)
 {
 	if (currentInitials < MAX_NB_CHARS_INITIALS) {
-		initialsText.setString(initialsText.getString() + intial);
+		std::string text = initialsText.getString();
+		if (currentIndex == currentInitials) {
+			initialsText.setString(text);
+		}
+		else {
+
+		}
+		text[currentIndex] = intial;
+		initialsText.setString(text);
 		currentInitials++;
+		currentIndex++;
+		//std::cout << currentIndex;
+		std::cout << currentInitials;
 	}
 }
 
@@ -172,8 +186,12 @@ void ScoreboardScene::removeInitialsText()
 {
 	if (initialsText.getString().getSize() > 0) {
 		std::string text = initialsText.getString();
-		initialsText.setString(text.substr(0, text.size() - 1));
+		//initialsText.setString(text.substr(0, text.size() - 1));
+		initialsText.setString(text.substr(0, currentIndex - 1));
 		currentInitials--;
+		currentIndex--;
+		std::string text2 = initialsText.getString();
+		std::cout << text2;
 	}
 }
 
@@ -254,6 +272,18 @@ bool ScoreboardScene::handleEvents(sf::RenderWindow& window)
 				saveStats(initials);
 				writeToFile(stats);
 				changeEnterNameText();
+			}
+			if (event.key.code == sf::Keyboard::Right)
+			{
+				if (currentIndex < MAX_NB_CHARS_INITIALS && initialsText.getString().getSize() >= currentIndex) {
+					currentIndex++;
+				}
+			}
+			if (event.key.code == sf::Keyboard::Left)
+			{
+				if (currentIndex > 0 && initialsText.getString().getSize() <= currentIndex) {
+					currentIndex--;
+				}
 			}
 		}
 		

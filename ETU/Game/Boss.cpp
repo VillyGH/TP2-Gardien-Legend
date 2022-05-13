@@ -2,14 +2,13 @@
 #include "Boss.h"
 #include "Inputs.h"
 #include "game.h"
-//#include "EnemyType1ExplosionAnimation.h"
 #include "BossIdleAnimation.h"
 #include "Publisher.h"
 
 const float Boss::BOSS_SPAWN_Y_POSITION = -15;
 const float Boss::BOSS_Y_MAX_POSITION = 160;
 const float Boss::BOSS_VERTICAL_SPEED = 4;
-const float Boss::BOSS_HORIZONTAL_SPEED = 13;
+const float Boss::BOSS_HORIZONTAL_SPEED = 8;
 
 const sf::Vector2f Boss::BOSS_SCALING_SIZE(1.5, 1.5); 
 const float Boss::MAX_BOSS_HEALTH = 100;

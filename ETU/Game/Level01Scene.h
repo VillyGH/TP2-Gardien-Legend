@@ -46,9 +46,6 @@ public:
 	virtual SceneType update() override;
 	bool spawnStandardEnemy();
 	bool spawnBoss();
-	StandardEnemy& getAvailableStandardEnemy();
-	StandardEnemy& getAvailableBossEnemy();
-	void addNewBossEnemies();
 	void addNewStandardEnemies();
 	void fireEnemyBullet(StandardEnemy enemy);
 	void fireBossBullet();
@@ -90,7 +87,6 @@ private:
 	bool gameEnded;
 	int score;
 	int livesRemaining;
-	int bonusTimeRemaining;
 	int nbKills;
 	int timer;
 	Hud hud;

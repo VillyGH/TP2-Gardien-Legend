@@ -22,10 +22,11 @@ public:
 	bool isImmune();
 	bool update(float deltaT, const Inputs& inputs) override;
 	void fireBullet();
-	float getFireRate();
 	bool onHit(float damage);
-	float getLivesRemaining();
 	void handleOutOfBoundsPosition();
+	float getFireRate();
+	float getGunBonusTimer();
+	float getLivesRemaining();
 private:
 	sf::SoundBuffer deathSoundBuffer;
 	sf::Sound sound;
