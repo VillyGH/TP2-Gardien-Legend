@@ -54,6 +54,7 @@ bool Bullet::init(const Level01ContentManager& contentManager, CharacterType typ
 {
 	GameObject::init(contentManager);
 	setTexture(contentManager.getMainCharacterTexture());
+	deactivate();
 	switch (type)
 	{
 	case CharacterType::STANDARD_ENEMY:
@@ -61,7 +62,7 @@ bool Bullet::init(const Level01ContentManager& contentManager, CharacterType typ
 		break;
 	case CharacterType::BOSS:
 		setTextureRect(sf::IntRect(287, 106, 16, 5));
-		this->scale(BULLET_SCALING_SIZE);
+		scale(BULLET_SCALING_SIZE);
 		break;
 	case CharacterType::PLAYER:
 		setTextureRect(sf::IntRect(265, 106, 16, 5));

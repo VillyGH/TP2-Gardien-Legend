@@ -11,7 +11,7 @@
 const float Level01Scene::TIME_PER_FRAME = 1.0f / (float)Game::FRAME_RATE;
 const float Level01Scene::GAMEPAD_SPEEDRATIO = 1000.0f;
 const float Level01Scene::KEYBOARD_SPEED = 0.1f;
-const float Level01Scene::TIME_BETWEEN_FIRE = 0.5f;
+const float Level01Scene::TIME_BETWEEN_FIRE = 0.3f;
 const float Level01Scene::MAX_NB_STANDARD_ENEMIES = 15;
 const float Level01Scene::MAX_NB_BOSS_ENEMIES = 3;
 const float Level01Scene::MAX_NB_BULLETS = 30;
@@ -77,7 +77,7 @@ SceneType Level01Scene::update()
 		enemySpawnTimer = 0;
 	}
 
-	if (nbKills >= BOSS_SPAWN_KILL_COUNT && !boss.isActive()) //À changer pour un compteur de Enemies Killed
+//	if (nbKills >= BOSS_SPAWN_KILL_COUNT && !boss.isActive()) //À changer pour un compteur de Enemies Killed
 		spawnBoss();
 
 	if (boss.isActive()) {
@@ -105,17 +105,21 @@ SceneType Level01Scene::update()
 	{
 		if (b.isActive() && b.update(TIME_PER_FRAME, CharacterType::PLAYER))
 			b.deactivate();
+
+		//Collision avec le boss
+		if (b.collidesWith(boss)) 
+		{
+  			b.deactivate();
+			boss.onHit();
+		}
+
+		//Collision avec les enemies
 		for (StandardEnemy& e : standardEnemies)
 		{
 			if (b.collidesWith(e))
 			{
 				b.deactivate();
 				e.onHit(PLAYER_BULLET_DAMAGE);
-			}
-
-			if (b.collidesWith(boss) && boss.isActive()) {
-				b.deactivate();
-				boss.onHit();
 			}
 		}
 	}
@@ -124,12 +128,6 @@ SceneType Level01Scene::update()
 	{
 		firePlayerBullet();
 		timeSinceLastFire = 0;
-	}
-
-	//Collision des balles du joueur
-	for (Bullet& b : playerBullets)
-	{
-
 	}
 
 	for (GunBonus& e : gunBonus) {
@@ -213,7 +211,7 @@ void Level01Scene::fireEnemyBullet(StandardEnemy enemy)
 
 void Level01Scene::fireBossBullet()
 {
-	Bullet& b = getAvailableStandardBullet();
+	Bullet& b = getAvailableBossBullet();
 	b.setPosition(boss.getPosition());
 }
 
@@ -238,7 +236,7 @@ Bullet& Level01Scene::getAvailableStandardBullet()
 	{
 		if (!b.isActive())
 		{
-			b.activate();
+ 			b.activate();
 			return b;
 		}
 	}
@@ -421,7 +419,6 @@ bool Level01Scene::init()
 
 	//Enemies
 	addNewStandardEnemies();
-	addNewEnemyBullets();
 	addNewEnemyBullets();
 	
 	//Boss
