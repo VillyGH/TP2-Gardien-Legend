@@ -103,8 +103,6 @@ SceneType Level01Scene::update()
 		}
 	}
 
-	gameEnded = true;
-
 	enemySpawnTimer += TIME_PER_FRAME;
 
 	if (enemySpawnTimer >= STANDARD_ENEMY_SPAWN_TIME && nbKills < BOSS_SPAWN_KILL_COUNT) {
@@ -113,7 +111,7 @@ SceneType Level01Scene::update()
 		enemySpawnTimer = 0;
 	}
 
-//	if (nbKills >= BOSS_SPAWN_KILL_COUNT && !boss.isActive()) //À changer pour un compteur de Enemies Killed
+	if (nbKills >= BOSS_SPAWN_KILL_COUNT && !boss.isActive()) //À changer pour un compteur de Enemies Killed
 		spawnBoss();
 
 	if (boss.isActive()) {
@@ -273,7 +271,7 @@ Bullet& Level01Scene::getAvailableStandardBullet()
 	{
 		if (!b.isActive())
 		{
- 			b.activate();
+			b.activate();
 			return b;
 		}
 	}
