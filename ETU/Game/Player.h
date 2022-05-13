@@ -13,12 +13,16 @@ public:
 	static const int INITIAL_LIFE_COUNT;
 	static const float MAX_IMMUNE_TIME;
 	static const float MAX_BONUS_TIME;
+	static const float NORMAL_FIRE_RATE;
+	static const float BONUS_FIRE_RATE;
+
 	Player();
 	virtual bool init(const Level01ContentManager& contentManager);
 	bool isGunBonusActive();
 	bool isImmune();
 	bool update(float deltaT, const Inputs& inputs) override;
 	void fireBullet();
+	float getFireRate();
 	bool onHit(float damage);
 	float getLivesRemaining();
 	void handleOutOfBoundsPosition();
@@ -29,6 +33,7 @@ private:
 	float gunBonusTimer;
 	float immuneTimer;
 	bool gunBonusIsActive; 
-	float lives; 
+	float lives;
+	float fireRate;
 };
 

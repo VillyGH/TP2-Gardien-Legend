@@ -10,13 +10,18 @@
 
 const float Player::PLAYER_MOVE_SPEED = 3.0f;
 const int Player::INITIAL_LIFE_COUNT = 500;
-const float Player::MAX_IMMUNE_TIME = 3.f;
+const float Player::MAX_IMMUNE_TIME = 0.75f;
 const float Player::MAX_BONUS_TIME = 3.f;
+const float Player::NORMAL_FIRE_RATE = 0.3f;
+const float Player::BONUS_FIRE_RATE = 0.25f;
 
 
 Player::Player():
 	gunBonusTimer(0),
-	gunBonusIsActive(false)
+	gunBonusIsActive(false),
+	immuneTimer(0),
+	lives(0),
+	fireRate(0)
 {
 
 }
@@ -31,6 +36,7 @@ bool Player::init(const Level01ContentManager& contentManager)
 	Animation* shipAnimation = new ShipAnimation(*this);
 
 	lives = INITIAL_LIFE_COUNT;
+	fireRate = NORMAL_FIRE_RATE;
 	deathSoundBuffer = contentManager.getEnemyKilledSoundBuffer();
 	firingSoundBuffer = contentManager.getEnemyGunSoundBuffer();
 
@@ -60,8 +66,11 @@ bool Player::update(float deltaT, const Inputs& inputs)
 		setColor(sf::Color(255, 255, 255, 255));
 	}
 		
-	if(isGunBonusActive())
+	if (isGunBonusActive()) {
 		gunBonusTimer -= deltaT;
+		fireRate = BONUS_FIRE_RATE;
+	}
+		
 	
 	handleOutOfBoundsPosition();
 	return AnimatedGameObject::update(deltaT, inputs);
@@ -92,6 +101,10 @@ bool Player::onHit(float damage) {
 
 float Player::getLivesRemaining() {
 	return lives;
+}
+
+float Player::getFireRate() {
+	return fireRate;
 }
 
 void Player::handleOutOfBoundsPosition()

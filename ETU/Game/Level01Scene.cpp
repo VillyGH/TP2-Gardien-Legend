@@ -11,7 +11,6 @@
 const float Level01Scene::TIME_PER_FRAME = 1.0f / (float)Game::FRAME_RATE;
 const float Level01Scene::GAMEPAD_SPEEDRATIO = 1000.0f;
 const float Level01Scene::KEYBOARD_SPEED = 0.1f;
-const float Level01Scene::TIME_BETWEEN_FIRE = 0.3f;
 const float Level01Scene::MAX_NB_STANDARD_ENEMIES = 15;
 const float Level01Scene::MAX_NB_BOSS_ENEMIES = 3;
 const float Level01Scene::MAX_NB_BULLETS = 30;
@@ -58,7 +57,7 @@ SceneType Level01Scene::update()
 	//Update du joueur
 	player.update(TIME_PER_FRAME, inputs);
 
-	if (inputs.fireBullet && timeSinceLastFire >= TIME_BETWEEN_FIRE)
+	if (inputs.fireBullet && timeSinceLastFire >= player.getFireRate())
 	{
 		firePlayerBullet();
 		timeSinceLastFire = 0;
@@ -128,9 +127,10 @@ SceneType Level01Scene::update()
 	{
 		if (e.isActive() && e.update(TIME_PER_FRAME, CharacterType::STANDARD_ENEMY))
 			e.deactivate();
-		if (e.collidesWith(player) && !player.isImmune()) {
+		if (e.collidesWith(player)) {
 			e.deactivate();
-			player.onHit(ENEMY_BULLET_DAMAGE);
+			if (!player.isImmune())
+				player.onHit(ENEMY_BULLET_DAMAGE);
 		}
 
 	}
@@ -195,7 +195,7 @@ SceneType Level01Scene::update()
 	/* playerBullets.remove_if([](const GameObject& b) {return !b.isActive(); });
 	 standardEnemies.remove_if([](const GameObject& b) {return !b.isActive(); });*/
 
-	hud.updateGameInfo(score, bonusTimeRemaining, player.getLivesRemaining());
+	hud.updateGameInfo(score, player.getLivesRemaining(), bonusTimeRemaining);
 
 	if (gameEnded)
 		retval = SceneType::SCOREBOARD_SCENE;
@@ -442,7 +442,7 @@ bool Level01Scene::uninit()
 
 bool Level01Scene::init()
 {
-	timeSinceLastFire = TIME_BETWEEN_FIRE * 3;
+	timeSinceLastFire = player.getFireRate() * 3;
 	inputs.reset();
 	livesRemaining = Player::INITIAL_LIFE_COUNT;
 	if (contentManager.loadContent() == false)

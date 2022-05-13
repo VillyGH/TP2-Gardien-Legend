@@ -21,7 +21,6 @@ public:
 	static const float TIME_PER_FRAME;
 	static const float GAMEPAD_SPEEDRATIO;
 	static const float KEYBOARD_SPEED;
-	static const float TIME_BETWEEN_FIRE;
 	static const float MAX_NB_STANDARD_ENEMIES;
 	static const float MAX_NB_BOSS_ENEMIES;
 	static const float MAX_NB_BULLETS;
