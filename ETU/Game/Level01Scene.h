@@ -35,6 +35,7 @@ public:
 	static const float NB_BONUS_FIRED_PLAYER_BULLETS;
 	static const float BOSS_SPAWN_KILL_COUNT;
 	static const float SCORE_GAINED_ENEMY_KILLED;
+	static const float SCORE_GAINED_BONUS;
 	static const float COLLISION_DAMAGE;
 	static const float ENEMY_BULLETS_PER_SHOT;
 	static const float MAX_GUN_BONUS;
