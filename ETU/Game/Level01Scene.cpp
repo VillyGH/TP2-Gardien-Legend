@@ -108,7 +108,7 @@ SceneType Level01Scene::update()
 	{
 		if (e.isActive() && e.update(TIME_PER_FRAME, CharacterType::STANDARD_ENEMY))
 			e.deactivate();
-		if (e.collidesWith(player)) {
+		if (e.collidesWith(player) && !player.isImmune()) {
 			e.deactivate();
 			player.onHit(ENEMY_BULLET_DAMAGE);
 		}
@@ -139,7 +139,7 @@ SceneType Level01Scene::update()
 		for (Bullet& e : bossBullets) {
 			if (e.isActive() && e.update(TIME_PER_FRAME, CharacterType::BOSS))
 				e.deactivate();
-			if (e.collidesWith(player)) {
+			if (e.collidesWith(player) && !player.isImmune()) {
 				e.deactivate();
 				player.onHit(ENEMY_BULLET_DAMAGE);
 			}
