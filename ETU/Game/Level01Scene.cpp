@@ -30,12 +30,6 @@ const float Level01Scene::MAX_GUN_BONUS = 5;
 const float Level01Scene::MAX_LIFE_BONUS = 5;
 
 
-
-
-
-
-
-
 Level01Scene::Level01Scene()
 	: Scene(SceneType::TITLE_SCENE)
 	, enemySpawnTimer(0)

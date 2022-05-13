@@ -19,7 +19,7 @@ bool LifeBonus::init(const Level01ContentManager& contentManager)
 {
 	bool retval = GameObject::init(contentManager);
 	setTexture(contentManager.getMiscTexture());
-	setTextureRect(sf::IntRect(315, 108, 10, 10));
+	setTextureRect(sf::IntRect(315, 108, 10, 10)); //
 	setScale(SCALING_SIZE);
 	soundBuffer = contentManager.getHealthSoundBuffer();
 	return retval;
