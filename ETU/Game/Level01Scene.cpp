@@ -15,7 +15,7 @@ const float Level01Scene::TIME_BETWEEN_FIRE = 0.3f;
 const float Level01Scene::MAX_NB_STANDARD_ENEMIES = 15;
 const float Level01Scene::MAX_NB_BOSS_ENEMIES = 3;
 const float Level01Scene::MAX_NB_BULLETS = 30;
-const float Level01Scene::STANDARD_ENEMY_SPAWN_TIME = 2;
+const float Level01Scene::STANDARD_ENEMY_SPAWN_TIME = 1.5;
 const float Level01Scene::ENEMY_SPAWN_DISTANCE = 15;
 const float Level01Scene::SPAWN_MARGIN = -50;
 const float Level01Scene::PLAYER_BULLET_DAMAGE = 1;
@@ -25,10 +25,10 @@ const float Level01Scene::NB_FIRED_PLAYER_BULLETS = 1;
 const float Level01Scene::NB_BONUS_FIRED_PLAYER_BULLETS = 2;
 const float Level01Scene::BOSS_SPAWN_KILL_COUNT = 15;
 const float Level01Scene::SCORE_GAINED_ENEMY_KILLED = 1000;
+const float Level01Scene::SCORE_GAINED_BONUS = 250;
 const float Level01Scene::ENEMY_BULLETS_PER_SHOT = 2;
 const float Level01Scene::MAX_GUN_BONUS = 5;
 const float Level01Scene::MAX_LIFE_BONUS = 5;
-
 
 Level01Scene::Level01Scene()
 	: Scene(SceneType::TITLE_SCENE)
@@ -54,7 +54,41 @@ SceneType Level01Scene::update()
 	static int cptScrollBackground = 0;
 	backgroundSprite.setTextureRect(sf::IntRect(0, (int)(0.5f * cptScrollBackground--), Game::GAME_WIDTH, Game::GAME_HEIGHT));
 	SceneType retval = getSceneType();
+	
+	//Update du joueur
 	player.update(TIME_PER_FRAME, inputs);
+	
+	if (inputs.fireBullet && timeSinceLastFire >= TIME_BETWEEN_FIRE)
+	{
+		firePlayerBullet();
+		timeSinceLastFire = 0;
+	}
+
+	timeSinceLastFire += 1.0f / (float)Game::FRAME_RATE;
+	
+	//Update des balles du joueur et les collisions
+	for (Bullet& b : playerBullets)
+	{
+		if (b.isActive() && b.update(TIME_PER_FRAME, CharacterType::PLAYER))
+			b.deactivate();
+
+		if (b.collidesWith(boss))
+		{
+			b.deactivate();
+			boss.onHit();
+		}
+
+		for (StandardEnemy& e : standardEnemies)
+		{
+			if (b.collidesWith(e))
+			{
+				b.deactivate();
+				e.onHit(PLAYER_BULLET_DAMAGE);
+			}
+		}
+	}
+
+	//Update des enemies et des collisions
 	for (StandardEnemy& e : standardEnemies) {
 		if(e.isActive())
 		{
@@ -69,27 +103,7 @@ SceneType Level01Scene::update()
 		}
 	}
 
-	enemySpawnTimer += TIME_PER_FRAME;
-
-	if (enemySpawnTimer >= STANDARD_ENEMY_SPAWN_TIME && nbKills < BOSS_SPAWN_KILL_COUNT) {
-
-		spawnStandardEnemy();
-		enemySpawnTimer = 0;
-	}
-
-//	if (nbKills >= BOSS_SPAWN_KILL_COUNT && !boss.isActive()) //À changer pour un compteur de Enemies Killed
-		spawnBoss();
-
-	if (boss.isActive()) {
-		boss.update(TIME_PER_FRAME, inputs, player.getPosition());
-		if (boss.isFiring())
-			fireBossBullet();
-		for (Bullet& e : bossBullets) {
-			if (e.isActive() && e.update(TIME_PER_FRAME, CharacterType::BOSS))
-				e.deactivate();
-		}
-	}
-
+	//Update des balles enemy et des collisions
 	for (Bullet& e : enemyBullets)
 	{
 		if (e.isActive() && e.update(TIME_PER_FRAME, CharacterType::STANDARD_ENEMY))
@@ -98,38 +112,41 @@ SceneType Level01Scene::update()
 			e.deactivate();
 			player.onHit(ENEMY_BULLET_DAMAGE);
 		}
-			
+
 	}
 
-	for (Bullet& b : playerBullets)
-	{
-		if (b.isActive() && b.update(TIME_PER_FRAME, CharacterType::PLAYER))
-			b.deactivate();
+	//Gestion des spawns enemy
+	enemySpawnTimer += TIME_PER_FRAME;
 
-		//Collision avec le boss
-		if (b.collidesWith(boss)) 
-		{
-  			b.deactivate();
-			boss.onHit();
-		}
+	if (enemySpawnTimer >= STANDARD_ENEMY_SPAWN_TIME && nbKills < BOSS_SPAWN_KILL_COUNT) {
 
-		//Collision avec les enemies
-		for (StandardEnemy& e : standardEnemies)
-		{
-			if (b.collidesWith(e))
-			{
-				b.deactivate();
-				e.onHit(PLAYER_BULLET_DAMAGE);
+		spawnStandardEnemy();
+		enemySpawnTimer = 0;
+	}
+
+	if (nbKills >= BOSS_SPAWN_KILL_COUNT && !boss.isActive()) //À changer pour un compteur de Enemies Killed
+		spawnBoss();
+
+	//Update Boss et çollisions avec joueur
+	if (boss.isActive()) {
+		boss.update(TIME_PER_FRAME, inputs, player.getPosition());
+		if (boss.isFiring())
+			fireBossBullet();
+
+		if (boss.collidesWith(player))
+			player.onHit(player.INITIAL_LIFE_COUNT);
+
+		for (Bullet& e : bossBullets) {
+			if (e.isActive() && e.update(TIME_PER_FRAME, CharacterType::BOSS))
+				e.deactivate();
+			if (e.collidesWith(player)) {
+				e.deactivate();
+				player.onHit(ENEMY_BULLET_DAMAGE);
 			}
 		}
 	}
 
-	if (inputs.fireBullet && timeSinceLastFire >= TIME_BETWEEN_FIRE)
-	{
-		firePlayerBullet();
-		timeSinceLastFire = 0;
-	}
-
+	//Update des bonus et de leur collisions
 	for (GunBonus& e : gunBonus) {
 		if (e.isActive())
 		{
@@ -159,8 +176,6 @@ SceneType Level01Scene::update()
 	 standardEnemies.remove_if([](const GameObject& b) {return !b.isActive(); });*/
 
 	hud.updateGameInfo(score, bonusTimeRemaining, player.getLivesRemaining());
-
-	timeSinceLastFire += 1.0f / (float)Game::FRAME_RATE;
 
 	if (gameEnded)
 		retval = SceneType::SCOREBOARD_SCENE; 
@@ -455,6 +470,7 @@ void Level01Scene::notify(Event event, const void* data)
 	case Event::ENEMY_KILLED:
 	{
 		nbKills++; 
+		score += SCORE_GAINED_ENEMY_KILLED;
 		break;
 	}
 	case Event::PLAYER_KILLED:
@@ -474,6 +490,16 @@ void Level01Scene::notify(Event event, const void* data)
 		const StandardEnemy* enemy = static_cast<const StandardEnemy*>(data);
 		LifeBonus& bonus = getAvailableLifeBonus();
 		bonus.setPosition(enemy->getPosition());
+		break;
+	}
+	case Event::GUN_PICKED_UP:
+	{
+		score += SCORE_GAINED_BONUS;
+		break;
+	}
+	case Event::LIFE_PICKED_UP:
+	{
+		score += SCORE_GAINED_BONUS;
 		break;
 	}
 	case::Event::BOSS_KILLED: 
