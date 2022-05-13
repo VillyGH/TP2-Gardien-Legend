@@ -30,8 +30,8 @@ void Hud::addScoreText(const Level01ContentManager& contentManager)
 void Hud::addLifeSprite(const Level01ContentManager& contentManager)
 {
 	lifeSprite.setTexture(contentManager.getMiscTexture());
-	lifeSprite.setTextureRect(sf::IntRect(315, 109, 7, 7));
-	lifeSprite.setScale(4.5f, 4.5f);
+	lifeSprite.setTextureRect(sf::IntRect(228, 63, 12, 11));
+	lifeSprite.setScale(3.0f, 3.0f);
 	lifeSprite.setPosition(scoreText.getPosition().x + 350, scoreText.getPosition().y - 5);
 }
 
@@ -45,7 +45,7 @@ void Hud::addNbLivesRemainingText(const Level01ContentManager& contentManager)
 
 void Hud::addBonusSprite(const Level01ContentManager& contentManager)
 {
-	bonusSprite.setTexture(contentManager.getMiscTexture());
+	bonusSprite.setTexture(contentManager.getMiscTexture()); 
 	bonusSprite.setTextureRect(sf::IntRect(248, 104, 16, 16));
 	bonusSprite.setScale(2.5f, 2.5f);
 	bonusSprite.setPosition(nbLivesRemainingText.getPosition().x + 150, lifeSprite.getPosition().y);
