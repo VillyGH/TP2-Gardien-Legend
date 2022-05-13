@@ -12,7 +12,10 @@ const float Boss::BOSS_VERTICAL_SPEED = 4;
 const float Boss::BOSS_HORIZONTAL_SPEED = 13;
 
 const sf::Vector2f Boss::BOSS_SCALING_SIZE(1.5, 1.5); 
-const float Boss::MAX_BOSS_HEALTH = 200;
+const float Boss::MAX_BOSS_HEALTH = 100;
+const float Boss::HEALTH_BAR_MAX_WIDTH = 100;
+const float Boss::HEALTH_BAR_MAX_HEIGHT = 10;
+
 
 
 Boss::Boss()
@@ -35,6 +38,7 @@ bool Boss::init(const Level01ContentManager& contentManager)
 {
 	setPosition(sf::Vector2f(Game::GAME_WIDTH * 0.5f, BOSS_SPAWN_Y_POSITION));
 	health = MAX_BOSS_HEALTH; 
+	initHealthBar(contentManager);
 	currentState = State::BOSS;
 	Animation* idleAnimation = new BossIdleAnimation(*this);
 	bool retval = idleAnimation->init(contentManager);
@@ -42,6 +46,28 @@ bool Boss::init(const Level01ContentManager& contentManager)
 		animations[State::BOSS] = idleAnimation;
 	this->scale(BOSS_SCALING_SIZE);
 	return retval && AnimatedGameObject::init(contentManager);
+}
+
+bool Boss::initHealthBar(const Level01ContentManager& contentManager) {
+	hpBarBack.setSize(sf::Vector2f(HEALTH_BAR_MAX_WIDTH + 10, HEALTH_BAR_MAX_HEIGHT + 5));
+	hpBarBack.setFillColor(sf::Color::White);
+	hpBarBack.setOrigin(hpBarBack.getSize().x / 2, hpBarBack.getSize().y / 2);
+
+	hpBarInner.setSize(sf::Vector2f(HEALTH_BAR_MAX_WIDTH, HEALTH_BAR_MAX_HEIGHT));
+	hpBarInner.setFillColor(sf::Color::Red);
+	hpBarInner.setOrigin(hpBarInner.getSize().x / 2, hpBarInner.getSize().y / 2);
+
+
+	return false;
+}
+
+void Boss::draw(sf::RenderWindow& window) const
+{
+	window.draw(hpBarBack);
+	window.draw(*this); 
+	window.draw(hpBarInner);
+
+
 }
 
 bool Boss::update(float deltaT, const Inputs& inputs, const sf::Vector2f& dest)
@@ -59,7 +85,25 @@ bool Boss::update(float deltaT, const Inputs& inputs, const sf::Vector2f& dest)
 
 	if (animations[currentState]->isOver())
 		return true;
+
+	updateHealthBar();
+
+
 	return AnimatedGameObject::update(deltaT, inputs);
+}
+
+bool Boss::updateHealthBar() {
+	float percent = health / MAX_BOSS_HEALTH;
+	hpBarInner.setSize(
+		sf::Vector2f(static_cast<float>(std::floor(HEALTH_BAR_MAX_WIDTH * percent)),
+			hpBarInner.getSize().y
+		)
+	);
+
+	hpBarBack.setPosition(getPosition().x, getGlobalBounds().top - 10);
+	hpBarInner.setPosition(hpBarBack.getPosition());
+
+	return false;
 }
 
 bool Boss::isFiring() {
