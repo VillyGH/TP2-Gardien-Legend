@@ -13,6 +13,9 @@ public:
 	static const int INITIAL_LIFE_COUNT;
 	static const float MAX_IMMUNE_TIME;
 	static const float MAX_BONUS_TIME;
+	static const float PLAYER_BULLET_DAMAGE;
+	static const float NB_FIRED_PLAYER_BULLETS;
+	static const float NB_BONUS_FIRED_PLAYER_BULLETS;
 	static const float NORMAL_FIRE_RATE;
 	static const float BONUS_FIRE_RATE;
 
@@ -21,14 +24,13 @@ public:
 	bool isGunBonusActive();
 	bool isImmune();
 	bool update(float deltaT, const Inputs& inputs) override;
-	void fireBullet();
+	void playFireSound();
 	bool onHit(float damage);
 	void handleOutOfBoundsPosition();
 	float getFireRate();
 	float getGunBonusTimer();
 	float getLivesRemaining();
 private:
-	sf::SoundBuffer deathSoundBuffer;
 	sf::Sound sound;
 	sf::SoundBuffer firingSoundBuffer;
 	float gunBonusTimer;

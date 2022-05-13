@@ -9,7 +9,8 @@ const float Boss::BOSS_SPAWN_Y_POSITION = -15;
 const float Boss::BOSS_Y_MAX_POSITION = 160;
 const float Boss::BOSS_VERTICAL_SPEED = 4;
 const float Boss::BOSS_HORIZONTAL_SPEED = 8;
-
+const float Boss::BOSS_BULLET_DAMAGE = 25;
+const float Boss::BOSS_SPAWN_KILL_COUNT = 15;
 const sf::Vector2f Boss::BOSS_SCALING_SIZE(1.5, 1.5); 
 const float Boss::MAX_BOSS_HEALTH = 100;
 const float Boss::HEALTH_BAR_MAX_WIDTH = 100;
@@ -44,6 +45,11 @@ bool Boss::init(const Level01ContentManager& contentManager)
 	if (retval)
 		animations[State::BOSS] = idleAnimation;
 	this->scale(BOSS_SCALING_SIZE);
+	deathSoundBuffer = contentManager.getEnemyKilledSoundBuffer();
+	firingSoundBuffer = contentManager.getEnemyGunSoundBuffer();
+
+	sound.setMinDistance(10);
+	sound.setVolume(10);
 	return retval && AnimatedGameObject::init(contentManager);
 }
 
@@ -105,6 +111,11 @@ bool Boss::updateHealthBar() {
 	return false;
 }
 
+void Boss::playFireSound() {
+	sound.setBuffer(firingSoundBuffer);
+	sound.play();
+}
+
 bool Boss::isFiring() {
 	if (animations[currentState]->getNextFrame() > 2 && animations[currentState]->getNextFrame() < 10)
 		return true;
@@ -123,6 +134,8 @@ void Boss::onHit()
  {
 	health--;
 	if (health <= 0) {
+		sound.setBuffer(deathSoundBuffer);
+		sound.play();
 		Publisher::notifySubscribers(Event::BOSS_KILLED, this);
 		deactivate();
 	}

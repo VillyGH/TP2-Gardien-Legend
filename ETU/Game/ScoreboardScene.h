@@ -48,6 +48,7 @@ private:
 	PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD];
 	int currentInitials;
 	int currentIndex;
+	int nbAlreadySavedInitials;
 	bool hasExited;
 	bool canExit;
 };

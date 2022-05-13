@@ -155,43 +155,41 @@ void ScoreboardScene::setInitialsText()
 	initialsText.setOrigin(initialsText.getGlobalBounds().width / 2, initialsText.getGlobalBounds().width / 2);
 	for (const PlayerStats& stat : stats)
 	{
-		std::string text = initialsText.getString();
-		initialsText.setString(initialsText.getString() + "\n" + stat.name);
-		remove(text.begin(), text.end(), ' ');
-		std::cout << text;
+		if (!strlen(stat.name) == 0) {
+			std::string text = initialsText.getString() + stat.name + "\n";
+			initialsText.setString(text);
+		}
+			
 	}
-	initialsText.setString(initialsText.getString() + "\n" + "");
+	initialsText.setString(initialsText.getString() + "\n");
 }
 
-void ScoreboardScene::addInitialsText(char intial)
+void ScoreboardScene::addInitialsText(char initial)
 {
 	if (currentInitials < MAX_NB_CHARS_INITIALS) {
 		std::string text = initialsText.getString();
 		if (currentIndex == currentInitials) {
-			initialsText.setString(text);
+			initialsText.setString(initialsText.getString() + initial);
 		}
 		else {
-
+			text[nbAlreadySavedInitials + currentIndex] = initial;
+			initialsText.setString(text);
 		}
-		text[currentIndex] = intial;
-		initialsText.setString(text);
 		currentInitials++;
 		currentIndex++;
-		//std::cout << currentIndex;
-		std::cout << currentInitials;
 	}
 }
 
 void ScoreboardScene::removeInitialsText()
 {
-	if (initialsText.getString().getSize() > 0) {
+	if (currentInitials > 0) {
 		std::string text = initialsText.getString();
 		//initialsText.setString(text.substr(0, text.size() - 1));
-		initialsText.setString(text.substr(0, currentIndex - 1));
+		text.erase(currentIndex - 1, 1);
+		initialsText.setString(text);
+		std::cout << text;
 		currentInitials--;
 		currentIndex--;
-		std::string text2 = initialsText.getString();
-		std::cout << text2;
 	}
 }
 
@@ -205,7 +203,7 @@ void ScoreboardScene::setScoreText()
 	for (const PlayerStats& stat : stats)
 	{
 		if(stat.score != 0)
-			scoresText.setString(scoresText.getString() + "\n" + std::to_string(stat.score));
+			scoresText.setString(scoresText.getString() + std::to_string(stat.score) + "\n");
 	}
 	scoresText.setString(scoresText.getString() + "\n" + scoresTextString);
 }
@@ -264,7 +262,9 @@ bool ScoreboardScene::handleEvents(sf::RenderWindow& window)
 			}
 			if (event.key.code == sf::Keyboard::BackSpace)
 			{
-				removeInitialsText();
+				if (currentIndex != 0) {
+					removeInitialsText();
+				}
 			}
 			if (event.key.code == sf::Keyboard::Enter)
 			{
@@ -275,15 +275,19 @@ bool ScoreboardScene::handleEvents(sf::RenderWindow& window)
 			}
 			if (event.key.code == sf::Keyboard::Right)
 			{
-				if (currentIndex < MAX_NB_CHARS_INITIALS && initialsText.getString().getSize() >= currentIndex) {
+				if (currentIndex < MAX_NB_CHARS_INITIALS && currentInitials > currentIndex) {
 					currentIndex++;
+					
 				}
+				//std::cout << currentInitials;
+				std::cout << currentIndex;
 			}
 			if (event.key.code == sf::Keyboard::Left)
 			{
-				if (currentIndex > 0 && initialsText.getString().getSize() <= currentIndex) {
+				if (currentIndex > 0) {
 					currentIndex--;
 				}
+				std::cout << currentIndex;
 			}
 		}
 		

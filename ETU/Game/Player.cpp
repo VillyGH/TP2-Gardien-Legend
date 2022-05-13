@@ -12,6 +12,9 @@ const float Player::PLAYER_MOVE_SPEED = 3.0f;
 const int Player::INITIAL_LIFE_COUNT = 500;
 const float Player::MAX_IMMUNE_TIME = 0.75f;
 const float Player::MAX_BONUS_TIME = 3.f;
+const float Player::PLAYER_BULLET_DAMAGE = 1;
+const float Player::NB_FIRED_PLAYER_BULLETS = 1;
+const float Player::NB_BONUS_FIRED_PLAYER_BULLETS = 2;
 const float Player::NORMAL_FIRE_RATE = 0.3f;
 const float Player::BONUS_FIRE_RATE = 0.2f;
 
@@ -37,7 +40,6 @@ bool Player::init(const Level01ContentManager& contentManager)
 
 	lives = INITIAL_LIFE_COUNT;
 	fireRate = NORMAL_FIRE_RATE;
-	deathSoundBuffer = contentManager.getEnemyKilledSoundBuffer();
 	firingSoundBuffer = contentManager.getEnemyGunSoundBuffer();
 
 	sound.setMinDistance(10);
@@ -76,7 +78,7 @@ bool Player::update(float deltaT, const Inputs& inputs)
 	return AnimatedGameObject::update(deltaT, inputs);
 }
 
-void Player::fireBullet() {
+void Player::playFireSound() {
 	sound.setBuffer(firingSoundBuffer);
 	sound.play();
 }
@@ -89,8 +91,6 @@ bool Player::onHit(float damage) {
 	else if (!isImmune()) {
 		lives -= damage;
 		immuneTimer = MAX_IMMUNE_TIME;
-		sound.setBuffer(deathSoundBuffer);
-		sound.play();
 
 		if (lives <= 0)
 			Publisher::notifySubscribers(Event::PLAYER_KILLED, this);

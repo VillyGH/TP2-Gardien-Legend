@@ -11,6 +11,7 @@ const float LifeBonus::BONUS_POINTS = 100;
 LifeBonus::LifeBonus() :
 	GameObject(),
 	life(BONUS_LIFE)
+	, bonusTimer(0)
 {
 
 }
@@ -40,6 +41,6 @@ bool LifeBonus::update(float deltaT, const Inputs& inputs)
 }
 
 void LifeBonus::checkOutOfBounds() {
-	if (getPosition().y > Game::GAME_HEIGHT  /** && currentState != State::EXPLODING*/)
+	if (getPosition().y > Game::GAME_HEIGHT)
 		deactivate();
 }

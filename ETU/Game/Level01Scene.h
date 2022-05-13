@@ -24,19 +24,10 @@ public:
 	static const float MAX_NB_STANDARD_ENEMIES;
 	static const float MAX_NB_BOSS_ENEMIES;
 	static const float MAX_NB_BULLETS;
-	static const float STANDARD_ENEMY_SPAWN_TIME;
-	static const float BOSS_ENEMY_SPAWN_TIME;
-	static const float ENEMY_SPAWN_DISTANCE;
 	static const float SPAWN_MARGIN;
-	static const float PLAYER_BULLET_DAMAGE;
-	static const float ENEMY_BULLET_DAMAGE;
-	static const float NB_FIRED_PLAYER_BULLETS;
-	static const float NB_BONUS_FIRED_PLAYER_BULLETS;
-	static const float BOSS_SPAWN_KILL_COUNT;
 	static const float SCORE_GAINED_ENEMY_KILLED;
 	static const float SCORE_GAINED_BONUS;
 	static const float COLLISION_DAMAGE;
-	static const float ENEMY_BULLETS_PER_SHOT;
 	static const float MAX_GUN_BONUS;
 	static const float MAX_LIFE_BONUS;
 

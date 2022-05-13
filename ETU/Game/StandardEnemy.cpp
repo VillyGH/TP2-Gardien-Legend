@@ -2,18 +2,22 @@
 #include "StandardEnemy.h"
 #include "Inputs.h"
 #include "game.h"
-//#include "EnemyType1ExplosionAnimation.h"
 #include "StandardEnemyIdleAnimation.h"
 #include "Publisher.h"
 
-const float StandardEnemy::MAX_ENEMY_HEALTH = 5;
+const float StandardEnemy::STANDARD_ENEMY_SPAWN_TIME = 1.5;
+const float StandardEnemy::ENEMY_SPAWN_DISTANCE = 15;
+const int StandardEnemy::MAX_ENEMY_HEALTH = 5;
 const int StandardEnemy::ENEMY_BONUS_DROP_CHANCE = 20;
+const int StandardEnemy::ENEMY_BULLET_DAMAGE = 25;
+const int StandardEnemy::ENEMY_BULLETS_PER_SHOT = 2;
 const float StandardEnemy::FIRING_TIME = StandardEnemyIdleAnimation::ANIMATION_LENGTH / 2;
 const float StandardEnemy::MIN_FIRING_FRAME = 15;
 const float StandardEnemy::MAX_FIRING_FRAME = 16;
 const float StandardEnemy::ENEMY_SPEED = 5;
 
-StandardEnemy::StandardEnemy()
+StandardEnemy::StandardEnemy():
+	health(MAX_ENEMY_HEALTH)
 {
 
 }
@@ -32,7 +36,6 @@ bool StandardEnemy::init(const Level01ContentManager& contentManager)
 	currentState = State::STANDARD_ENEMY;
 	deathSoundBuffer = contentManager.getEnemyKilledSoundBuffer();
 	firingSoundBuffer = contentManager.getEnemyGunSoundBuffer();
-	health = MAX_ENEMY_HEALTH;
 	Animation* idleAnimation = new StandardEnemyIdleAnimation(*this);
 	bool retval = idleAnimation->init(contentManager);
 	if (retval)
@@ -99,7 +102,7 @@ bool StandardEnemy::checkBonusDrop()
 }
 
 void StandardEnemy::checkOutOfBounds() {
-	if (getPosition().y > Game::GAME_HEIGHT  /** && currentState != State::EXPLODING*/)
+	if (getPosition().y > Game::GAME_HEIGHT)
 		setPosition((getPosition().x), 0);
 }
 
