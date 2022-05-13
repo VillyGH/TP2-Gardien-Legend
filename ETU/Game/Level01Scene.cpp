@@ -69,6 +69,8 @@ SceneType Level01Scene::update()
 		}
 	}
 
+	gameEnded = true;
+
 	enemySpawnTimer += TIME_PER_FRAME;
 
 	if (enemySpawnTimer >= STANDARD_ENEMY_SPAWN_TIME && nbKills < BOSS_SPAWN_KILL_COUNT) {

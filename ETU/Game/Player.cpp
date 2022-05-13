@@ -130,7 +130,6 @@ bool Player::isImmune() {
 	return true;
 }
 
-
 void Player::notify(Event event, const void* data)
 {
 	switch (event)

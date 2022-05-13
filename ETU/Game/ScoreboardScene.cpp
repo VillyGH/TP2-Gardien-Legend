@@ -154,7 +154,8 @@ void ScoreboardScene::setInitialsText()
 	initialsText.setOrigin(initialsText.getGlobalBounds().width / 2, initialsText.getGlobalBounds().width / 2);
 	for (const PlayerStats& stat : stats)
 	{
-		initialsText.setString(initialsText.getString() + "\n" + stat.name);
+		if (stat.name != "")
+			initialsText.setString(initialsText.getString() + "\n" + stat.name);
 	}
 	initialsText.setString(initialsText.getString() + "\n" + "");
 }
@@ -171,7 +172,6 @@ void ScoreboardScene::removeInitialsText()
 {
 	if (initialsText.getString().getSize() > 0) {
 		std::string text = initialsText.getString();
-		std::cout << text.substr(0, text.size() - 1) << std::endl;
 		initialsText.setString(text.substr(0, text.size() - 1));
 		currentInitials--;
 	}
@@ -186,7 +186,8 @@ void ScoreboardScene::setScoreText()
 	scoresText.setOrigin(scoresText.getGlobalBounds().width / 2, scoresText.getGlobalBounds().width / 2);
 	for (const PlayerStats& stat : stats)
 	{
-		scoresText.setString(scoresText.getString() + "\n" + std::to_string(stat.score));
+		if(stat.score != 0)
+			scoresText.setString(scoresText.getString() + "\n" + std::to_string(stat.score));
 	}
 	scoresText.setString(scoresText.getString() + "\n" + scoresTextString);
 }
