@@ -22,7 +22,7 @@ public:
 	Boss(const Boss& src);
 	virtual bool init(const Level01ContentManager& contentManager) override;
 	bool initHealthBar(const Level01ContentManager& contentManager);
-	bool update(float deltaT, const Inputs& inputs, const sf::Vector2f& dest);
+	bool update(const float deltaT, const Inputs& inputs, const sf::Vector2f& dest);
 	bool updateHealthBar();
 	bool isFiring();
 	void playFireSound();

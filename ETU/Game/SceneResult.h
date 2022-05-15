@@ -2,7 +2,7 @@
 
 struct Level01SceneResult
 {
-	int score;
+	float score;
 };
 
 

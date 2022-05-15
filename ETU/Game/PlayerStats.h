@@ -3,6 +3,6 @@
 struct PlayerStats
 {
   char name[NAME_LENGTH];
-  int score;
+  float score;
 };
 

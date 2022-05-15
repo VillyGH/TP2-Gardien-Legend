@@ -68,14 +68,17 @@ bool Boss::initHealthBar(const Level01ContentManager& contentManager) {
 
 void Boss::draw(sf::RenderWindow& window) const
 {
-	window.draw(hpBarBack);
-	window.draw(*this); 
-	window.draw(hpBarInner);
+	if (isActive()) {
+		window.draw(hpBarBack);
+		window.draw(*this);
+		window.draw(hpBarInner);
+	}
+
 
 
 }
 
-bool Boss::update(float deltaT, const Inputs& inputs, const sf::Vector2f& dest)
+bool Boss::update(const float deltaT, const Inputs& inputs, const sf::Vector2f& dest)
 {
 	if(getPosition().y < BOSS_Y_MAX_POSITION)
 		move(sf::Vector2f(0, BOSS_VERTICAL_SPEED));

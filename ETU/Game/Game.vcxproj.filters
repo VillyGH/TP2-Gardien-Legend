@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Bonus">
-      <UniqueIdentifier>{f81dc113-d171-4da8-a580-e946f80bab53}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PubSub">
       <UniqueIdentifier>{5cca3c48-32c6-4d35-90d9-d7329e8e3429}</UniqueIdentifier>
     </Filter>
@@ -322,9 +319,6 @@
     </Filter>
     <Filter Include="Bonus">
       <UniqueIdentifier>{a6a4f9e7-54d1-46ee-bc06-41b374ebb544}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Characters">
-      <UniqueIdentifier>{9f5857e9-2d7c-4be4-9683-afe10bae9b2b}</UniqueIdentifier>
     </Filter>
     <Filter Include="GenericFiles">
       <UniqueIdentifier>{03a3c0c2-7584-4c78-a134-d5ad5075217b}</UniqueIdentifier>

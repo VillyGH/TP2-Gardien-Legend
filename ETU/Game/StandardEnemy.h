@@ -9,12 +9,12 @@ class StandardEnemy :
 public:
 	static const float STANDARD_ENEMY_SPAWN_TIME;
 	static const float ENEMY_SPAWN_DISTANCE;
-	static const int MAX_ENEMY_HEALTH;
-	static const int ENEMY_BONUS_DROP_CHANCE;
-	static const int GUN_BONUS_DROP_CHANCE;
-	static const int LIFE_BONUS_DROP_CHANCE;
-	static const int ENEMY_BULLET_DAMAGE;
-	static const int ENEMY_BULLETS_PER_SHOT;
+	static const float MAX_ENEMY_HEALTH;
+	static const float ENEMY_BONUS_DROP_CHANCE;
+	static const float GUN_BONUS_DROP_CHANCE;
+	static const float LIFE_BONUS_DROP_CHANCE;
+	static const float ENEMY_BULLET_DAMAGE;
+	static const float ENEMY_BULLETS_PER_SHOT;
 	static const float FIRING_TIME;
 	static const float MIN_FIRING_FRAME;
 	static const float MAX_FIRING_FRAME;
@@ -24,9 +24,9 @@ public:
 	StandardEnemy(const StandardEnemy& src);
 	virtual bool init(const Level01ContentManager& contentManager) override;
 	bool update(float deltaT, const Inputs& inputs) override;
-	bool isFiring(float deltaT);
-	void onHit(float damage);
-	bool checkBonusDrop();
+	bool isFiring(const float deltaT);
+	void onHit(const float damage);
+	bool checkBonusDrop() const;
 	void checkOutOfBounds();
 
 private:

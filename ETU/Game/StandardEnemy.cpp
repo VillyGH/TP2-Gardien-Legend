@@ -7,17 +7,17 @@
 
 const float StandardEnemy::STANDARD_ENEMY_SPAWN_TIME = 1.5;
 const float StandardEnemy::ENEMY_SPAWN_DISTANCE = 15;
-const int StandardEnemy::MAX_ENEMY_HEALTH = 5;
-const int StandardEnemy::ENEMY_BONUS_DROP_CHANCE = 20;
-const int StandardEnemy::ENEMY_BULLET_DAMAGE = 25;
-const int StandardEnemy::ENEMY_BULLETS_PER_SHOT = 2;
+const float StandardEnemy::MAX_ENEMY_HEALTH = 5;
+const float StandardEnemy::ENEMY_BONUS_DROP_CHANCE = 20;
+const float StandardEnemy::ENEMY_BULLET_DAMAGE = 25;
+const float StandardEnemy::ENEMY_BULLETS_PER_SHOT = 2;
 const float StandardEnemy::FIRING_TIME = StandardEnemyIdleAnimation::ANIMATION_LENGTH / 2;
 const float StandardEnemy::MIN_FIRING_FRAME = 15;
 const float StandardEnemy::MAX_FIRING_FRAME = 16;
 const float StandardEnemy::ENEMY_SPEED = 5;
 
-StandardEnemy::StandardEnemy():
-	health(MAX_ENEMY_HEALTH)
+StandardEnemy::StandardEnemy()
+	: health(0)
 {
 
 }
@@ -34,6 +34,7 @@ StandardEnemy::StandardEnemy(const StandardEnemy& src)
 bool StandardEnemy::init(const Level01ContentManager& contentManager)
 {
 	currentState = State::STANDARD_ENEMY;
+	health = MAX_ENEMY_HEALTH;
 	deathSoundBuffer = contentManager.getEnemyKilledSoundBuffer();
 	firingSoundBuffer = contentManager.getEnemyGunSoundBuffer();
 	Animation* idleAnimation = new StandardEnemyIdleAnimation(*this);
@@ -55,11 +56,11 @@ bool StandardEnemy::update(float deltaT, const Inputs& inputs)
 	return AnimatedGameObject::update(deltaT, inputs);
 }
 
-bool StandardEnemy::isFiring(float deltaT) {
+bool StandardEnemy::isFiring(const float deltaT) {
 	
 	bool retval = false; 
 	float time = animations[currentState]->getTimeInCurrentState();
-	float nextFrame = animations[currentState]->getNextFrame();
+	unsigned int nextFrame = animations[currentState]->getNextFrame();
 
 	if (nextFrame >= MIN_FIRING_FRAME && nextFrame <= MAX_FIRING_FRAME) {
 		retval = true;
@@ -73,7 +74,7 @@ bool StandardEnemy::isFiring(float deltaT) {
 	return retval;
 }
 
-void StandardEnemy::onHit(float damage)
+void StandardEnemy::onHit(const float damage)
 {
 	health -= damage;
 	if (health <= 0) {
@@ -86,13 +87,12 @@ void StandardEnemy::onHit(float damage)
 	}
 }
 
-bool StandardEnemy::checkBonusDrop() 
+bool StandardEnemy::checkBonusDrop() const
 {
 	if (1 + (std::rand() % (100 - 1 + 1)) <= ENEMY_BONUS_DROP_CHANCE) {
 		Publisher::notifySubscribers(Event::GUN_BONUS_DROPPED, this);
 		return true;
 	}
-	
 	else if (1 + (std::rand() % (100 - 1 + 1)) <= ENEMY_BONUS_DROP_CHANCE)
 	{
 		Publisher::notifySubscribers(Event::LIFE_BONUS_DROPPED, this);

@@ -9,7 +9,7 @@
 
 
 const float Player::PLAYER_MOVE_SPEED = 3.0f;
-const int Player::INITIAL_LIFE_COUNT = 500;
+const float Player::INITIAL_LIFE_COUNT = 500.f;
 const float Player::MAX_IMMUNE_TIME = 0.75f;
 const float Player::MAX_BONUS_TIME = 3.f;
 const float Player::PLAYER_BULLET_DAMAGE = 1;
@@ -17,6 +17,11 @@ const float Player::NB_FIRED_PLAYER_BULLETS = 1;
 const float Player::NB_BONUS_FIRED_PLAYER_BULLETS = 2;
 const float Player::NORMAL_FIRE_RATE = 0.3f;
 const float Player::BONUS_FIRE_RATE = 0.2f;
+const float Player::SPAWN_DISTANCE = 10.f; 
+const float Player::SOUND_VOLUME = 10.f;
+const sf::Vector2f Player::SCALE_SIZE (2.5,2.5);
+
+
 
 
 Player::Player():
@@ -31,9 +36,9 @@ Player::Player():
 
 bool Player::init(const Level01ContentManager& contentManager)
 {
-	setScale(2.5f, 2.5f);
+	setScale(SCALE_SIZE);
 	activate();
-	setPosition(Game::GAME_WIDTH / 2.0f, Game::GAME_HEIGHT - 100);
+	setPosition(Game::GAME_WIDTH / 2.f, Game::GAME_HEIGHT - 100.f);
 
 	currentState = State::SHIP;
 	Animation* shipAnimation = new ShipAnimation(*this);
@@ -42,8 +47,8 @@ bool Player::init(const Level01ContentManager& contentManager)
 	fireRate = NORMAL_FIRE_RATE;
 	firingSoundBuffer = contentManager.getEnemyGunSoundBuffer();
 
-	sound.setMinDistance(10);
-	sound.setVolume(10);
+	sound.setMinDistance(SPAWN_DISTANCE);
+	sound.setVolume(SOUND_VOLUME);
 
 	bool retval = shipAnimation->init(contentManager);
 	if (retval)
@@ -56,7 +61,7 @@ bool Player::init(const Level01ContentManager& contentManager)
 	return retval && AnimatedGameObject::init(contentManager);
 }
 
-bool Player::update(float deltaT, const Inputs& inputs)
+bool Player::update(const float deltaT, const Inputs& inputs)
 {
 	move(inputs.moveFactorX * -PLAYER_MOVE_SPEED, inputs.moveFactorY * -PLAYER_MOVE_SPEED);
 	if (isImmune()) {
@@ -83,7 +88,7 @@ void Player::playFireSound() {
 	sound.play();
 }
 
-bool Player::onHit(float damage) {
+bool Player::onHit(const float damage) {
 	if (isGunBonusActive()) {
 		gunBonusTimer = 0;
 		return false;
@@ -99,33 +104,33 @@ bool Player::onHit(float damage) {
 	return true;
 }
 
-float Player::getLivesRemaining() {
+float Player::getLivesRemaining() const{
 	return lives;
 }
 
-float Player::getFireRate() {
+float Player::getFireRate() const{
 	return fireRate;
 }
 
-float Player::getGunBonusTimer() {
+float Player::getGunBonusTimer() const{
 	return gunBonusTimer;
 }
 
 void Player::handleOutOfBoundsPosition()
 {
 	sf::Vector2f newPosition = getPosition();
-	if (newPosition.x > Game::GAME_WIDTH)
+	if (newPosition.x > (float)Game::GAME_WIDTH)
 	{
-		newPosition.x = Game::GAME_WIDTH;
+		newPosition.x = (float)Game::GAME_WIDTH;
 	}
 	else if (newPosition.x < 0)
 	{
 		newPosition.x = 0;
 	}
 
-	if (newPosition.y > Game::GAME_HEIGHT)
+	if (newPosition.y > (float)Game::GAME_HEIGHT)
 	{
-		newPosition.y = Game::GAME_HEIGHT;
+		newPosition.y = (float)Game::GAME_HEIGHT;
 	}
 	else if (newPosition.y < 0)
 	{
@@ -135,7 +140,7 @@ void Player::handleOutOfBoundsPosition()
 	GameObject::setPosition(newPosition);
 }
 
-bool Player::isGunBonusActive() {
+bool Player::isGunBonusActive() const{
 	if (gunBonusTimer >= 0)
 		return true;
 	return false;
@@ -147,7 +152,7 @@ bool Player::isImmune() {
 	return true;
 }
 
-void Player::notify(Event event, const void* data)
+void Player::notify(const Event event, const void* data)
 {
 	switch (event)
 	{
