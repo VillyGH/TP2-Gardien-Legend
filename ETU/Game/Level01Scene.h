@@ -26,6 +26,7 @@ public:
 	static const float MAX_NB_BULLETS;
 	static const float SPAWN_MARGIN;
 	static const float SCORE_GAINED_ENEMY_KILLED;
+	static const float SCORE_GAINED_BOSS_KILLED;
 	static const float SCORE_GAINED_BONUS;
 	static const float COLLISION_DAMAGE;
 	static const float MAX_GUN_BONUS;
@@ -38,7 +39,7 @@ public:
 	bool spawnStandardEnemy();
 	bool spawnBoss();
 	void addNewStandardEnemies();
-	void fireEnemyBullet(StandardEnemy enemy);
+	void fireEnemyBullet(const StandardEnemy enemy);
 	void fireBossBullet();
 	void firePlayerBullet();
 	Bullet& getAvailableStandardBullet();
@@ -76,10 +77,8 @@ private:
 	float enemySpawnTimer;
 	bool allEnemiesKilled;
 	bool gameEnded;
-	int score;
-	int livesRemaining;
+	float score;
 	int nbKills;
-	int timer;
 	Hud hud;
 	sf::Text scoreText;
 

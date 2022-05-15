@@ -32,7 +32,7 @@ void ScoreboardScene::fillPlayerStatsWithRandomValues(PlayerStats stats[MAX_NB_P
 	for (int i = 0; i < NB_INITIAL_PLAYERS; i++)
 	{
 		sprintf_s(stats[i].name, "%s", names[rand() % (sizeof(names) / sizeof(names[0]))].c_str());
-		stats[i].score = 10000 + rand() % 1000;
+		stats[i].score = 10000.f + rand() % 1000;
 	}
 }
 
@@ -94,11 +94,11 @@ bool ScoreboardScene::init()
 		{
 			if (0 == ::memcmp(outStats, stats, MAX_NB_PLAYERS_LEADERBOARD * sizeof(PlayerStats)))
 			{
-				std::cout << "La désérialisation est similaire à la sérialisation" << std::endl;
+				std::cout << "La dï¿½sï¿½rialisation est similaire ï¿½ la sï¿½rialisation" << std::endl;
 			}
 			else
 			{
-				std::cout << "Il y a eu un problème" << std::endl;
+				std::cout << "Il y a eu un problï¿½me" << std::endl;
 			}
 
 		}
@@ -119,8 +119,8 @@ void ScoreboardScene::setGameOverText()
 	gameOverText.setCharacterSize(64);
 	gameOverText.setFillColor(sf::Color::Red);
 	gameOverText.setString(gameOverTextString);
-	gameOverText.setPosition(Game::GAME_WIDTH / 2, Game::GAME_HEIGHT / 7.0f - gameOverText.getLocalBounds().height);
-	gameOverText.setOrigin(gameOverText.getLocalBounds().width / 2, gameOverText.getLocalBounds().height / 2);
+	gameOverText.setPosition(Game::GAME_WIDTH / 2.f, Game::GAME_HEIGHT / 7.0f - gameOverText.getLocalBounds().height);
+	gameOverText.setOrigin(gameOverText.getLocalBounds().width / 2.f, gameOverText.getLocalBounds().height / 2.f);
 }
 
 void ScoreboardScene::setLeaderboardText()
@@ -139,7 +139,7 @@ void ScoreboardScene::setEnterNameText()
 	enterNameText.setFont(contentManager.getMainFont());
 	enterNameText.setCharacterSize(24);
 	enterNameText.setString(enterNameTextString);
-	enterNameText.setPosition(Game::GAME_WIDTH / 2.0f, Game::GAME_HEIGHT - 100);
+	enterNameText.setPosition(Game::GAME_WIDTH / 2.0f, Game::GAME_HEIGHT - 100.f);
 	enterNameText.setOrigin(enterNameText.getGlobalBounds().width / 2, enterNameText.getGlobalBounds().height / 2);
 }
 
@@ -166,7 +166,7 @@ void ScoreboardScene::setInitialsText()
 	//initialsText.setString(initialsText.getString() + "\n");
 }
 
-void ScoreboardScene::addInitialsText(char initial)
+void ScoreboardScene::addInitialsText(const char initial)
 {
 	if (currentInitials < MAX_NB_CHARS_INITIALS) {
 		std::string text = initialsText.getString();
@@ -246,7 +246,7 @@ bool ScoreboardScene::writeToFile(const PlayerStats stats[MAX_NB_PLAYERS_LEADERB
 	return true;
 }
 
-bool ScoreboardScene::readFromFile(PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD])
+bool ScoreboardScene::readFromFile(const PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD])
 {
 	std::ifstream ifs(PATH_TO_BIN_FILE, std::ios::binary);
 	if (!ifs)
@@ -331,10 +331,10 @@ bool ScoreboardScene::handleEvents(sf::RenderWindow& window)
 				}
 			}
 		}
-		
 
-		
-		
+
+
+
 	}
 	return retval;
 }

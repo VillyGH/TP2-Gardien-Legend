@@ -26,9 +26,9 @@ public:
 	void setScoreText();
 	void saveStats();
 	bool writeToFile(const PlayerStats stats[ScoreboardScene::MAX_NB_PLAYERS_LEADERBOARD]);
-	bool readFromFile(PlayerStats stats[ScoreboardScene::MAX_NB_PLAYERS_LEADERBOARD]);
+	bool readFromFile(const PlayerStats stats[ScoreboardScene::MAX_NB_PLAYERS_LEADERBOARD]);
 	void setInitialsText();
-	void addInitialsText(char intial);
+	void addInitialsText(const char intial);
 	void removeInitialsText();
 	void setLeaderboardText();
 	void setGameOverText();

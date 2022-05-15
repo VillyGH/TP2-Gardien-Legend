@@ -24,7 +24,7 @@ void Hud::addScoreText(const Level01ContentManager& contentManager)
 	scoreText.setFont(contentManager.getMainFont());
 	scoreText.setCharacterSize(22);
 	scoreText.setFillColor(sf::Color::Cyan);
-	scoreText.setPosition(scoreText.getLocalBounds().width / 2.0f, Game::GAME_HEIGHT - 50);
+	scoreText.setPosition(scoreText.getLocalBounds().width / 2.0f, Game::GAME_HEIGHT - 50.f);
 }
 
 void Hud::addLifeSprite(const Level01ContentManager& contentManager)
@@ -70,22 +70,22 @@ void Hud::addPauseText(const Level01ContentManager& contentManager)
 
 // Mise à jour du texte
 
-void Hud::updateScoreText(int score)
+void Hud::updateScoreText(float score)
 {
-	const std::string scoreString = "Score : " + std::to_string(score);
+	const std::string scoreString = "Score : " + std::to_string(int(score));
 	scoreText.setString(scoreString);
 }
 
-void Hud::updateNbLivesText(int nbLivesRemaining)
+void Hud::updateNbLivesText(float nbLivesRemaining)
 {
 	//nbLivesRemainingText.setPosition(Game::GAME_WIDTH - nbLivesRemainingText.getLocalBounds().width, nbLivesRemainingText.getLocalBounds().height / 2.0f);
-	nbLivesRemainingText.setString(std::to_string(nbLivesRemaining));
+	nbLivesRemainingText.setString(std::to_string((int)nbLivesRemaining));
 }
 
-void Hud::updateTimeRemainingBonus(int timeRemainingBonus)
+void Hud::updateTimeRemainingBonus(float timeRemainingBonus)
 {
 	//timeRemainingBonusText.setPosition(Game::GAME_WIDTH - nbLivesRemainingText.getLocalBounds().width, nbLivesRemainingText.getLocalBounds().height / 2.0f);
-	timeRemainingBonusText.setString(std::to_string(timeRemainingBonus));
+	timeRemainingBonusText.setString(std::to_string((int)timeRemainingBonus));
 }
 
 void Hud::updatePauseText()
@@ -94,7 +94,7 @@ void Hud::updatePauseText()
 	pauseText.setString(pauseString);
 }
 
-void Hud::updateGameInfo(int score, int nbLivesRemaining, int timeRemainingBonus)
+void Hud::updateGameInfo(float score, float nbLivesRemaining, float timeRemainingBonus)
 {
 	updateScoreText(score);
 	updateNbLivesText(nbLivesRemaining);
