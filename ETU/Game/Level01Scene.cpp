@@ -9,7 +9,7 @@
 #include "GunBonus.h"
 
 const float Level01Scene::TIME_PER_FRAME = 1.0f / (float)Game::FRAME_RATE;
-const float Level01Scene::GAMEPAD_SPEEDRATIO = 1000.0f;
+const float Level01Scene::GAMEPAD_SPEEDRATIO = 40.0f;
 const float Level01Scene::KEYBOARD_SPEED = 0.1f;
 const float Level01Scene::MAX_NB_STANDARD_ENEMIES = 15;
 const float Level01Scene::MAX_NB_BOSS_ENEMIES = 3;
@@ -539,11 +539,22 @@ bool Level01Scene::handleEvents(sf::RenderWindow& window)
 			retval = true;
 		}
 	}
-	inputs.moveFactorX += sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) ? 3.0f : 0.0f;
-	inputs.moveFactorX -= sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) ? 3.0f : 0.0f;
-	inputs.moveFactorY -= sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) ? -3.0f : 0.0f;
-	inputs.moveFactorY += sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) ? -3.0f : 0.0f;
-	inputs.playFireSound = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
+
+
+	if (sf::Joystick::isConnected(0))
+	{
+		inputs.moveFactorX = -Inputs::eliminateVibration(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X)) / GAMEPAD_SPEEDRATIO;
+		inputs.moveFactorY = -Inputs::eliminateVibration(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y)) / GAMEPAD_SPEEDRATIO;
+		inputs.playFireSound = sf::Joystick::isButtonPressed(0, sf::Joystick::X);
+	}
+	else
+	{
+		inputs.moveFactorX += sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) ? 3.0f : 0.0f;
+		inputs.moveFactorX -= sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) ? 3.0f : 0.0f;
+		inputs.moveFactorY -= sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) ? -3.0f : 0.0f;
+		inputs.moveFactorY += sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) ? -3.0f : 0.0f;
+		inputs.playFireSound = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
+	}
 
 	return retval;
 }
