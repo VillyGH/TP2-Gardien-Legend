@@ -38,6 +38,7 @@ bool TitleScene::init()
 		return false;
 	titleMusic.setVolume(10);
 	titleMusic.setLoop(true);
+	titleMusic.stop();
 	titleMusic.play();
 
 	menuImage.setTexture(contentManager.getTitleScreenTexture());

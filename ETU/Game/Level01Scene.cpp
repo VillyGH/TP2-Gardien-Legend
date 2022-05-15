@@ -17,6 +17,8 @@ const float Level01Scene::MAX_NB_BULLETS = 30;
 const float Level01Scene::SPAWN_MARGIN = -50;
 const float Level01Scene::COLLISION_DAMAGE = 5;
 const float Level01Scene::SCORE_GAINED_ENEMY_KILLED = 1000;
+const float Level01Scene::SCORE_GAINED_BOSS_KILLED = 250;
+
 const float Level01Scene::SCORE_GAINED_BONUS = 250;
 const float Level01Scene::MAX_GUN_BONUS = 5;
 const float Level01Scene::MAX_LIFE_BONUS = 5;
@@ -26,10 +28,8 @@ Level01Scene::Level01Scene()
 	, enemySpawnTimer(0)
 	, timeSinceLastFire(0)
 	, allEnemiesKilled(false)
-	, livesRemaining(0)
 	, gameEnded(false)
 	, score(0)
-	, timer(0)
 	, nbKills(0)
 {
 }
@@ -136,10 +136,10 @@ SceneType Level01Scene::update()
 		enemySpawnTimer = 0;
 	}
 
-	if (nbKills >= Boss::BOSS_SPAWN_KILL_COUNT && !boss.isActive()) //À changer pour un compteur de Enemies Killed
+	if (nbKills >= Boss::BOSS_SPAWN_KILL_COUNT && !boss.isActive())
 		spawnBoss();
 
-	//Update Boss et çollisions avec joueur
+	//Update Boss et collisions avec joueur
 	if (boss.isActive()) {
 		boss.update(TIME_PER_FRAME, inputs, player.getPosition());
 		if (boss.isFiring())
@@ -242,6 +242,7 @@ void Level01Scene::fireBossBullet()
 	b.setPosition(boss.getPosition());
 }
 
+//TODO: À VALIDER
 void Level01Scene::firePlayerBullet()
 {
 	Bullet& b = getAvailableStandardBullet();
@@ -284,7 +285,7 @@ Bullet& Level01Scene::getAvailableEnemyBullet()
 			return b;
 		}
 	}
-	addNewEnemyBullets();
+	addNewEnemyBullets(); //TODO: OK DE AJOUTER BEAUCOUP DE BULLET D'UN COUP? 
 	return enemyBullets.back();
 }
 
@@ -397,6 +398,7 @@ void Level01Scene::draw(sf::RenderWindow& window) const
 {
 	window.draw(backgroundSprite);
 	player.draw(window);
+	boss.draw(window);
 
 	for (const StandardEnemy& e : standardEnemies)
 		e.draw(window);
@@ -407,23 +409,15 @@ void Level01Scene::draw(sf::RenderWindow& window) const
 	for (const Bullet& e : enemyBullets)
 		e.draw(window);
 
-	if (boss.isActive())
-		boss.draw(window);
-
 	for (const Bullet& e : bossBullets)
 		e.draw(window);
 
-	for (const GunBonus& e : gunBonus) {
-		if (e.isActive())
-			e.draw(window);
-	}
-	for (const LifeBonus& e : lifeBonus) {
-		if (e.isActive())
-			e.draw(window);
-	}
-
-
-
+	for (const GunBonus& e : gunBonus) 
+		e.draw(window);
+	
+	for (const LifeBonus& e : lifeBonus) 
+		e.draw(window);
+	
 	hud.draw(window);
 }
 
@@ -436,7 +430,6 @@ bool Level01Scene::init()
 {
 	timeSinceLastFire = player.getFireRate() * 3;
 	inputs.reset();
-	livesRemaining = Player::INITIAL_LIFE_COUNT;
 	if (contentManager.loadContent() == false)
 	{
 		return false;
@@ -516,6 +509,7 @@ void Level01Scene::notify(Event event, const void* data)
 	}
 	case::Event::BOSS_KILLED:
 	{
+		score += 
 		result.level01SceneResult.score = score;
 		gameEnded = true;
 	}

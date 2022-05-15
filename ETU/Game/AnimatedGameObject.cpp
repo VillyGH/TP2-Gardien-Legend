@@ -19,6 +19,7 @@ AnimatedGameObject::~AnimatedGameObject()
 AnimatedGameObject::AnimatedGameObject(const AnimatedGameObject& src)
 	:GameObject(src)
 	, contentManager(src.contentManager)
+
 {
 
 }

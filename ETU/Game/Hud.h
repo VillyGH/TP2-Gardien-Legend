@@ -14,11 +14,11 @@ public:
 	void addTimeRemainingBonusText(const Level01ContentManager& contentManager);
 	void addPauseText(const Level01ContentManager& contentManager);
 
-	void updateScoreText(int score);
-	void updateNbLivesText(int nbLivesRemaining);
-	void updateTimeRemainingBonus(int timeRemainingBonus);
+	void updateScoreText(float score);
+	void updateNbLivesText(float nbLivesRemaining);
+	void updateTimeRemainingBonus(float timeRemainingBonus);
 	void updatePauseText();
-	void updateGameInfo(int score, int nbLivesRemaining, int timeRemainingBonus);
+	void updateGameInfo(float score, float nbLivesRemaining, float timeRemainingBonus);
 
 	void removeGameInfoText();
 	void removePauseText();
