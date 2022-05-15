@@ -81,6 +81,7 @@ private:
 	int nbKills;
 	Hud hud;
 	sf::Text scoreText;
+	bool isPaused;
 
 	virtual void notify(Event event, const void* data) override;
 };

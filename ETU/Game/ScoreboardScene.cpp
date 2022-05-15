@@ -199,7 +199,6 @@ void ScoreboardScene::removeInitialsText()
 
 void ScoreboardScene::setScoreText()
 {
-	const std::string scoresTextString = std::to_string(result.level01SceneResult.score);
 	scoresText.setFont(contentManager.getMainFont());
 	scoresText.setCharacterSize(24);
 	scoresText.setPosition(Game::GAME_WIDTH / 1.5f, initialsText.getPosition().y);
@@ -208,12 +207,12 @@ void ScoreboardScene::setScoreText()
 	for (const PlayerStats& stat : stats)
 	{
 		if (stat.score != 0) {
-			scoresText.setString(scoresText.getString() + std::to_string(stat.score) + "\n");
+			scoresText.setString(scoresText.getString() + std::to_string((int)stat.score) + "\n");
 			nbScores++;
 		}
 	}
 
-	scoresText.setString(scoresText.getString() + std::to_string(result.level01SceneResult.score));
+	scoresText.setString(scoresText.getString() + std::to_string((int)result.level01SceneResult.score));
 }
 
 template <typename T, std::size_t N>
@@ -232,7 +231,7 @@ int ScoreboardScene::compare(const void* a, const void* b) {
 void ScoreboardScene::saveStats()
 {
 	strcpy_s(stats[nbScores].name, newInitials.c_str());
-	stats[nbScores].score = result.level01SceneResult.score;
+	stats[nbScores].score = (int)result.level01SceneResult.score;
 }
 
 
@@ -331,10 +330,6 @@ bool ScoreboardScene::handleEvents(sf::RenderWindow& window)
 				}
 			}
 		}
-
-
-
-
 	}
 	return retval;
 }
