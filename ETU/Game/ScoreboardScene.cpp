@@ -13,9 +13,8 @@ ScoreboardScene::ScoreboardScene()
 	, stats()
 	, currentInitials(0)
 	, canExit(false)
-	, currentIndex(0)
 	, lockedInScore(false)
-	, nbScores(0)
+	, scoreIndex(0)
 	, nbAlreadySavedInitials(0)
 {
 }
@@ -145,13 +144,14 @@ void ScoreboardScene::setEnterNameText()
 
 void ScoreboardScene::changeEnterNameText()
 {
-	const std::string enterNameTextString = "PRESS ESC OR MENU TO QUIT";
+	const std::string enterNameTextString = "PRESS ESC OR A TO QUIT";
 	enterNameText.setString(enterNameTextString);
 	canExit = true;
 }
 
 void ScoreboardScene::setInitialsText()
 {
+	int nbNames = 0;
 	initialsText.setFont(contentManager.getMainFont());
 	initialsText.setCharacterSize(24);
 	initialsText.setPosition(Game::GAME_WIDTH / 4.0f, Game::GAME_HEIGHT / 3.0f);
@@ -159,11 +159,15 @@ void ScoreboardScene::setInitialsText()
 	for (const PlayerStats& stat : stats)
 	{
 		if (!strlen(stat.name) == 0) {
-			std::string text = initialsText.getString() + stat.name + "\n";
-			initialsText.setString(text);
+			if (nbNames == scoreIndex) {
+				initialsText.setString(initialsText.getString() + "\n");
+			}
+			else {
+				initialsText.setString(initialsText.getString() + stat.name + "\n");
+			}
+			nbNames++;
 		}
 	}
-	//initialsText.setString(initialsText.getString() + "\n");
 }
 
 void ScoreboardScene::addInitialsText(const char initial)
@@ -172,15 +176,7 @@ void ScoreboardScene::addInitialsText(const char initial)
 		std::string text = initialsText.getString();
 		initialsText.setString(initialsText.getString() + initial);
 		newInitials += initial;
-		/*if (currentIndex == currentInitials) {
-			initialsText.setString(initialsText.getString() + initial);
-		}
-		else {
-			text[nbAlreadySavedInitials + currentIndex] = initial;
-			initialsText.setString(text);
-		}*/
 		currentInitials++;
-		//currentIndex++;
 	}
 }
 
@@ -189,30 +185,50 @@ void ScoreboardScene::removeInitialsText()
 	if (currentInitials > 0) {
 		std::string text = initialsText.getString();
 		initialsText.setString(text.substr(0, text.size() - 1));
-		newInitials.substr(0, text.size() - 1);
-		//text.erase(currentIndex - 1, 1);
-		//initialsText.setString(text);
+		newInitials = newInitials.substr(0, newInitials.size() - 1);
 		currentInitials--;
-		//currentIndex--;
 	}
 }
 
+int compare(const PlayerStats& playerStatA, const PlayerStats& playerStatB) {
+	if (playerStatA.score > playerStatB.score)
+		return 1;
+	if (playerStatA.score < playerStatB.score)
+		return -1;
+	return 0;
+}
+
+bool operator<(const PlayerStats& playerStatA, const PlayerStats& playerStatB)
+{
+	if (playerStatA.score > playerStatB.score)
+		return true;
+
+	return false;
+}
+
+
 void ScoreboardScene::setScoreText()
 {
+	bool scoreWritten = false;
 	scoresText.setFont(contentManager.getMainFont());
 	scoresText.setCharacterSize(24);
 	scoresText.setPosition(Game::GAME_WIDTH / 1.5f, initialsText.getPosition().y);
 	scoresText.setOrigin(scoresText.getGlobalBounds().width / 2, scoresText.getGlobalBounds().width / 2);
-	//qsort(stats, array_size(stats), sizeof(stats), compare);
 	for (const PlayerStats& stat : stats)
 	{
-		if(stat.score != 0)
-			scoresText.setString(scoresText.getString() + std::to_string(stat.score) + "\n");
+		if (stat.score != 0) {
+			scoreIndex++;
+		}
 	}
-	scoresText.setString(scoresText.getString() + std::to_string((int)result.level01SceneResult.score));
-}
-
-	scoresText.setString(scoresText.getString() + std::to_string((int)result.level01SceneResult.score));
+	stats[scoreIndex].score = result.level01SceneResult.score;
+	std::sort(stats, stats + 5);
+	for (const PlayerStats& stat : stats)
+	{
+		if (stat.score != 0) {
+			scoresText.setString(scoresText.getString() + std::to_string((int)stat.score) + "\n");
+			scoreIndex++;
+		}
+	}
 }
 
 template <typename T, std::size_t N>
@@ -221,17 +237,12 @@ std::size_t array_size(T(&)[N])
 	return N;
 }
 
-int ScoreboardScene::compare(const void* a, const void* b) {
-	PlayerStats* playerStatA = (PlayerStats*)a;
-	PlayerStats* playerStatB = (PlayerStats*)b;
 
-	return (playerStatA->score - playerStatA->score);
-}
 
 void ScoreboardScene::saveStats()
 {
-	strcpy_s(stats[nbScores].name, newInitials.c_str());
-	stats[nbScores].score = (int)result.level01SceneResult.score;
+	strcpy_s(stats[scoreIndex].name, newInitials.c_str());
+	stats[scoreIndex].score = (int)result.level01SceneResult.score;
 }
 
 
@@ -288,7 +299,7 @@ bool ScoreboardScene::handleEvents(sf::RenderWindow& window)
 						changeEnterNameText();
 					}
 				}
-				if (sf::Joystick::isButtonPressed(0, sf::Joystick::PovY) && canExit)
+				if (sf::Joystick::isButtonPressed(0, sf::Joystick::X) && canExit)
 				{
 					hasExited = true;
 				}
@@ -302,31 +313,18 @@ bool ScoreboardScene::handleEvents(sf::RenderWindow& window)
 				}
 				if (event.key.code == sf::Keyboard::BackSpace)
 				{
-					if (/*currentIndex != 0*/ currentInitials != 0 && !lockedInScore) {
+					if (currentInitials != 0 && !lockedInScore) {
 						removeInitialsText();
 					}
 				}
 				if (event.key.code == sf::Keyboard::Enter)
 				{
-					if (/*currentIndex != 0*/ currentInitials == 3 && !lockedInScore) {
+					if (currentInitials == 3 && !lockedInScore) {
 						saveStats();
 						writeToFile(stats);
 						changeEnterNameText();
 						lockedInScore = true;
 					}
-				}
-				if (event.key.code == sf::Keyboard::Right)
-				{
-					if (currentIndex < MAX_NB_CHARS_INITIALS && currentInitials > currentIndex) {
-						currentIndex++;
-					}
-				}
-				if (event.key.code == sf::Keyboard::Left)
-				{
-					if (currentIndex > 0) {
-						currentIndex--;
-					}
-					std::cout << currentIndex;
 				}
 			}
 		}

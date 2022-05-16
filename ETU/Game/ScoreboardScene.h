@@ -34,7 +34,6 @@ public:
 	void setGameOverText();
 	void setEnterNameText();
 	void changeEnterNameText();
-	int compare(const void* a, const void* b);
 	virtual bool uninit() override;
 	virtual bool handleEvents(sf::RenderWindow& window) override;
 private:
@@ -48,11 +47,10 @@ private:
 	sf::Sprite endGameImage;
 	PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD];
 	int currentInitials;
-	int currentIndex;
+	int scoreIndex;
 	bool lockedInScore;
 	std::string newInitials;
 	int nbAlreadySavedInitials;
-	int nbScores;
 	bool hasExited;
 	bool canExit;
 };

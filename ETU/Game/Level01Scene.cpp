@@ -18,7 +18,8 @@ const float Level01Scene::SPAWN_MARGIN = -50;
 const float Level01Scene::COLLISION_DAMAGE = 5;
 const float Level01Scene::SCORE_GAINED_ENEMY_KILLED = 1000;
 const float Level01Scene::SCORE_GAINED_BOSS_KILLED = 250;
-
+const float Level01Scene::LIFE_SCORE_MULTIPLIER = 3;
+const float Level01Scene::TIME_SCORE_MULTIPLIER = 75;
 const float Level01Scene::SCORE_GAINED_BONUS = 250;
 const float Level01Scene::MAX_GUN_BONUS = 5;
 const float Level01Scene::MAX_LIFE_BONUS = 5;
@@ -31,6 +32,8 @@ Level01Scene::Level01Scene()
 	, gameEnded(false)
 	, score(0)
 	, nbKills(0)
+	, isPaused(false)
+	, gameTime(0)
 	, scoreBoardCalled(false)
 {
 }
@@ -46,6 +49,10 @@ SceneType Level01Scene::update()
 	if (!isPaused) {
 		static int cptScrollBackground = 0;
 		backgroundSprite.setTextureRect(sf::IntRect(0, (int)(0.5f * cptScrollBackground--), Game::GAME_WIDTH, Game::GAME_HEIGHT));
+
+		gameTime += TIME_PER_FRAME;
+
+		//gameEnded = true;
 
 		//Update du joueur
 		player.update(TIME_PER_FRAME, inputs);
@@ -441,7 +448,7 @@ bool Level01Scene::uninit()
 
 bool Level01Scene::init()
 {
-	timeSinceLastFire = player.getFireRate() * 3;
+	timeSinceLastFire = player.getFireRate();
 	inputs.reset();
 	nbKills = 0;
 	if (contentManager.loadContent() == false)
@@ -523,7 +530,9 @@ void Level01Scene::notify(Event event, const void* data)
 	}
 	case::Event::BOSS_KILLED:
 	{
-		score += 
+		score += player.getLivesRemaining() * LIFE_SCORE_MULTIPLIER;
+		score -= gameTime;
+
 		gameEnded = true;
 	}
 	default:
@@ -564,9 +573,10 @@ bool Level01Scene::handleEvents(sf::RenderWindow& window)
 		inputs.moveFactorY -= sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) ? -3.0f : 0.0f;
 		inputs.moveFactorY += sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) ? -3.0f : 0.0f;
 		inputs.playFireSound = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
 			isPaused = !isPaused;
-		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
+			gameEnded = true;
 	}
 
 	return retval;
