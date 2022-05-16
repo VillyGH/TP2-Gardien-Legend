@@ -27,6 +27,8 @@ public:
 	static const float SPAWN_MARGIN;
 	static const float SCORE_GAINED_ENEMY_KILLED;
 	static const float SCORE_GAINED_BOSS_KILLED;
+	static const float LIFE_SCORE_MULTIPLIER;
+	static const float TIME_SCORE_MULTIPLIER;
 	static const float SCORE_GAINED_BONUS;
 	static const float COLLISION_DAMAGE;
 	static const float MAX_GUN_BONUS;
@@ -71,6 +73,7 @@ private:
 	std::list<GunBonus> gunBonus;
 	std::list<LifeBonus> lifeBonus;
 
+	float gameTime;
 	float timeSinceLastFire;
 	sf::Music music;
 	sf::SoundBuffer enemyDeathSound;
