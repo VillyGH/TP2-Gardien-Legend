@@ -25,7 +25,7 @@ const float Level01Scene::MAX_GUN_BONUS = 5;
 const float Level01Scene::MAX_LIFE_BONUS = 5;
 
 Level01Scene::Level01Scene()
-	: Scene(SceneType::TITLE_SCENE)
+	: Scene(SceneType::LEVEL01_SCENE)
 	, enemySpawnTimer(0)
 	, timeSinceLastFire(0)
 	, allEnemiesKilled(false)
@@ -34,6 +34,7 @@ Level01Scene::Level01Scene()
 	, nbKills(0)
 	, isPaused(false)
 	, gameTime(0)
+	, scoreBoardCalled(false)
 {
 }
 
@@ -110,8 +111,8 @@ SceneType Level01Scene::update()
 			enemySpawnTimer = 0;
 		}
 
-		if (nbKills >= Boss::BOSS_SPAWN_KILL_COUNT && !boss.isActive()) //À changer pour un compteur de Enemies Killed
-			spawnBoss();
+	if (nbKills >= Boss::BOSS_SPAWN_KILL_COUNT && !boss.isActive())
+ 		spawnBoss();
 
 		if (boss.isActive()) {
 			boss.update(TIME_PER_FRAME, inputs, player.getPosition());
@@ -192,16 +193,23 @@ SceneType Level01Scene::update()
 		}
 
 
-		/* playerBullets.remove_if([](const GameObject& b) {return !b.isActive(); });
-		 standardEnemies.remove_if([](const GameObject& b) {return !b.isActive(); });*/
-		hud.addPauseText(contentManager);
-		hud.removePauseText();
-		hud.updateGameInfo(score, player.getLivesRemaining(), player.getGunBonusTimer());
-	} else {
-		hud.updatePauseText();
+	/* playerBullets.remove_if([](const GameObject& b) {return !b.isActive(); });
+	 standardEnemies.remove_if([](const GameObject& b) {return !b.isActive(); });*/
+
+	hud.updateGameInfo(score, player.getLivesRemaining(), player.getGunBonusTimer());
+
+	if (gameEnded && scoreBoardCalled) {
+		retval = SceneType::NONE;
+		uninit();
 	}
-	if (gameEnded)
-		retval = SceneType::SCOREBOARD_SCENE;
+	if (!scoreBoardCalled) {
+		if (gameEnded) {
+			retval = SceneType::SCOREBOARD_SCENE;
+			result.level01SceneResult.score = score;
+			scoreBoardCalled = true;
+		}	 
+	}
+
 
 	return retval;
 }
@@ -429,6 +437,12 @@ void Level01Scene::draw(sf::RenderWindow& window) const
 
 bool Level01Scene::uninit()
 {
+	Publisher::removeSubscriber(*this, Event::ENEMY_KILLED);
+	Publisher::removeSubscriber(*this, Event::BOSS_KILLED);
+	Publisher::removeSubscriber(*this, Event::PLAYER_KILLED);
+	Publisher::removeSubscriber(*this, Event::GUN_PICKED_UP);
+	Publisher::removeSubscriber(*this, Event::GUN_BONUS_DROPPED);
+	Publisher::removeSubscriber(*this, Event::LIFE_BONUS_DROPPED);
 	return true;
 }
 
@@ -436,6 +450,7 @@ bool Level01Scene::init()
 {
 	timeSinceLastFire = player.getFireRate();
 	inputs.reset();
+	nbKills = 0;
 	if (contentManager.loadContent() == false)
 	{
 		return false;
@@ -517,7 +532,6 @@ void Level01Scene::notify(Event event, const void* data)
 	{
 		score += player.getLivesRemaining() * LIFE_SCORE_MULTIPLIER;
 		score -= gameTime;
-		score += result.level01SceneResult.score = score;
 
 		gameEnded = true;
 	}

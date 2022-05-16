@@ -80,6 +80,7 @@ private:
 	float enemySpawnTimer;
 	bool allEnemiesKilled;
 	bool gameEnded;
+	bool scoreBoardCalled;
 	float score;
 	int nbKills;
 	Hud hud;
