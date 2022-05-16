@@ -17,8 +17,10 @@ SceneType TitleScene::update()
 {
 	SceneType retval = getSceneType();
 
-	if (gameStarted)
+	if (gameStarted) {
 		retval = SceneType::LEVEL01_SCENE;
+		gameStarted = false;
+	}
 
 	return retval;
 }
@@ -52,6 +54,8 @@ bool TitleScene::init()
 	menuStartText.setPosition(Game::GAME_WIDTH / 2.0f - menuStartText.getLocalBounds().width / 2.0f, Game::GAME_HEIGHT / 1.2f - menuStartText.getLocalBounds().height / 2.0f);
 	menuStartText.setString(menuStartString);
 	menuStartText.setOrigin(menuStartText.getLocalBounds().width / 2.0f, menuStartText.getLocalBounds().height / 2.0f);
+
+	gameStarted = false; 
 
 	return true;
 }

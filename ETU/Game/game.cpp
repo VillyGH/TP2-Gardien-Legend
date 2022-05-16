@@ -63,6 +63,7 @@ bool Game::update()
 			if (SceneType::NONE == nextSceneType)
 			{
 				popScene(false);
+
 			}
 			else
 			{
