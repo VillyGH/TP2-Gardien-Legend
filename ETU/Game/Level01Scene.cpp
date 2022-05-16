@@ -9,7 +9,7 @@
 #include "GunBonus.h"
 
 const float Level01Scene::TIME_PER_FRAME = 1.0f / (float)Game::FRAME_RATE;
-const float Level01Scene::GAMEPAD_SPEEDRATIO = 1000.0f;
+const float Level01Scene::GAMEPAD_SPEEDRATIO = 40.0f;
 const float Level01Scene::KEYBOARD_SPEED = 0.1f;
 const float Level01Scene::MAX_NB_STANDARD_ENEMIES = 15;
 const float Level01Scene::MAX_NB_BOSS_ENEMIES = 3;
@@ -42,147 +42,148 @@ Level01Scene::~Level01Scene()
 
 SceneType Level01Scene::update()
 {
-	static int cptScrollBackground = 0;
-	backgroundSprite.setTextureRect(sf::IntRect(0, (int)(0.5f * cptScrollBackground--), Game::GAME_WIDTH, Game::GAME_HEIGHT));
 	SceneType retval = getSceneType();
+	if (!isPaused) {
+		static int cptScrollBackground = 0;
+		backgroundSprite.setTextureRect(sf::IntRect(0, (int)(0.5f * cptScrollBackground--), Game::GAME_WIDTH, Game::GAME_HEIGHT));
 
-	//Update du joueur
-	player.update(TIME_PER_FRAME, inputs);
+		//Update du joueur
+		player.update(TIME_PER_FRAME, inputs);
 
-	if (inputs.playFireSound && timeSinceLastFire >= player.getFireRate())
-	{
-		firePlayerBullet();
-		player.playFireSound();
-		timeSinceLastFire = 0;
-	}
-
-	timeSinceLastFire += 1.0f / (float)Game::FRAME_RATE;
-
-	//Update des balles du joueur et les collisions
-	for (Bullet& b : playerBullets)
-	{
-		if (b.isActive() && b.update(TIME_PER_FRAME, CharacterType::PLAYER))
-			b.deactivate();
-
-		if (b.collidesWith(boss))
+		if (inputs.playFireSound && timeSinceLastFire >= player.getFireRate())
 		{
-			b.deactivate();
-			boss.onHit();
+			firePlayerBullet();
+			player.playFireSound();
+			timeSinceLastFire = 0;
 		}
 
-		for (StandardEnemy& e : standardEnemies)
+		timeSinceLastFire += 1.0f / (float)Game::FRAME_RATE;
+
+		//Update des balles du joueur et les collisions
+		for (Bullet& b : playerBullets)
 		{
-			if (b.collidesWith(e))
+			if (b.isActive() && b.update(TIME_PER_FRAME, CharacterType::PLAYER))
+				b.deactivate();
+
+			if (b.collidesWith(boss))
 			{
 				b.deactivate();
-				e.onHit(Player::PLAYER_BULLET_DAMAGE);
+				boss.onHit();
+			}
+
+			for (StandardEnemy& e : standardEnemies)
+			{
+				if (b.collidesWith(e))
+				{
+					b.deactivate();
+					e.onHit(Player::PLAYER_BULLET_DAMAGE);
+				}
 			}
 		}
-	}
 
-	//Update des enemies et des collisions
-	for (StandardEnemy& e : standardEnemies) {
-		if(e.isActive())
-		{
-			if (e.update(TIME_PER_FRAME, inputs))
-				e.deactivate();
-			if (e.isFiring(TIME_PER_FRAME) && e.isActive())
-				fireEnemyBullet(e);
-			if (e.collidesWith(player) && !player.isImmune()) {
-				e.onHit(COLLISION_DAMAGE);
-				player.onHit(COLLISION_DAMAGE);
+		//Update des enemies et des collisions
+		for (StandardEnemy& e : standardEnemies) {
+			if (e.isActive())
+			{
+				if (e.update(TIME_PER_FRAME, inputs))
+					e.deactivate();
+				if (e.isFiring(TIME_PER_FRAME) && e.isActive())
+					fireEnemyBullet(e);
+				if (e.collidesWith(player) && !player.isImmune()) {
+					e.onHit(COLLISION_DAMAGE);
+					player.onHit(COLLISION_DAMAGE);
+				}
 			}
 		}
-	}
 
-	enemySpawnTimer += TIME_PER_FRAME;
+		enemySpawnTimer += TIME_PER_FRAME;
 
-	if (enemySpawnTimer >= StandardEnemy::STANDARD_ENEMY_SPAWN_TIME && nbKills < Boss::BOSS_SPAWN_KILL_COUNT) {
+		if (enemySpawnTimer >= StandardEnemy::STANDARD_ENEMY_SPAWN_TIME && nbKills < Boss::BOSS_SPAWN_KILL_COUNT) {
 
-		spawnStandardEnemy();
-		enemySpawnTimer = 0;
-	}
+			spawnStandardEnemy();
+			enemySpawnTimer = 0;
+		}
 
 	if (nbKills >= Boss::BOSS_SPAWN_KILL_COUNT && !boss.isActive())
  		spawnBoss();
 
-	if (boss.isActive()) {
-		boss.update(TIME_PER_FRAME, inputs, player.getPosition());
-		if (boss.isFiring())
-			fireBossBullet();
-		for (Bullet& e : bossBullets) {
-			if (e.isActive() && e.update(TIME_PER_FRAME, CharacterType::BOSS))
-				e.deactivate();
-		}
-	}
-
-	for (Bullet& e : enemyBullets)
-	{
-		if (e.isActive() && e.update(TIME_PER_FRAME, CharacterType::STANDARD_ENEMY))
-			e.deactivate();
-		if (e.collidesWith(player)) {
-			e.deactivate();
-			if (!player.isImmune())
-				player.onHit(StandardEnemy::ENEMY_BULLET_DAMAGE);
-		}
-
-	}
-
-	//Gestion des spawns enemy
-	enemySpawnTimer += TIME_PER_FRAME;
-
-	if (enemySpawnTimer >= StandardEnemy::STANDARD_ENEMY_SPAWN_TIME && nbKills < Boss::BOSS_SPAWN_KILL_COUNT) {
-
-		spawnStandardEnemy();
-		enemySpawnTimer = 0;
-	}
-
-	if (nbKills >= Boss::BOSS_SPAWN_KILL_COUNT && !boss.isActive())
-		spawnBoss();
-
-	//Update Boss et collisions avec joueur
-	if (boss.isActive()) {
-		boss.update(TIME_PER_FRAME, inputs, player.getPosition());
-		if (boss.isFiring())
-			fireBossBullet();
-
-		if (boss.collidesWith(player))
-			player.onHit(player.INITIAL_LIFE_COUNT);
-
-		for (Bullet& e : bossBullets) {
-			if (e.isActive() && e.update(TIME_PER_FRAME, CharacterType::BOSS))
-				e.deactivate();
-			if (e.collidesWith(player) && !player.isImmune()) {
-				e.deactivate();
-				player.onHit(Boss::BOSS_BULLET_DAMAGE);
+		if (boss.isActive()) {
+			boss.update(TIME_PER_FRAME, inputs, player.getPosition());
+			if (boss.isFiring())
+				fireBossBullet();
+			for (Bullet& e : bossBullets) {
+				if (e.isActive() && e.update(TIME_PER_FRAME, CharacterType::BOSS))
+					e.deactivate();
 			}
 		}
-	}
 
-	//Update des bonus et de leur collisions
-	for (GunBonus& e : gunBonus) {
-		if (e.isActive())
+		for (Bullet& e : enemyBullets)
 		{
-			if (e.update(TIME_PER_FRAME, inputs))
+			if (e.isActive() && e.update(TIME_PER_FRAME, CharacterType::STANDARD_ENEMY))
 				e.deactivate();
 			if (e.collidesWith(player)) {
 				e.deactivate();
-				e.onPickUp();
+				if (!player.isImmune())
+					player.onHit(StandardEnemy::ENEMY_BULLET_DAMAGE);
 			}
-		}
-	}
 
-	for (LifeBonus& e : lifeBonus) {
-		if (e.isActive())
-		{
-			if (e.update(TIME_PER_FRAME, inputs))
-				e.deactivate();
-			if (e.collidesWith(player)) {
-				e.deactivate();
-				e.onPickUp();
+		}
+
+		//Gestion des spawns enemy
+		enemySpawnTimer += TIME_PER_FRAME;
+
+		if (enemySpawnTimer >= StandardEnemy::STANDARD_ENEMY_SPAWN_TIME && nbKills < Boss::BOSS_SPAWN_KILL_COUNT) {
+
+			spawnStandardEnemy();
+			enemySpawnTimer = 0;
+		}
+
+		if (nbKills >= Boss::BOSS_SPAWN_KILL_COUNT && !boss.isActive())
+			spawnBoss();
+
+		//Update Boss et collisions avec joueur
+		if (boss.isActive()) {
+			boss.update(TIME_PER_FRAME, inputs, player.getPosition());
+			if (boss.isFiring())
+				fireBossBullet();
+
+			if (boss.collidesWith(player))
+				player.onHit(player.INITIAL_LIFE_COUNT);
+
+			for (Bullet& e : bossBullets) {
+				if (e.isActive() && e.update(TIME_PER_FRAME, CharacterType::BOSS))
+					e.deactivate();
+				if (e.collidesWith(player) && !player.isImmune()) {
+					e.deactivate();
+					player.onHit(Boss::BOSS_BULLET_DAMAGE);
+				}
 			}
 		}
-	}
+
+		//Update des bonus et de leur collisions
+		for (GunBonus& e : gunBonus) {
+			if (e.isActive())
+			{
+				if (e.update(TIME_PER_FRAME, inputs))
+					e.deactivate();
+				if (e.collidesWith(player)) {
+					e.deactivate();
+					e.onPickUp();
+				}
+			}
+		}
+
+		for (LifeBonus& e : lifeBonus) {
+			if (e.isActive())
+			{
+				if (e.update(TIME_PER_FRAME, inputs))
+					e.deactivate();
+				if (e.collidesWith(player)) {
+					e.deactivate();
+					e.onPickUp();
+				}
+			}
+		}
 
 
 	/* playerBullets.remove_if([](const GameObject& b) {return !b.isActive(); });
@@ -545,11 +546,28 @@ bool Level01Scene::handleEvents(sf::RenderWindow& window)
 			retval = true;
 		}
 	}
-	inputs.moveFactorX += sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) ? 3.0f : 0.0f;
-	inputs.moveFactorX -= sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) ? 3.0f : 0.0f;
-	inputs.moveFactorY -= sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) ? -3.0f : 0.0f;
-	inputs.moveFactorY += sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) ? -3.0f : 0.0f;
-	inputs.playFireSound = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
+
+
+	if (sf::Joystick::isConnected(0))
+	{
+		inputs.moveFactorX = -Inputs::eliminateVibration(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X)) / GAMEPAD_SPEEDRATIO;
+		inputs.moveFactorY = -Inputs::eliminateVibration(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y)) / GAMEPAD_SPEEDRATIO;
+		inputs.playFireSound = sf::Joystick::isButtonPressed(0, sf::Joystick::X);
+		if (sf::Joystick::isButtonPressed(0, sf::Joystick::PovX)) {
+			isPaused = !isPaused;
+		}
+	}
+	else
+	{
+		inputs.moveFactorX += sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) ? 3.0f : 0.0f;
+		inputs.moveFactorX -= sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) ? 3.0f : 0.0f;
+		inputs.moveFactorY -= sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) ? -3.0f : 0.0f;
+		inputs.moveFactorY += sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) ? -3.0f : 0.0f;
+		inputs.playFireSound = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+			isPaused = !isPaused;
+		}
+	}
 
 	return retval;
 }

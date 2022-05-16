@@ -62,7 +62,7 @@ void Hud::addTimeRemainingBonusText(const Level01ContentManager& contentManager)
 void Hud::addPauseText(const Level01ContentManager& contentManager)
 {
 	pauseText.setFont(contentManager.getMainFont());
-	pauseText.setCharacterSize(32);
+	pauseText.setCharacterSize(28);
 	pauseText.setFillColor(sf::Color::Cyan);
 	pauseText.setPosition(Game::GAME_WIDTH / 2.0f - pauseText.getLocalBounds().width / 2.0f, Game::GAME_HEIGHT / 2.0f - pauseText.getLocalBounds().height / 2.0f);
 }

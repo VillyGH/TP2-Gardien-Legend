@@ -24,7 +24,7 @@ public:
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual bool init() override;
 	void setScoreText();
-	void saveStats(std::string initials);
+	void saveStats();
 	bool writeToFile(const PlayerStats stats[ScoreboardScene::MAX_NB_PLAYERS_LEADERBOARD]);
 	bool readFromFile(const PlayerStats stats[ScoreboardScene::MAX_NB_PLAYERS_LEADERBOARD]);
 	void setInitialsText();
@@ -34,6 +34,7 @@ public:
 	void setGameOverText();
 	void setEnterNameText();
 	void changeEnterNameText();
+	int compare(const void* a, const void* b);
 	virtual bool uninit() override;
 	virtual bool handleEvents(sf::RenderWindow& window) override;
 private:
@@ -48,7 +49,10 @@ private:
 	PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD];
 	int currentInitials;
 	int currentIndex;
+	bool lockedInScore;
+	std::string newInitials;
 	int nbAlreadySavedInitials;
+	int nbScores;
 	bool hasExited;
 	bool canExit;
 };

@@ -88,7 +88,7 @@ bool Boss::update(const float deltaT, const Inputs& inputs, const sf::Vector2f& 
 		move(cos(moveAngle) * BOSS_HORIZONTAL_SPEED, 0);
 	}
 
-	if (getGlobalBounds().height < -getGlobalBounds().height * 0.5f /** && currentState != State::EXPLODING*/)
+	if (getGlobalBounds().height < -getGlobalBounds().height * 0.5f)
 		setPosition(getPosition().x, 0);
 
 	if (animations[currentState]->isOver())
