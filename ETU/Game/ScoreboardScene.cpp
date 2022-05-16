@@ -39,7 +39,7 @@ SceneType ScoreboardScene::update()
 	SceneType retval = getSceneType();
 
 	if (hasExited)
-		retval = SceneType::TITLE_SCENE;
+		retval = SceneType::NONE;
 
 	return retval;
 }
@@ -196,7 +196,6 @@ void ScoreboardScene::removeInitialsText()
 
 void ScoreboardScene::setScoreText()
 {
-	const std::string scoresTextString = std::to_string(result.level01SceneResult.score);
 	scoresText.setFont(contentManager.getMainFont());
 	scoresText.setCharacterSize(24);
 	scoresText.setPosition(Game::GAME_WIDTH / 1.5f, initialsText.getPosition().y);
@@ -206,7 +205,7 @@ void ScoreboardScene::setScoreText()
 		if(stat.score != 0)
 			scoresText.setString(scoresText.getString() + std::to_string(stat.score) + "\n");
 	}
-	scoresText.setString(scoresText.getString() + "\n" + scoresTextString);
+	scoresText.setString(scoresText.getString() + std::to_string((int)result.level01SceneResult.score));
 }
 
 void ScoreboardScene::saveStats(std::string initials)
