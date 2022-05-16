@@ -80,6 +80,7 @@ bool ScoreboardScene::init()
 
 	backgroundSprite.setTexture(contentManager.getBackgroundTexture());
 
+	scoreIndex = 0;
 	setGameOverText();
 	setLeaderboardText();
 	setEnterNameText();
@@ -151,7 +152,7 @@ void ScoreboardScene::changeEnterNameText()
 
 void ScoreboardScene::setInitialsText()
 {
-	int nameIndex = 0;
+	bool nameWritten = false;
 	initialsText.setFont(contentManager.getMainFont());
 	initialsText.setCharacterSize(24);
 	initialsText.setPosition(Game::GAME_WIDTH / 4.0f, Game::GAME_HEIGHT / 3.0f);
@@ -159,14 +160,12 @@ void ScoreboardScene::setInitialsText()
 	for (const PlayerStats& stat : stats)
 	{
 		if (!strlen(stat.name) == 0) {
-			if (stat.score == (int)result.level01SceneResult.score) {
+			if (stat.score == (int)std::round(result.level01SceneResult.score && !nameWritten)) {
 				initialsText.setString(initialsText.getString() + "\n");
-				scoreIndex = nameIndex;
-			}
-			else {
+				nameWritten = true;
+			} else {
 				initialsText.setString(initialsText.getString() + stat.name + "\n");
 			}
-			nameIndex++;
 		}
 	}
 }
@@ -227,7 +226,6 @@ void ScoreboardScene::setScoreText()
 	{
 		if (stat.score != 0) {
 			scoresText.setString(scoresText.getString() + std::to_string((int)stat.score) + "\n");
-			scoreIndex++;
 		}
 	}
 }
@@ -242,8 +240,8 @@ std::size_t array_size(T(&)[N])
 
 void ScoreboardScene::saveStats()
 {
-	strcpy_s(stats[scoreIndex].name, newInitials.c_str());
-	stats[scoreIndex].score = (int)result.level01SceneResult.score;
+	strcpy_s(stats[scoreIndex - 1].name, newInitials.c_str());
+	stats[scoreIndex - 1].score = (int)result.level01SceneResult.score;
 }
 
 
