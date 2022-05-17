@@ -6,7 +6,7 @@ class GameObject : public sf::Sprite
 public:
 	GameObject();
 	GameObject(const GameObject& src);
-	
+
 	virtual void draw(sf::RenderWindow& window) const;
 	virtual void initialize(const sf::Texture& texture, const sf::Vector2f& initialPosition);
 	virtual bool init(const Level01ContentManager& manager);

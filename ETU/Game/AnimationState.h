@@ -3,8 +3,9 @@
 
 enum class State
 {
-  NONE,
-  STANDARD_ENEMY,
-  SHIP,
-  BOSS,
+	NONE,
+	STANDARD_ENEMY,
+	EXPLODING,
+	SHIP,
+	BOSS,
 };

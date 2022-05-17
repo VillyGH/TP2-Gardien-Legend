@@ -8,9 +8,9 @@ struct Inputs
 	void reset();
 	//Portée analogue -100 à 100
 	static float eliminateVibration(float analogInput);
-	bool fireBullet;
+	bool playFireSound;
 	float moveFactorX;
 	float moveFactorY;
-	
+
 };
 

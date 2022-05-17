@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
-class MenuContentManager
+#include "ContentManager.h"
+class MenuContentManager : ContentManager
 {
 public:
 	MenuContentManager();

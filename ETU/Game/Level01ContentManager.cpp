@@ -4,73 +4,82 @@
 
 Level01ContentManager::Level01ContentManager()
 {
+
 }
 
 bool Level01ContentManager::loadContent()
 {
 
-    if (!backgroundTexture.loadFromFile("Assets\\Sprites\\Level01\\SpaceBackground.png"))
-        return false;
-    else
-        backgroundTexture.setRepeated(true);
-    if (!mainCharacterTexture.loadFromFile("Assets\\Sprites\\Level01\\NES - The Guardian Legend - The Guardian Alyssa.bmp"))
-        return false;
-    if (!miscTexture.loadFromFile("Assets\\Sprites\\Level01\\NES - The Guardian Legend - Miscellaneous.bmp"))
-        return false;
-    if (!enemiesTexture.loadFromFile("Assets\\Sprites\\Level01\\NES - The Guardian Legend - Bosses.bmp"))
-        return false;
-    if (!playerGunSoundBuffer.loadFromFile("Assets\\SoundFX\\Level01\\playerGun.wav"))
-        return false;
-    if (!enemyGunSoundBuffer.loadFromFile("Assets\\SoundFX\\Level01\\enemyGun.wav"))
-        return false;
-    if (!healthBonusSoundBuffer.loadFromFile("Assets\\SoundFX\\Level01\\healthBonus.wav"))
-        return false;
-    if (!gunBonusSoundBuffer.loadFromFile("Assets\\SoundFX\\Level01\\gunBonus.wav"))
-        return false;
-    if (!enemyKilledSoundBuffer.loadFromFile("Assets\\SoundFX\\Level01\\enemyKilled.wav"))
-        return false;
+	if (!backgroundTexture.loadFromFile("Assets\\Sprites\\Level01\\SpaceBackground.png"))
+		return false;
+	else
+		backgroundTexture.setRepeated(true);
+	if (!mainCharacterTexture.loadFromFile("Assets\\Sprites\\Level01\\NES - The Guardian Legend - The Guardian Alyssa.bmp"))
+		return false;
+	if (!miscTexture.loadFromFile("Assets\\Sprites\\Level01\\NES - The Guardian Legend - Miscellaneous.bmp"))
+		return false;
+	if (!enemiesTexture.loadFromFile("Assets\\Sprites\\Level01\\NES - The Guardian Legend - Bosses.bmp"))
+		return false;
+	if (!playerGunSoundBuffer.loadFromFile("Assets\\SoundFX\\Level01\\playerGun.wav"))
+		return false;
+	if (!enemyGunSoundBuffer.loadFromFile("Assets\\SoundFX\\Level01\\enemyGun.wav"))
+		return false;
+	if (!mainFont.loadFromFile("Assets\\Fonts\\Level01\\emulogic.ttf"))
+		return false;
+	if (!healthBonusSoundBuffer.loadFromFile("Assets\\SoundFX\\Level01\\healthBonus.wav"))
+		return false;
+	if (!gunBonusSoundBuffer.loadFromFile("Assets\\SoundFX\\Level01\\gunBonus.wav"))
+		return false;
+	if (!enemyKilledSoundBuffer.loadFromFile("Assets\\SoundFX\\Level01\\enemyKilled.wav"))
+		return false;
 
-    return true;
+	return true;
 }
+
 const sf::Texture& Level01ContentManager::getEnemiesTexture() const
 {
-    return enemiesTexture;
+	return enemiesTexture;
+}
+
+const sf::Font& Level01ContentManager::getMainFont() const
+{
+	return mainFont;
 }
 
 const sf::Texture& Level01ContentManager::getBackgroundTexture() const
 {
-    return backgroundTexture;
+	return backgroundTexture;
 }
 const sf::Texture& Level01ContentManager::getMiscTexture() const
 {
-    return miscTexture;
+	return miscTexture;
 }
 
 const sf::Texture& Level01ContentManager::getMainCharacterTexture() const
 {
-    return mainCharacterTexture;
+	return mainCharacterTexture;
 }
 
 const sf::SoundBuffer& Level01ContentManager::getPlayerGunSoundBuffer() const
 {
-    return playerGunSoundBuffer;
+	return playerGunSoundBuffer;
 }
 
 const sf::SoundBuffer& Level01ContentManager::getEnemyGunSoundBuffer() const
 {
-    return enemyGunSoundBuffer;
+	return enemyGunSoundBuffer;
 }
 
 const sf::SoundBuffer& Level01ContentManager::getHealthSoundBuffer() const
 {
-    return healthBonusSoundBuffer;
+	return healthBonusSoundBuffer;
 }
 
 const sf::SoundBuffer& Level01ContentManager::getGunBonusSoundBuffer() const
 {
-    return gunBonusSoundBuffer;
+	return gunBonusSoundBuffer;
 }
 const sf::SoundBuffer& Level01ContentManager::getEnemyKilledSoundBuffer() const
 {
-    return enemyKilledSoundBuffer;
+	return enemyKilledSoundBuffer;
 }

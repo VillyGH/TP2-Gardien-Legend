@@ -1,46 +1,30 @@
 #include "stdafx.h"
-#include "ScoreBoardContentManager.h"
+#include "ScoreboardContentManager.h"
 
 
-ScoreBoardContentManager::ScoreBoardContentManager()
+ScoreboardContentManager::ScoreboardContentManager()
 {
 }
 
-bool ScoreBoardContentManager::loadContent()
+bool ScoreboardContentManager::loadContent()
 {
 
-    if (!backgroundTexture.loadFromFile("Assets\\Sprites\\Level01\\SpaceBackground.png"))
-        return false;
-    else
-        backgroundTexture.setRepeated(true);
+	if (!backgroundTexture.loadFromFile("Assets\\Sprites\\Level01\\SpaceBackground.png"))
+		return false;
+	else
+		backgroundTexture.setRepeated(true);
+	if (!mainFont.loadFromFile("Assets\\Fonts\\Level01\\emulogic.ttf"))
+		return false;
 
-    if (!miscTexture.loadFromFile("Assets\\Sprites\\Level01\\NES - The Guardian Legend - Miscellaneous.bmp"))
-        return false;
-
-    if (!mainFont.loadFromFile("Assets\\Fonts\\Level01\\emulogic.ttf"))
-        return false;
-    if (!titleScreenTexture.loadFromFile("Assets\\Sprites\\Title\\Title.png"))
-        return false;
-
-    return true;
+	return true;
 }
 
-const sf::Texture& ScoreBoardContentManager::getBackgroundTexture() const
+const sf::Texture& ScoreboardContentManager::getBackgroundTexture() const
 {
-    return backgroundTexture;
-}
-const sf::Texture& ScoreBoardContentManager::getMiscTexture() const
-{
-    return miscTexture;
+	return backgroundTexture;
 }
 
-const sf::Font& ScoreBoardContentManager::getMainFont() const
+const sf::Font& ScoreboardContentManager::getMainFont() const
 {
-    return mainFont;
-}
-
-
-const sf::Texture& ScoreBoardContentManager::getTitleScreenTexture() const
-{
-    return titleScreenTexture;
+	return mainFont;
 }

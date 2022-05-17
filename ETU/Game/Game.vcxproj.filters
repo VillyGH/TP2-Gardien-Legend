@@ -1,10 +1,237 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="PubSub">
+      <UniqueIdentifier>{5cca3c48-32c6-4d35-90d9-d7329e8e3429}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Animations">
+      <UniqueIdentifier>{9ed0a21d-58fc-4567-a92e-94cf3743e0ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{2da220f6-b49f-4d73-8dc9-d5e8db51128f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GenericFiles">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Scenes\ContentManagers">
+      <UniqueIdentifier>{8c96c7ad-c911-43c8-b71b-daae3f71e4f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{99e711c9-3346-4b09-8d26-54139f135885}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Animations">
+      <UniqueIdentifier>{8c72a434-5e92-4cca-8682-b2ee7b362803}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Bonus">
+      <UniqueIdentifier>{ec63a94b-fe7b-429c-9378-16ac7f8b738b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\GenericFiles">
+      <UniqueIdentifier>{ee145b2b-c6f5-4f10-b85b-4d2a86ea92b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Scenes">
+      <UniqueIdentifier>{d39c3555-b160-4dec-99ee-59a5157570e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Scenes\ContentMangers">
+      <UniqueIdentifier>{887d7bde-0c44-4faf-ac22-81d4e539ceb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hud">
+      <UniqueIdentifier>{7dbb2d32-9f55-40ff-a34c-3671e8f798ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Hud">
+      <UniqueIdentifier>{06e06f68-ca45-46a7-b44b-63106bf1e56c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects">
+      <UniqueIdentifier>{a56334a4-6740-4ea9-a7cc-c0939060e07f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\GameObjects">
+      <UniqueIdentifier>{7ff0d7e2-0d76-4b32-b5b6-6362bbeec418}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Characters">
+      <UniqueIdentifier>{88fbd685-f9bd-47a7-bbe5-d699b703812e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\GameObjects\Characters">
+      <UniqueIdentifier>{ecdf686b-747d-4e9b-9cf2-90fe401f3661}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\GameObjects\Bonus">
+      <UniqueIdentifier>{12438821-faa8-4ba6-b01e-8340e778cbeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Bonus">
+      <UniqueIdentifier>{45e69786-f6fa-4d4c-9bb8-bee63cb1d49d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Publisher.h">
+      <Filter>PubSub</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>PubSub</Filter>
+    </ClInclude>
+    <ClInclude Include="Subscriber.h">
+      <Filter>PubSub</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentManager.h">
+      <Filter>Header files\Scenes\ContentMangers</Filter>
+    </ClInclude>
+    <ClInclude Include="Level01ContentManager.h">
+      <Filter>Header files\Scenes\ContentMangers</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuContentManager.h">
+      <Filter>Header files\Scenes\ContentMangers</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreboardContentManager.h">
+      <Filter>Header files\Scenes\ContentMangers</Filter>
+    </ClInclude>
+    <ClInclude Include="Level01Scene.h">
+      <Filter>Header files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Header files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Hud.h">
+      <Filter>Header files\Hud</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedGameObject.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="StandardEnemy.h">
+      <Filter>Header files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterType.h">
+      <Filter>Header files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Header files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorType.h">
+      <Filter>Header files\GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuContentManager.h">
+      <Filter>Scenes\ContentManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="Level01ContentManager.h">
+      <Filter>Header files\Scenes\ContentMangers</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuContentManager.h">
+      <Filter>Header files\Scenes\ContentMangers</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreboardContentManager.h">
+      <Filter>Header files\Scenes\ContentMangers</Filter>
+    </ClInclude>
+    <ClInclude Include="Level01Scene.h">
+      <Filter>Header files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneResult.h">
+      <Filter>Header files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneType.h">
+      <Filter>Header files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreboardScene.h">
+      <Filter>Header files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Header files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Hud.h">
+      <Filter>Header files\Hud</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedGameObject.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterType.h">
+      <Filter>Header files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Header files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorType.h">
+      <Filter>Header files\GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>Header files\GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Inputs.h">
+      <Filter>Header files\GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header files\GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header files\GenericFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationFrame.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationState.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="CyclicAnimation.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="StandardEnemyIdleAnimation.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="InputBasedAnimation.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="LinearAnimation.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipAnimation.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Header files\GameObjects\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="BossIdleAnimation.h">
+      <Filter>Header files\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStats.h">
+      <Filter>Header files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="GunBonus.h">
+      <Filter>Header files\GameObjects\Bonus</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeBonus.h">
+      <Filter>Header files\GameObjects\Bonus</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Publisher.cpp">
+      <Filter>PubSub</Filter>
+    </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Animations</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationFrame.cpp">
+    <ClCompile Include="CyclicAnimation.cpp">
       <Filter>Animations</Filter>
     </ClCompile>
     <ClCompile Include="InputBasedAnimation.cpp">
@@ -13,11 +240,14 @@
     <ClCompile Include="LinearAnimation.cpp">
       <Filter>Animations</Filter>
     </ClCompile>
-    <ClCompile Include="CyclicAnimation.cpp">
+    <ClCompile Include="AnimationFrame.cpp">
       <Filter>Animations</Filter>
     </ClCompile>
-    <ClCompile Include="ContentManager.cpp">
-      <Filter>GenericFiles</Filter>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="game.cpp">
       <Filter>GenericFiles</Filter>
@@ -25,144 +255,63 @@
     <ClCompile Include="Inputs.cpp">
       <Filter>GenericFiles</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>GenericFiles</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>GenericFiles</Filter>
     </ClCompile>
-    <ClCompile Include="Publisher.cpp">
-      <Filter>PubSub</Filter>
+    <ClCompile Include="Hud.cpp">
+      <Filter>Hud</Filter>
     </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Level01.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
+    <ClCompile Include="Level01Scene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Level01ContentManager.cpp">
       <Filter>Scenes\ContentManagers</Filter>
     </ClCompile>
-    <ClCompile Include="ScoreBoardContentManager.cpp">
+    <ClCompile Include="ContentManager.cpp">
       <Filter>Scenes\ContentManagers</Filter>
     </ClCompile>
     <ClCompile Include="MenuContentManager.cpp">
       <Filter>Scenes\ContentManagers</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyType1.cpp">
-      <Filter>Characters</Filter>
+    <ClCompile Include="ScoreboardContentManager.cpp">
+      <Filter>Scenes\ContentManagers</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyType1IdleAnimation.cpp">
+    <ClCompile Include="ScoreboardScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipAnimation.cpp">
       <Filter>Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="StandardEnemy.cpp">
+      <Filter>GameObjects\Characters</Filter>
     </ClCompile>
     <ClCompile Include="AnimatedGameObject.cpp">
-      <Filter>GenericFiles</Filter>
+      <Filter>Animations</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <Filter>Characters</Filter>
+      <Filter>GameObjects</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Animation.h">
+    <ClCompile Include="GameObject.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>GameObjects\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="StandardEnemyIdleAnimation.cpp">
       <Filter>Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationState.h">
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>GameObjects\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="BossIdleAnimation.cpp">
       <Filter>Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationFrame.h">
-      <Filter>Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="InputBasedAnimation.h">
-      <Filter>Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="LinearAnimation.h">
-      <Filter>Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="CyclicAnimation.h">
-      <Filter>Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="ActorType.h">
-      <Filter>GenericFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedGameObject.h">
-      <Filter>GenericFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>GenericFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="Inputs.h">
-      <Filter>GenericFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>GenericFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>GenericFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>GenericFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="Event.h">
-      <Filter>PubSub</Filter>
-    </ClInclude>
-    <ClInclude Include="Publisher.h">
-      <Filter>PubSub</Filter>
-    </ClInclude>
-    <ClInclude Include="Subscriber.h">
-      <Filter>PubSub</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Level01.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="scenetype.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneResult.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Level01ContentManager.h">
-      <Filter>Scenes\ContentManagers</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreBoardContentManager.h">
-      <Filter>Scenes\ContentManagers</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuContentManager.h">
-      <Filter>Scenes\ContentManagers</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyType1.h">
-      <Filter>Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyType1IdleAnimation.h">
-      <Filter>Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="CharacterType.h">
-      <Filter>Characters</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="..\extern\SFML\bin\openal32.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-audio-2.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-audio-d-2.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-graphics-2.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-graphics-d-2.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-network-2.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-network-d-2.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-system-2.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-system-d-2.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-window-2.dll" />
-    <CopyFileToFolders Include="..\extern\SFML\bin\sfml-window-d-2.dll" />
+    </ClCompile>
+    <ClCompile Include="LifeBonus.cpp">
+      <Filter>GameObjects\Bonus</Filter>
+    </ClCompile>
+    <ClCompile Include="GunBonus.cpp">
+      <Filter>GameObjects\Bonus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Animations">
@@ -170,12 +319,6 @@
     </Filter>
     <Filter Include="Bonus">
       <UniqueIdentifier>{a6a4f9e7-54d1-46ee-bc06-41b374ebb544}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Characters">
-      <UniqueIdentifier>{9f5857e9-2d7c-4be4-9683-afe10bae9b2b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NewFilter4">
-      <UniqueIdentifier>{1a4169a1-130c-4021-9c97-986dc5dff5c0}</UniqueIdentifier>
     </Filter>
     <Filter Include="GenericFiles">
       <UniqueIdentifier>{03a3c0c2-7584-4c78-a134-d5ad5075217b}</UniqueIdentifier>

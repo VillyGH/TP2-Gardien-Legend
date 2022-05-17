@@ -3,86 +3,86 @@
 #define RADIANS_TO_DEGREE 57.295779513f
 
 GameObject::GameObject()
-  : Sprite()
+	: Sprite()
 {
-  active = false;
+	active = false;
 }
 
 GameObject::GameObject(const GameObject& src)
-  : Sprite(src)
-  , active(src.active)
+	: Sprite(src)
+	, active(src.active)
 {
-  if (nullptr != src.getTexture())
-  {
-    setTextureRect(src.getTextureRect());
-    initialize(*src.getTexture(), src.getPosition());
-  }
+	if (nullptr != src.getTexture())
+	{
+		setTextureRect(src.getTextureRect());
+		initialize(*src.getTexture(), src.getPosition());
+	}
 }
 
 float GameObject::getAngleWith(const GameObject& other) const
 {
-  return atan2f(other.getPosition().y - getPosition().y, other.getPosition().x - getPosition().x);
+	return atan2f(other.getPosition().y - getPosition().y, other.getPosition().x - getPosition().x);
 }
 
 void GameObject::draw(sf::RenderWindow& window) const
 {
-  if (isActive())
-    window.draw(*this, sf::RenderStates(sf::BlendAlpha));
+	if (isActive())
+		window.draw(*this, sf::RenderStates(sf::BlendAlpha));
 }
 
 void GameObject::activate()
 {
-  active = true;
+	active = true;
 }
 
 void GameObject::deactivate()
 {
-  active = false;
+	active = false;
 }
 
 bool GameObject::isActive() const
 {
-  return active;
+	return active;
 }
 
 bool GameObject::collidesWith(const GameObject& other) const
 {
-  return isActive() && other.isActive() && getGlobalBounds().intersects(other.getGlobalBounds());
+	return isActive() && other.isActive() && getGlobalBounds().intersects(other.getGlobalBounds());
 }
 
 float GameObject::getRotationAngleInRadians() const
 {
-  return getRotation() / RADIANS_TO_DEGREE;
+	return getRotation() / RADIANS_TO_DEGREE;
 }
 
 
 void GameObject::setRotationAngleRadians(const float angle)
 {
-  setRotation(angle * RADIANS_TO_DEGREE);
+	setRotation(angle * RADIANS_TO_DEGREE);
 }
 
 void GameObject::rotateInRadians(const float angle)
 {
-  rotate(angle * RADIANS_TO_DEGREE);
+	rotate(angle * RADIANS_TO_DEGREE);
 }
 
 void GameObject::initialize(const sf::Texture& texture, const sf::Vector2f& initialPoistion)
 {
-  setTexture(texture);
-  const sf::IntRect& rect = getTextureRect();
-  setOrigin(sf::Vector2f(rect.width / 2.0f, rect.height / 2.0f));
-  setPosition(initialPoistion);
+	setTexture(texture);
+	const sf::IntRect& rect = getTextureRect();
+	setOrigin(sf::Vector2f(rect.width / 2.0f, rect.height / 2.0f));
+	setPosition(initialPoistion);
 }
 bool GameObject::init(const Level01ContentManager& contentManager)
 {
-  return true;
+	return true;
 }
 
 bool GameObject::update(float deltaT)
 {
-  return false;
+	return false;
 }
 bool GameObject::update(float deltaT, const Inputs& inputs)
 {
-  return false;
+	return false;
 }

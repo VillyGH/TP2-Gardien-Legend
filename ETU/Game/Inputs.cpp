@@ -19,6 +19,6 @@ float Inputs::eliminateVibration(float analogInput)
 
 void Inputs::reset()
 {
-	moveFactorX=moveFactorY=0.0f;
-	fireBullet = false;
+	moveFactorX = moveFactorY = 0.0f;
+	playFireSound = false;
 }

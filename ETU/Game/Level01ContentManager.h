@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
-class Level01ContentManager
+#include "ContentManager.h"
+class Level01ContentManager : ContentManager
 {
 public:
 	Level01ContentManager();
@@ -10,12 +11,14 @@ public:
 	const sf::Texture& getMainCharacterTexture() const;
 	const sf::Texture& getMiscTexture() const;
 	const sf::Texture& getEnemiesTexture() const;
+	const sf::Font& getMainFont() const;
 	const sf::SoundBuffer& getPlayerGunSoundBuffer() const;
 	const sf::SoundBuffer& getEnemyGunSoundBuffer() const;
 	const sf::SoundBuffer& getHealthSoundBuffer() const;
 	const sf::SoundBuffer& getGunBonusSoundBuffer() const;
 	const sf::SoundBuffer& getEnemyKilledSoundBuffer() const;
 private:
+	sf::Font mainFont;
 	sf::Texture mainCharacterTexture;
 	sf::Texture backgroundTexture;
 	sf::Texture miscTexture;

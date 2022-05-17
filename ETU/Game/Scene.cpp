@@ -4,7 +4,7 @@
 SceneResult Scene::result;
 
 Scene::Scene(SceneType type)
-  : sceneType(type)
+	: sceneType(type)
 {
 
 }
@@ -21,31 +21,31 @@ void Scene::pause()
 
 void Scene::unPause()
 {
- 
+
 }
 
 bool Scene::handleEvents(sf::RenderWindow& window)
 {
-  bool retval = false;
-  
-  while (window.pollEvent(event))
-  {
-    //x sur la fenêtre
-    if (event.type == sf::Event::Closed)
-    {
-      window.close();
-      retval = true;
-    }
-  }
-  return retval;
+	bool retval = false;
+
+	while (window.pollEvent(event))
+	{
+		//x sur la fenêtre
+		if (event.type == sf::Event::Closed)
+		{
+			window.close();
+			retval = true;
+		}
+	}
+	return retval;
 }
 
 SceneType Scene::getSceneType() const
 {
-  return sceneType;
+	return sceneType;
 }
 
 SceneResult Scene::getSceneResult() const
 {
-  return result;
+	return result;
 }
