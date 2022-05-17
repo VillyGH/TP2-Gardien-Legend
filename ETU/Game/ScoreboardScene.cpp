@@ -78,6 +78,7 @@ bool ScoreboardScene::init()
 		return false;
 	}
 
+	scoreIndex = 0;
 	backgroundSprite.setTexture(contentManager.getBackgroundTexture());
 
 	scoreIndex = 0;

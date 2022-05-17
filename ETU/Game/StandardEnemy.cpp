@@ -84,6 +84,7 @@ void StandardEnemy::onHit(const float damage)
 		sound.play();
 		sound.setVolume(10);
 		deactivate();
+		health = MAX_ENEMY_HEALTH;
 	}
 }
 
