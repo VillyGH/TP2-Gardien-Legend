@@ -15,7 +15,7 @@ const float Level01Scene::MAX_NB_STANDARD_ENEMIES = 15;
 const float Level01Scene::MAX_NB_BOSS_ENEMIES = 3;
 const float Level01Scene::MAX_NB_BULLETS = 30;
 const unsigned int Level01Scene::MAX_SPAWN_WIDTH = Game::GAME_WIDTH - 20;
-const unsigned int Level01Scene::MIN_SPAWN_WIDTH = 0 + 20;
+const unsigned int Level01Scene::MIN_SPAWN_WIDTH = 20;
 const float Level01Scene::COLLISION_DAMAGE = 5;
 const float Level01Scene::SCORE_GAINED_ENEMY_KILLED = 1000;
 const float Level01Scene::SCORE_GAINED_BOSS_KILLED = 250;
@@ -107,7 +107,7 @@ SceneType Level01Scene::update()
 		}
 
 		if (nbKills >= Boss::BOSS_SPAWN_KILL_COUNT && !boss.isActive())
- 			spawnBoss();
+			spawnBoss();
 
 		if (boss.isActive()) {
 			boss.update(TIME_PER_FRAME, inputs, player.getPosition());
@@ -235,10 +235,10 @@ bool Level01Scene::spawnBoss()
 #pragma region Bullet
 void Level01Scene::fireEnemyBullet(StandardEnemy enemy)
 {
-		Bullet& b = getAvailableEnemyBullet();
-		b.setPosition(enemy.getPosition().x - enemy.getTextureRect().width / 4, enemy.getPosition().y);
-		Bullet& b2 = getAvailableEnemyBullet();
-		b2.setPosition(enemy.getPosition().x + enemy.getTextureRect().width / 4, enemy.getPosition().y);
+	Bullet& b = getAvailableEnemyBullet();
+	b.setPosition(enemy.getPosition().x - enemy.getTextureRect().width / 4, enemy.getPosition().y);
+	Bullet& b2 = getAvailableEnemyBullet();
+	b2.setPosition(enemy.getPosition().x + enemy.getTextureRect().width / 4, enemy.getPosition().y);
 }
 
 void Level01Scene::fireBossBullet()
@@ -412,12 +412,12 @@ void Level01Scene::draw(sf::RenderWindow& window) const
 	for (const Bullet& e : bossBullets)
 		e.draw(window);
 
-	for (const GunBonus& e : gunBonus) 
+	for (const GunBonus& e : gunBonus)
 		e.draw(window);
-	
-	for (const LifeBonus& e : lifeBonus) 
+
+	for (const LifeBonus& e : lifeBonus)
 		e.draw(window);
-	
+
 	hud.draw(window);
 }
 
@@ -430,8 +430,8 @@ bool Level01Scene::uninit()
 	Publisher::removeSubscriber(*this, Event::LIFE_PICKED_UP);
 	Publisher::removeSubscriber(*this, Event::GUN_BONUS_DROPPED);
 	Publisher::removeSubscriber(*this, Event::LIFE_BONUS_DROPPED);
-	Publisher::removeSubscriber(player, Event::GUN_BONUS_DROPPED);
-	Publisher::removeSubscriber(player, Event::LIFE_BONUS_DROPPED);
+	Publisher::removeSubscriber(player, Event::GUN_PICKED_UP);
+	Publisher::removeSubscriber(player, Event::LIFE_PICKED_UP);
 	return true;
 }
 

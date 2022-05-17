@@ -13,8 +13,7 @@ bool ScoreboardContentManager::loadContent()
 		return false;
 	else
 		backgroundTexture.setRepeated(true);
-	if (!mainFont.loadFromFile("Assets\\Fonts\\Level01\\emulogic.ttf"))
-		return false;
+	ContentManager::loadContent();
 
 	return true;
 }
@@ -22,9 +21,4 @@ bool ScoreboardContentManager::loadContent()
 const sf::Texture& ScoreboardContentManager::getBackgroundTexture() const
 {
 	return backgroundTexture;
-}
-
-const sf::Font& ScoreboardContentManager::getMainFont() const
-{
-	return mainFont;
 }

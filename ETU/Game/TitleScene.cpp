@@ -55,7 +55,7 @@ bool TitleScene::init()
 	menuStartText.setString(menuStartString);
 	menuStartText.setOrigin(menuStartText.getLocalBounds().width / 2.0f, menuStartText.getLocalBounds().height / 2.0f);
 
-	gameStarted = false; 
+	gameStarted = false;
 
 	return true;
 }
@@ -71,7 +71,6 @@ bool TitleScene::handleEvents(sf::RenderWindow& window)
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
-		//x sur la fen�tre
 		if (event.type == sf::Event::Closed)
 		{
 			window.close();

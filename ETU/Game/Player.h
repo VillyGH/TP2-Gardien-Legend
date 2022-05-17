@@ -41,7 +41,7 @@ private:
 	sf::SoundBuffer firingSoundBuffer;
 	float gunBonusTimer;
 	float immuneTimer;
-	bool gunBonusIsActive; 
+	bool gunBonusIsActive;
 	float lives;
 	float fireRate;
 };

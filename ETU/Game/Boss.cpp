@@ -11,7 +11,7 @@ const float Boss::BOSS_VERTICAL_SPEED = 4;
 const float Boss::BOSS_HORIZONTAL_SPEED = 8;
 const float Boss::BOSS_BULLET_DAMAGE = 25;
 const float Boss::BOSS_SPAWN_KILL_COUNT = 15;
-const sf::Vector2f Boss::BOSS_SCALING_SIZE(1.5, 1.5); 
+const sf::Vector2f Boss::BOSS_SCALING_SIZE(1.5, 1.5);
 const float Boss::MAX_BOSS_HEALTH = 100;
 const float Boss::HEALTH_BAR_MAX_WIDTH = 100;
 const float Boss::HEALTH_BAR_MAX_HEIGHT = 10;
@@ -19,11 +19,8 @@ const float Boss::MIN_FIRING_FRAME = 6;
 const float Boss::MAX_FIRING_FRAME = 12;
 
 
-
-
-
 Boss::Boss()
-	 :moveAngle(0)
+	:moveAngle(0)
 	, health(0)
 {
 
@@ -41,7 +38,7 @@ Boss::Boss(const Boss& src)
 bool Boss::init(const Level01ContentManager& contentManager)
 {
 	setPosition(sf::Vector2f(Game::GAME_WIDTH * 0.5f, BOSS_SPAWN_Y_POSITION));
-	health = MAX_BOSS_HEALTH; 
+	health = MAX_BOSS_HEALTH;
 	initHealthBar(contentManager);
 	currentState = State::BOSS;
 	Animation* idleAnimation = new BossIdleAnimation(*this);
@@ -84,9 +81,9 @@ void Boss::draw(sf::RenderWindow& window) const
 
 bool Boss::update(const float deltaT, const Inputs& inputs, const sf::Vector2f& dest)
 {
-	if(getPosition().y < BOSS_Y_MAX_POSITION)
+	if (getPosition().y < BOSS_Y_MAX_POSITION)
 		move(sf::Vector2f(0, BOSS_VERTICAL_SPEED));
-	else 
+	else
 	{
 		setDestination(dest);
 		move(cos(moveAngle) * BOSS_HORIZONTAL_SPEED, 0);
@@ -129,7 +126,7 @@ bool Boss::isFiring() {
 	return false;
 }
 
-void Boss::setDestination(const sf::Vector2f& dest) 
+void Boss::setDestination(const sf::Vector2f& dest)
 {
 	destination.x = dest.x;
 	destination.y = dest.y;
@@ -138,7 +135,7 @@ void Boss::setDestination(const sf::Vector2f& dest)
 
 
 void Boss::onHit()
- {
+{
 	health--;
 	if (health <= 0) {
 		sound.setBuffer(deathSoundBuffer);

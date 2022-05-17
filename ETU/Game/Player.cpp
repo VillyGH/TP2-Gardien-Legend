@@ -17,14 +17,14 @@ const float Player::NB_FIRED_PLAYER_BULLETS = 1;
 const float Player::NB_BONUS_FIRED_PLAYER_BULLETS = 2;
 const float Player::NORMAL_FIRE_RATE = 0.3f;
 const float Player::BONUS_FIRE_RATE = 0.2f;
-const float Player::SPAWN_DISTANCE = 10.f; 
+const float Player::SPAWN_DISTANCE = 10.f;
 const float Player::SOUND_VOLUME = 10.f;
-const sf::Vector2f Player::SCALE_SIZE (2.5,2.5);
+const sf::Vector2f Player::SCALE_SIZE(2.5, 2.5);
 
 
 
 
-Player::Player():
+Player::Player() :
 	gunBonusTimer(0),
 	gunBonusIsActive(false),
 	immuneTimer(0),
@@ -68,17 +68,17 @@ bool Player::update(const float deltaT, const Inputs& inputs)
 		immuneTimer -= deltaT;
 		setColor(sf::Color(255, 255, 255, 128));
 	}
-	else 
+	else
 	{
 		setColor(sf::Color(255, 255, 255, 255));
 	}
-		
+
 	if (isGunBonusActive()) {
 		gunBonusTimer -= deltaT;
 		fireRate = BONUS_FIRE_RATE;
 	}
-		
-	
+
+
 	handleOutOfBoundsPosition();
 	return AnimatedGameObject::update(deltaT, inputs);
 }
@@ -104,15 +104,15 @@ bool Player::onHit(const float damage) {
 	return true;
 }
 
-float Player::getLivesRemaining() const{
+float Player::getLivesRemaining() const {
 	return lives;
 }
 
-float Player::getFireRate() const{
+float Player::getFireRate() const {
 	return fireRate;
 }
 
-float Player::getGunBonusTimer() const{
+float Player::getGunBonusTimer() const {
 	return gunBonusTimer;
 }
 
@@ -140,7 +140,7 @@ void Player::handleOutOfBoundsPosition()
 	GameObject::setPosition(newPosition);
 }
 
-bool Player::isGunBonusActive() const{
+bool Player::isGunBonusActive() const {
 	if (gunBonusTimer >= 0)
 		return true;
 	return false;

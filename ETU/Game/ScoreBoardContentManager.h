@@ -1,18 +1,17 @@
 #pragma once
 #include "stdafx.h"
-class ScoreboardContentManager
+#include "ContentManager.h"
+class ScoreboardContentManager : public ContentManager
 {
 public:
 	ScoreboardContentManager();
 	virtual bool loadContent();
 
 	const sf::Texture& getBackgroundTexture() const;
-	const sf::Font& getMainFont() const;
 private:
 	sf::Texture backgroundTexture;
 	sf::Texture miscTexture;
 	sf::Texture titleScreenTexture;
-	sf::Font mainFont;
 };
 
 

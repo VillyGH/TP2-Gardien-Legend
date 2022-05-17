@@ -30,7 +30,6 @@ bool Scene::handleEvents(sf::RenderWindow& window)
 
 	while (window.pollEvent(event))
 	{
-		//x sur la fenêtre
 		if (event.type == sf::Event::Closed)
 		{
 			window.close();

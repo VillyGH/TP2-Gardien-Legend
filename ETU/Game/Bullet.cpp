@@ -50,7 +50,7 @@ bool Bullet::update(float elapsedTime, CharacterType type)
 	return false;
 }
 
-bool Bullet::init(const Level01ContentManager& contentManager,const  CharacterType type)
+bool Bullet::init(const Level01ContentManager& contentManager, const  CharacterType type)
 {
 	GameObject::init(contentManager);
 	setTexture(contentManager.getMainCharacterTexture());
@@ -78,10 +78,10 @@ bool Bullet::init(const Level01ContentManager& contentManager,const  CharacterTy
 }
 
 void Bullet::checkOutOfBounds() {
-	
+
 	if (getPosition().y > Game::GAME_HEIGHT - getLocalBounds().height * 0.5f)
 		deactivate();
 	if (getPosition().y < 0 + getLocalBounds().height * 0.5f)
- 		deactivate();
+		deactivate();
 }
 

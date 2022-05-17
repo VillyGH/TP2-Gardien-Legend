@@ -33,7 +33,7 @@ public:
 	void onHit();
 	virtual void draw(sf::RenderWindow& window) const override;
 
-private:	
+private:
 	sf::Vector2f destination;
 	float moveAngle;
 	float health;
@@ -41,6 +41,6 @@ private:
 	sf::SoundBuffer firingSoundBuffer;
 	sf::SoundBuffer deathSoundBuffer;
 	sf::RectangleShape hpBarBack;
-	sf::RectangleShape hpBarInner; 
+	sf::RectangleShape hpBarInner;
 };
 
