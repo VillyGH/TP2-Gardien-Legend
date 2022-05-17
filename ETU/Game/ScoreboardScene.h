@@ -19,8 +19,6 @@ public:
 	~ScoreboardScene();
 	void fillPlayerStatsWithRandomValues(PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD]);
 	virtual SceneType update() override;
-	virtual void pause()override;
-	virtual void unPause() override;
 	virtual void draw(sf::RenderWindow& window) const override;
 	virtual bool init() override;
 	void setScoreText();
@@ -38,19 +36,18 @@ public:
 	virtual bool handleEvents(sf::RenderWindow& window) override;
 private:
 	ScoreboardContentManager contentManager;
+	PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD];
 	sf::Sprite backgroundSprite;
 	sf::Text leaderboardText;
 	sf::Text gameOverText;
 	sf::Text enterNameText;
 	sf::Text initialsText;
 	sf::Text scoresText;
-	sf::Sprite endGameImage;
-	PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD];
 	int currentInitials;
 	int scoreIndex;
+	int nameIndex;
 	bool lockedInScore;
 	std::string newInitials;
-	int nbAlreadySavedInitials;
 	bool hasExited;
 	bool canExit;
 };

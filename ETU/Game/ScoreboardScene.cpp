@@ -4,7 +4,6 @@
 
 const float ScoreboardScene::TIME_PER_FRAME = 1.0f / (float)Game::FRAME_RATE;
 const std::string ScoreboardScene::PATH_TO_BIN_FILE = "stats.bin";
-const int ScoreboardScene::NB_INITIAL_PLAYERS = 3;
 const int ScoreboardScene::MAX_NB_CHARS_INITIALS = 3;
 
 ScoreboardScene::ScoreboardScene()
@@ -15,7 +14,7 @@ ScoreboardScene::ScoreboardScene()
 	, canExit(false)
 	, lockedInScore(false)
 	, scoreIndex(0)
-	, nbAlreadySavedInitials(0)
+	, nameIndex(0)
 {
 }
 
@@ -23,17 +22,6 @@ ScoreboardScene::~ScoreboardScene()
 {
 
 }
-
-//void ScoreboardScene::fillPlayerStatsWithRandomValues(PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD])
-//{
-//	srand((unsigned)time(nullptr));
-//	std::string names[] = { "SSD", "MAD", "SKT" };
-//	for (int i = 0; i < NB_INITIAL_PLAYERS; i++)
-//	{
-//		sprintf_s(stats[i].name, "%s", names[rand() % (sizeof(names) / sizeof(names[0]))].c_str());
-//		stats[i].score = 10000.f + rand() % 1000;
-//	}
-//}
 
 SceneType ScoreboardScene::update()
 {
@@ -45,20 +33,9 @@ SceneType ScoreboardScene::update()
 	return retval;
 }
 
-void ScoreboardScene::pause()
-{
-
-}
-
-void ScoreboardScene::unPause()
-{
-
-}
-
 void ScoreboardScene::draw(sf::RenderWindow& window) const
 {
 	window.draw(backgroundSprite);
-	window.draw(endGameImage);
 	window.draw(gameOverText);
 	window.draw(leaderboardText);
 	window.draw(enterNameText);
@@ -81,34 +58,15 @@ bool ScoreboardScene::init()
 	scoreIndex = 0;
 	backgroundSprite.setTexture(contentManager.getBackgroundTexture());
 
-	scoreIndex = 0;
 	setGameOverText();
 	setLeaderboardText();
 	setEnterNameText();
-
-	//PlayerStats outStats[MAX_NB_PLAYERS_LEADERBOARD];
-	//fillPlayerStatsWithRandomValues(outStats);
-
-	/*if (writeToFile(outStats))
-	{
-		if (readFromFile(stats))
-		{
-			if (0 == ::memcmp(outStats, stats, MAX_NB_PLAYERS_LEADERBOARD * sizeof(PlayerStats)))
-			{
-				std::cout << "La d�s�rialisation est similaire � la s�rialisation" << std::endl;
-			}
-			else
-			{
-				std::cout << "Il y a eu un probl�me" << std::endl;
-			}
-
-		}
-	}*/
 	if (!readFromFile(stats))
 		return false;
-
-	setInitialsText();
 	setScoreText();
+	setInitialsText();
+
+
 
 	return true;
 }
@@ -154,16 +112,19 @@ void ScoreboardScene::changeEnterNameText()
 void ScoreboardScene::setInitialsText()
 {
 	bool nameWritten = false;
+	int currentIndex = 0;
 	initialsText.setFont(contentManager.getMainFont());
 	initialsText.setCharacterSize(24);
 	initialsText.setPosition(Game::GAME_WIDTH / 4.0f, Game::GAME_HEIGHT / 3.0f);
 	initialsText.setOrigin(initialsText.getGlobalBounds().width / 2, initialsText.getGlobalBounds().width / 2);
 	for (const PlayerStats& stat : stats)
 	{
-		if (!strlen(stat.name) == 0) {
-			if (stat.score == (int)std::round(result.level01SceneResult.score && !nameWritten)) {
-				initialsText.setString(initialsText.getString() + "\n");
+		if (stat.score != 0) {
+			currentIndex++;
+			if (stat.score == (int)std::round(result.level01SceneResult.score) && !nameWritten) {
+				initialsText.setString(initialsText.getString() + "   " + "\n");
 				nameWritten = true;
+				nameIndex = currentIndex - 1;
 			} else {
 				initialsText.setString(initialsText.getString() + stat.name + "\n");
 			}
@@ -175,7 +136,13 @@ void ScoreboardScene::addInitialsText(const char initial)
 {
 	if (currentInitials < MAX_NB_CHARS_INITIALS) {
 		std::string text = initialsText.getString();
-		initialsText.setString(initialsText.getString() + initial);
+		if (nameIndex != scoreIndex) {
+			text[(nameIndex) * 4 + newInitials.size()] = initial;
+		}
+		else {
+			text += initial;
+		}
+		initialsText.setString(text);
 		newInitials += initial;
 		currentInitials++;
 	}
@@ -183,20 +150,16 @@ void ScoreboardScene::addInitialsText(const char initial)
 
 void ScoreboardScene::removeInitialsText()
 {
-	if (currentInitials > 0) {
-		std::string text = initialsText.getString();
-		initialsText.setString(text.substr(0, text.size() - 1));
-		newInitials = newInitials.substr(0, newInitials.size() - 1);
-		currentInitials--;
+	std::string text = initialsText.getString();
+	if (nameIndex != scoreIndex) {
+		text[(nameIndex) * 4 + newInitials.size() - 1] = ' ';
+		initialsText.setString(text);
 	}
-}
-
-int compare(const PlayerStats& playerStatA, const PlayerStats& playerStatB) {
-	if (playerStatA.score > playerStatB.score)
-		return 1;
-	if (playerStatA.score < playerStatB.score)
-		return -1;
-	return 0;
+	else {
+		initialsText.setString(text.substr(0, text.size() - 1));
+	}
+	newInitials = newInitials.substr(0, newInitials.size() - 1);
+	currentInitials--;
 }
 
 bool operator<(const PlayerStats& playerStatA, const PlayerStats& playerStatB)
@@ -213,16 +176,18 @@ void ScoreboardScene::setScoreText()
 	bool scoreWritten = false;
 	scoresText.setFont(contentManager.getMainFont());
 	scoresText.setCharacterSize(24);
-	scoresText.setPosition(Game::GAME_WIDTH / 1.5f, initialsText.getPosition().y);
+	scoresText.setPosition(Game::GAME_WIDTH / 1.5f, Game::GAME_HEIGHT / 3.0f);
 	scoresText.setOrigin(scoresText.getGlobalBounds().width / 2, scoresText.getGlobalBounds().width / 2);
 	for (const PlayerStats& stat : stats)
 	{
 		if (stat.score != 0) {
 			scoreIndex++;
+			if (scoreIndex >= MAX_NB_PLAYERS_LEADERBOARD)
+				scoreIndex--;
 		}
 	}
-	stats[scoreIndex].score = result.level01SceneResult.score;
-	std::sort(stats, stats + 5);
+	stats[scoreIndex].score = std::round(result.level01SceneResult.score);
+	std::sort(stats, stats + MAX_NB_PLAYERS_LEADERBOARD);
 	for (const PlayerStats& stat : stats)
 	{
 		if (stat.score != 0) {
@@ -231,16 +196,9 @@ void ScoreboardScene::setScoreText()
 	}
 }
 
-template <typename T, std::size_t N>
-std::size_t array_size(T(&)[N])
-{
-	return N;
-}
-
 void ScoreboardScene::saveStats()
 {
-	strcpy_s(stats[scoreIndex - 1].name, newInitials.c_str());
-	stats[scoreIndex - 1].score = (int)result.level01SceneResult.score;
+	strcpy_s(stats[nameIndex].name, newInitials.c_str());
 }
 
 bool ScoreboardScene::writeToFile(const PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD])
