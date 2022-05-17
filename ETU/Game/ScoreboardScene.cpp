@@ -201,7 +201,6 @@ void ScoreboardScene::saveStats()
 	strcpy_s(stats[nameIndex].name, newInitials.c_str());
 }
 
-
 bool ScoreboardScene::writeToFile(const PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD])
 {
 	std::ofstream ofs(PATH_TO_BIN_FILE, std::ios::binary);

@@ -17,8 +17,6 @@ void Hud::initialize(const Level01ContentManager& contentManager)
 	addPauseText(contentManager);
 }
 
-// Ajout de texte
-
 void Hud::addScoreText(const Level01ContentManager& contentManager)
 {
 	scoreText.setFont(contentManager.getMainFont());
@@ -67,9 +65,6 @@ void Hud::addPauseText(const Level01ContentManager& contentManager)
 	pauseText.setPosition(Game::GAME_WIDTH / 2.0f - pauseText.getLocalBounds().width / 2.0f, Game::GAME_HEIGHT / 2.0f - pauseText.getLocalBounds().height / 2.0f);
 }
 
-
-// Mise à jour du texte
-
 void Hud::updateScoreText(float score)
 {
 	const std::string scoreString = "Score : " + std::to_string(int(score));
@@ -98,8 +93,6 @@ void Hud::updateGameInfo(float score, float nbLivesRemaining, float timeRemainin
 	updateNbLivesText(nbLivesRemaining);
 	updateTimeRemainingBonus(timeRemainingBonus);
 }
-
-// Reset du texte
 
 void Hud::removeGameInfoText()
 {
