@@ -28,7 +28,6 @@ Level01Scene::Level01Scene()
 	: Scene(SceneType::LEVEL01_SCENE)
 	, enemySpawnTimer(0)
 	, timeSinceLastFire(0)
-	, allEnemiesKilled(false)
 	, gameEnded(false)
 	, score(0)
 	, nbKills(0)
@@ -110,7 +109,7 @@ SceneType Level01Scene::update()
 		}
 
 		if (nbKills >= Boss::BOSS_SPAWN_KILL_COUNT && !boss.isActive())
-			spawnBoss();
+ 			spawnBoss();
 
 		if (boss.isActive()) {
 			boss.update(TIME_PER_FRAME, inputs, player.getPosition());
@@ -259,7 +258,7 @@ void Level01Scene::fireBossBullet()
 	b.setPosition(boss.getPosition());
 }
 
-//TODO: À VALIDER
+
 void Level01Scene::firePlayerBullet()
 {
 	Bullet& b = getAvailableStandardBullet();
@@ -302,7 +301,7 @@ Bullet& Level01Scene::getAvailableEnemyBullet()
 			return b;
 		}
 	}
-	addNewEnemyBullets(); //TODO: OK DE AJOUTER BEAUCOUP DE BULLET D'UN COUP? 
+	addNewEnemyBullets();
 	return enemyBullets.back();
 }
 

@@ -76,9 +76,7 @@ private:
 	float gameTime;
 	float timeSinceLastFire;
 	sf::Music music;
-	sf::SoundBuffer enemyDeathSound;
 	float enemySpawnTimer;
-	bool allEnemiesKilled;
 	bool gameEnded;
 	bool scoreBoardCalled;
 	float score;
