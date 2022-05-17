@@ -78,13 +78,11 @@ void Hud::updateScoreText(float score)
 
 void Hud::updateNbLivesText(float nbLivesRemaining)
 {
-	//nbLivesRemainingText.setPosition(Game::GAME_WIDTH - nbLivesRemainingText.getLocalBounds().width, nbLivesRemainingText.getLocalBounds().height / 2.0f);
 	nbLivesRemainingText.setString(std::to_string((int)nbLivesRemaining));
 }
 
 void Hud::updateTimeRemainingBonus(float timeRemainingBonus)
 {
-	//timeRemainingBonusText.setPosition(Game::GAME_WIDTH - nbLivesRemainingText.getLocalBounds().width, nbLivesRemainingText.getLocalBounds().height / 2.0f);
 	timeRemainingBonusText.setString(std::to_string((int)timeRemainingBonus));
 }
 

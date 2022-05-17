@@ -15,7 +15,6 @@ public:
 	bool update(float elapsedTime, CharacterType type);
 
 private:
-	Bullet& operator=(const Bullet& rhs);
 	sf::Texture texture;
 };
 

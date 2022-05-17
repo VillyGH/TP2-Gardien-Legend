@@ -82,6 +82,6 @@ void Bullet::checkOutOfBounds() {
 	if (getPosition().y > Game::GAME_HEIGHT - getLocalBounds().height * 0.5f)
 		deactivate();
 	if (getPosition().y < 0 + getLocalBounds().height * 0.5f)
- 		deactivate();
+		deactivate();
 }
 

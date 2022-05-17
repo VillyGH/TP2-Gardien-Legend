@@ -71,7 +71,6 @@ bool TitleScene::handleEvents(sf::RenderWindow& window)
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
-		//x sur la fen�tre
 		if (event.type == sf::Event::Closed)
 		{
 			window.close();

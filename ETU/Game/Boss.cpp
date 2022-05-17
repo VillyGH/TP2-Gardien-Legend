@@ -19,9 +19,6 @@ const float Boss::MIN_FIRING_FRAME = 6;
 const float Boss::MAX_FIRING_FRAME = 12;
 
 
-
-
-
 Boss::Boss()
 	 :moveAngle(0)
 	, health(0)

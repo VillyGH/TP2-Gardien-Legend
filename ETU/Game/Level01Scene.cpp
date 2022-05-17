@@ -109,7 +109,7 @@ SceneType Level01Scene::update()
 		}
 
 		if (nbKills >= Boss::BOSS_SPAWN_KILL_COUNT && !boss.isActive())
- 			spawnBoss();
+			spawnBoss();
 
 		if (boss.isActive()) {
 			boss.update(TIME_PER_FRAME, inputs, player.getPosition());
@@ -188,10 +188,6 @@ SceneType Level01Scene::update()
 				}
 			}
 		}
-
-
-		/* playerBullets.remove_if([](const GameObject& b) {return !b.isActive(); });
-		 standardEnemies.remove_if([](const GameObject& b) {return !b.isActive(); });*/
 
 		hud.updateGameInfo(score, player.getLivesRemaining(), player.getGunBonusTimer());
 
@@ -440,8 +436,8 @@ bool Level01Scene::uninit()
 	Publisher::removeSubscriber(*this, Event::GUN_PICKED_UP);
 	Publisher::removeSubscriber(*this, Event::GUN_BONUS_DROPPED);
 	Publisher::removeSubscriber(*this, Event::LIFE_BONUS_DROPPED);
-	Publisher::removeSubscriber(player, Event::GUN_BONUS_DROPPED);
-	Publisher::removeSubscriber(player, Event::LIFE_BONUS_DROPPED);
+	Publisher::removeSubscriber(player, Event::GUN_PICKED_UP);
+	Publisher::removeSubscriber(player, Event::LIFE_PICKED_UP);
 	return true;
 }
 
@@ -547,7 +543,6 @@ bool Level01Scene::handleEvents(sf::RenderWindow& window)
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
-		//x sur la fen�tre
 		if (event.type == sf::Event::Closed)
 		{
 			window.close();
