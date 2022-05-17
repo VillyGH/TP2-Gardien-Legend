@@ -24,7 +24,8 @@ public:
 	static const float MAX_NB_STANDARD_ENEMIES;
 	static const float MAX_NB_BOSS_ENEMIES;
 	static const float MAX_NB_BULLETS;
-	static const float SPAWN_MARGIN;
+	static const unsigned int MAX_SPAWN_WIDTH;
+	static const unsigned int MIN_SPAWN_WIDTH;
 	static const float SCORE_GAINED_ENEMY_KILLED;
 	static const float SCORE_GAINED_BOSS_KILLED;
 	static const float LIFE_SCORE_MULTIPLIER;

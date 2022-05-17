@@ -156,8 +156,6 @@ void Player::notify(const Event event, const void* data)
 {
 	switch (event)
 	{
-	case Event::NONE:
-		break;
 	case Event::LIFE_PICKED_UP:
 	{
 		const LifeBonus* bonus = static_cast<const LifeBonus*>(data);

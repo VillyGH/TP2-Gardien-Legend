@@ -19,6 +19,7 @@ AnimatedGameObject::~AnimatedGameObject()
 AnimatedGameObject::AnimatedGameObject(const AnimatedGameObject& src)
 	:GameObject(src)
 	, contentManager(src.contentManager)
+	, currentState(State::NONE)
 
 {
 
@@ -34,7 +35,6 @@ bool AnimatedGameObject::update(float deltaT, const Inputs& inputs)
 	bool retval = GameObject::update(deltaT);
 	if (false == retval)
 		animations[currentState]->update(deltaT, inputs);
-
 
 	return retval;
 }

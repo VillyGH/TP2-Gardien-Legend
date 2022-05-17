@@ -14,7 +14,8 @@ const float Level01Scene::KEYBOARD_SPEED = 0.1f;
 const float Level01Scene::MAX_NB_STANDARD_ENEMIES = 15;
 const float Level01Scene::MAX_NB_BOSS_ENEMIES = 3;
 const float Level01Scene::MAX_NB_BULLETS = 30;
-const float Level01Scene::SPAWN_MARGIN = -50;
+const unsigned int Level01Scene::MAX_SPAWN_WIDTH = Game::GAME_WIDTH - 20;
+const unsigned int Level01Scene::MIN_SPAWN_WIDTH = 0 + 20;
 const float Level01Scene::COLLISION_DAMAGE = 5;
 const float Level01Scene::SCORE_GAINED_ENEMY_KILLED = 1000;
 const float Level01Scene::SCORE_GAINED_BOSS_KILLED = 250;
@@ -51,7 +52,6 @@ SceneType Level01Scene::update()
 
 		gameTime += TIME_PER_FRAME;
 
-		//Update du joueur
 		player.update(TIME_PER_FRAME, inputs);
 
 		if (inputs.playFireSound && timeSinceLastFire >= player.getFireRate())
@@ -63,7 +63,6 @@ SceneType Level01Scene::update()
 
 		timeSinceLastFire += 1.0f / (float)Game::FRAME_RATE;
 
-		//Update des balles du joueur et les collisions
 		for (Bullet& b : playerBullets)
 		{
 			if (b.isActive() && b.update(TIME_PER_FRAME, CharacterType::PLAYER))
@@ -85,7 +84,6 @@ SceneType Level01Scene::update()
 			}
 		}
 
-		//Update des enemies et des collisions
 		for (StandardEnemy& e : standardEnemies) {
 			if (e.isActive())
 			{
@@ -133,7 +131,6 @@ SceneType Level01Scene::update()
 
 		}
 
-		//Gestion des spawns enemy
 		enemySpawnTimer += TIME_PER_FRAME;
 
 		if (enemySpawnTimer >= StandardEnemy::STANDARD_ENEMY_SPAWN_TIME && nbKills < Boss::BOSS_SPAWN_KILL_COUNT) {
@@ -145,7 +142,6 @@ SceneType Level01Scene::update()
 		if (nbKills >= Boss::BOSS_SPAWN_KILL_COUNT && !boss.isActive())
 			spawnBoss();
 
-		//Update Boss et collisions avec joueur
 		if (boss.isActive()) {
 			boss.update(TIME_PER_FRAME, inputs, player.getPosition());
 			if (boss.isFiring())
@@ -164,7 +160,6 @@ SceneType Level01Scene::update()
 			}
 		}
 
-		//Update des bonus et de leur collisions
 		for (GunBonus& e : gunBonus) {
 			if (e.isActive())
 			{
@@ -189,10 +184,6 @@ SceneType Level01Scene::update()
 			}
 		}
 
-
-		/* playerBullets.remove_if([](const GameObject& b) {return !b.isActive(); });
-		 standardEnemies.remove_if([](const GameObject& b) {return !b.isActive(); });*/
-
 		hud.updateGameInfo(score, player.getLivesRemaining(), player.getGunBonusTimer());
 
 		if (gameEnded && scoreBoardCalled) {
@@ -207,10 +198,8 @@ SceneType Level01Scene::update()
 			}
 		}
 	}
-
 	return retval;
 }
-
 
 #pragma region Enemy
 void Level01Scene::addNewStandardEnemies() {
@@ -227,7 +216,7 @@ bool Level01Scene::spawnStandardEnemy()
 	for (StandardEnemy& enemy : standardEnemies) {
 		if (!enemy.isActive()) {
 			enemy.activate();
-			enemy.setPosition((rand() % Game::GAME_WIDTH - SPAWN_MARGIN), StandardEnemy::ENEMY_SPAWN_DISTANCE);
+			enemy.setPosition((rand() % MAX_SPAWN_WIDTH - MIN_SPAWN_WIDTH), StandardEnemy::ENEMY_SPAWN_DISTANCE);
 			return false;
 		}
 	}
@@ -438,6 +427,7 @@ bool Level01Scene::uninit()
 	Publisher::removeSubscriber(*this, Event::BOSS_KILLED);
 	Publisher::removeSubscriber(*this, Event::PLAYER_KILLED);
 	Publisher::removeSubscriber(*this, Event::GUN_PICKED_UP);
+	Publisher::removeSubscriber(*this, Event::LIFE_PICKED_UP);
 	Publisher::removeSubscriber(*this, Event::GUN_BONUS_DROPPED);
 	Publisher::removeSubscriber(*this, Event::LIFE_BONUS_DROPPED);
 	Publisher::removeSubscriber(player, Event::GUN_BONUS_DROPPED);
@@ -477,6 +467,7 @@ bool Level01Scene::init()
 	Publisher::addSubscriber(*this, Event::BOSS_KILLED);
 	Publisher::addSubscriber(*this, Event::PLAYER_KILLED);
 	Publisher::addSubscriber(*this, Event::GUN_PICKED_UP);
+	Publisher::addSubscriber(*this, Event::LIFE_PICKED_UP);
 	Publisher::addSubscriber(*this, Event::GUN_BONUS_DROPPED);
 	Publisher::addSubscriber(*this, Event::LIFE_BONUS_DROPPED);
 
@@ -490,8 +481,6 @@ void Level01Scene::notify(Event event, const void* data)
 {
 	switch (event)
 	{
-	case Event::NONE:
-		break;
 	case Event::ENEMY_KILLED:
 	{
 		nbKills++;
@@ -547,7 +536,6 @@ bool Level01Scene::handleEvents(sf::RenderWindow& window)
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
-		//x sur la fen�tre
 		if (event.type == sf::Event::Closed)
 		{
 			window.close();

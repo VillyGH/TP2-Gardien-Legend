@@ -237,14 +237,11 @@ std::size_t array_size(T(&)[N])
 	return N;
 }
 
-
-
 void ScoreboardScene::saveStats()
 {
 	strcpy_s(stats[scoreIndex - 1].name, newInitials.c_str());
 	stats[scoreIndex - 1].score = (int)result.level01SceneResult.score;
 }
-
 
 bool ScoreboardScene::writeToFile(const PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD])
 {

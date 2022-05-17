@@ -5,7 +5,6 @@ struct Subscriber;
 class Publisher
 {
 public:
-
 	static void addSubscriber(Subscriber& o, Event event);
 	static void removeSubscriber(Subscriber& o, Event event);
 	static void notifySubscribers(Event event, const void* data);

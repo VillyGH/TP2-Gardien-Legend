@@ -27,7 +27,6 @@ void Game::run()
 		bool windowIsClosed = handleEvents();
 		if (windowIsClosed || true == update())
 		{
-			// On termine "normalement" l'application
 			break;
 		}
 		else
@@ -55,19 +54,15 @@ bool Game::update()
 	if (!gameMustEnd)
 	{
 		SceneType nextSceneType = scenes.top()->update();
-		// Si la nouvelle sc�ne attendue est diff�rente de l'ancienne...
 		if (nextSceneType != scenes.top()->getSceneType())
 		{
 			Scene* nextScene = nullptr;
-			// ... soit on veut retirer la sc�ne courant de la pile
 			if (SceneType::NONE == nextSceneType)
 			{
 				popScene(false);
-
 			}
 			else
 			{
-				// ... soit on veut en ajouter une nouvelle
 				nextScene = getNextScene(nextSceneType);
 			}
 			if (nextScene != nullptr)
@@ -108,7 +103,6 @@ bool Game::pushScene(Scene* newScene)
 			scenes.top()->pause();
 		scenes.push(newScene);
 	}
-
 	return retval;
 }
 
@@ -136,7 +130,6 @@ bool Game::uninit()
 	}
 	return true;
 }
-
 
 Scene* Game::getNextScene(SceneType type) const
 {
