@@ -10,7 +10,8 @@ const float GunBonus::BONUS_POINTS = 100;
 
 GunBonus::GunBonus() : 
 	GameObject(),
-	duration(BONUS_DURATION)
+	duration(BONUS_DURATION),
+	bonusTimer(0)
 {
 
 }

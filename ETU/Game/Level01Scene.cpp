@@ -28,7 +28,6 @@ Level01Scene::Level01Scene()
 	: Scene(SceneType::LEVEL01_SCENE)
 	, enemySpawnTimer(0)
 	, timeSinceLastFire(0)
-	, allEnemiesKilled(false)
 	, gameEnded(false)
 	, score(0)
 	, nbKills(0)
@@ -111,8 +110,8 @@ SceneType Level01Scene::update()
 			enemySpawnTimer = 0;
 		}
 
-	if (nbKills >= Boss::BOSS_SPAWN_KILL_COUNT && !boss.isActive())
- 		spawnBoss();
+		if (nbKills >= Boss::BOSS_SPAWN_KILL_COUNT && !boss.isActive())
+ 			spawnBoss();
 
 		if (boss.isActive()) {
 			boss.update(TIME_PER_FRAME, inputs, player.getPosition());
@@ -193,21 +192,22 @@ SceneType Level01Scene::update()
 		}
 
 
-	/* playerBullets.remove_if([](const GameObject& b) {return !b.isActive(); });
-	 standardEnemies.remove_if([](const GameObject& b) {return !b.isActive(); });*/
+		/* playerBullets.remove_if([](const GameObject& b) {return !b.isActive(); });
+		 standardEnemies.remove_if([](const GameObject& b) {return !b.isActive(); });*/
 
-	hud.updateGameInfo(score, player.getLivesRemaining(), player.getGunBonusTimer());
+		hud.updateGameInfo(score, player.getLivesRemaining(), player.getGunBonusTimer());
 
-	if (gameEnded && scoreBoardCalled) {
-		retval = SceneType::NONE;
-		uninit();
-	}
-	if (!scoreBoardCalled) {
-		if (gameEnded) {
-			retval = SceneType::SCOREBOARD_SCENE;
-			result.level01SceneResult.score = score;
-			scoreBoardCalled = true;
-		}	 
+		if (gameEnded && scoreBoardCalled) {
+			retval = SceneType::NONE;
+			uninit();
+		}
+		if (!scoreBoardCalled) {
+			if (gameEnded) {
+				retval = SceneType::SCOREBOARD_SCENE;
+				result.level01SceneResult.score = score;
+				scoreBoardCalled = true;
+			}
+		}
 	}
 
 

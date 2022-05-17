@@ -50,7 +50,7 @@ bool Bullet::update(float elapsedTime, CharacterType type)
 	return false;
 }
 
-bool Bullet::init(const Level01ContentManager& contentManager, CharacterType type)
+bool Bullet::init(const Level01ContentManager& contentManager,const  CharacterType type)
 {
 	GameObject::init(contentManager);
 	setTexture(contentManager.getMainCharacterTexture());
@@ -62,6 +62,7 @@ bool Bullet::init(const Level01ContentManager& contentManager, CharacterType typ
 		break;
 	case CharacterType::BOSS:
 		setTextureRect(sf::IntRect(287, 106, 16, 5));
+		setColor(sf::Color::Green);
 		scale(BULLET_SCALING_SIZE);
 		break;
 	case CharacterType::PLAYER:

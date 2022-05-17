@@ -15,6 +15,10 @@ const sf::Vector2f Boss::BOSS_SCALING_SIZE(1.5, 1.5);
 const float Boss::MAX_BOSS_HEALTH = 100;
 const float Boss::HEALTH_BAR_MAX_WIDTH = 100;
 const float Boss::HEALTH_BAR_MAX_HEIGHT = 10;
+const float Boss::MIN_FIRING_FRAME = 6;
+const float Boss::MAX_FIRING_FRAME = 12;
+
+
 
 
 
@@ -120,7 +124,7 @@ void Boss::playFireSound() {
 }
 
 bool Boss::isFiring() {
-	if (animations[currentState]->getNextFrame() > 2 && animations[currentState]->getNextFrame() < 10)
+	if (animations[currentState]->getNextFrame() > MIN_FIRING_FRAME && animations[currentState]->getNextFrame() < MAX_FIRING_FRAME)
 		return true;
 	return false;
 }
