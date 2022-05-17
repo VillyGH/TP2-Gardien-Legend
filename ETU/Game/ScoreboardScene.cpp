@@ -24,16 +24,16 @@ ScoreboardScene::~ScoreboardScene()
 
 }
 
-void ScoreboardScene::fillPlayerStatsWithRandomValues(PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD])
-{
-	srand((unsigned)time(nullptr));
-	std::string names[] = { "SSD", "MAD", "SKT" };
-	for (int i = 0; i < NB_INITIAL_PLAYERS; i++)
-	{
-		sprintf_s(stats[i].name, "%s", names[rand() % (sizeof(names) / sizeof(names[0]))].c_str());
-		stats[i].score = 10000.f + rand() % 1000;
-	}
-}
+//void ScoreboardScene::fillPlayerStatsWithRandomValues(PlayerStats stats[MAX_NB_PLAYERS_LEADERBOARD])
+//{
+//	srand((unsigned)time(nullptr));
+//	std::string names[] = { "SSD", "MAD", "SKT" };
+//	for (int i = 0; i < NB_INITIAL_PLAYERS; i++)
+//	{
+//		sprintf_s(stats[i].name, "%s", names[rand() % (sizeof(names) / sizeof(names[0]))].c_str());
+//		stats[i].score = 10000.f + rand() % 1000;
+//	}
+//}
 
 SceneType ScoreboardScene::update()
 {
@@ -81,6 +81,7 @@ bool ScoreboardScene::init()
 	scoreIndex = 0;
 	backgroundSprite.setTexture(contentManager.getBackgroundTexture());
 
+	scoreIndex = 0;
 	setGameOverText();
 	setLeaderboardText();
 	setEnterNameText();
@@ -152,7 +153,7 @@ void ScoreboardScene::changeEnterNameText()
 
 void ScoreboardScene::setInitialsText()
 {
-	int nbNames = 0;
+	bool nameWritten = false;
 	initialsText.setFont(contentManager.getMainFont());
 	initialsText.setCharacterSize(24);
 	initialsText.setPosition(Game::GAME_WIDTH / 4.0f, Game::GAME_HEIGHT / 3.0f);
@@ -160,13 +161,12 @@ void ScoreboardScene::setInitialsText()
 	for (const PlayerStats& stat : stats)
 	{
 		if (!strlen(stat.name) == 0) {
-			if (nbNames == scoreIndex) {
+			if (stat.score == (int)std::round(result.level01SceneResult.score && !nameWritten)) {
 				initialsText.setString(initialsText.getString() + "\n");
-			}
-			else {
+				nameWritten = true;
+			} else {
 				initialsText.setString(initialsText.getString() + stat.name + "\n");
 			}
-			nbNames++;
 		}
 	}
 }
@@ -227,7 +227,6 @@ void ScoreboardScene::setScoreText()
 	{
 		if (stat.score != 0) {
 			scoresText.setString(scoresText.getString() + std::to_string((int)stat.score) + "\n");
-			scoreIndex++;
 		}
 	}
 }
@@ -242,8 +241,8 @@ std::size_t array_size(T(&)[N])
 
 void ScoreboardScene::saveStats()
 {
-	strcpy_s(stats[scoreIndex].name, newInitials.c_str());
-	stats[scoreIndex].score = (int)result.level01SceneResult.score;
+	strcpy_s(stats[scoreIndex - 1].name, newInitials.c_str());
+	stats[scoreIndex - 1].score = (int)result.level01SceneResult.score;
 }
 
 

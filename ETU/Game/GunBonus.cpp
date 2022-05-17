@@ -41,6 +41,6 @@ bool GunBonus::update(float deltaT, const Inputs& inputs)
 }
 
 void GunBonus::checkOutOfBounds() {
-	if (getPosition().y > Game::GAME_HEIGHT  /** && currentState != State::EXPLODING*/)
+	if (getPosition().y > Game::GAME_HEIGHT)
 		deactivate();
 }

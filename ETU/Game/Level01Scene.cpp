@@ -51,8 +51,6 @@ SceneType Level01Scene::update()
 
 		gameTime += TIME_PER_FRAME;
 
-		//gameEnded = true;
-
 		//Update du joueur
 		player.update(TIME_PER_FRAME, inputs);
 
@@ -210,7 +208,6 @@ SceneType Level01Scene::update()
 		}
 	}
 
-
 	return retval;
 }
 
@@ -261,7 +258,7 @@ void Level01Scene::fireBossBullet()
 	b.setPosition(boss.getPosition());
 }
 
-//TODO: À VALIDER
+
 void Level01Scene::firePlayerBullet()
 {
 	Bullet& b = getAvailableStandardBullet();
@@ -304,7 +301,7 @@ Bullet& Level01Scene::getAvailableEnemyBullet()
 			return b;
 		}
 	}
-	addNewEnemyBullets(); //TODO: OK DE AJOUTER BEAUCOUP DE BULLET D'UN COUP? 
+	addNewEnemyBullets();
 	return enemyBullets.back();
 }
 
@@ -443,6 +440,8 @@ bool Level01Scene::uninit()
 	Publisher::removeSubscriber(*this, Event::GUN_PICKED_UP);
 	Publisher::removeSubscriber(*this, Event::GUN_BONUS_DROPPED);
 	Publisher::removeSubscriber(*this, Event::LIFE_BONUS_DROPPED);
+	Publisher::removeSubscriber(player, Event::GUN_BONUS_DROPPED);
+	Publisher::removeSubscriber(player, Event::LIFE_BONUS_DROPPED);
 	return true;
 }
 
