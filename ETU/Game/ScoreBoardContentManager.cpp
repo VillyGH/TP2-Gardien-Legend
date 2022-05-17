@@ -13,6 +13,7 @@ bool ScoreboardContentManager::loadContent()
 		return false;
 	else
 		backgroundTexture.setRepeated(true);
+	ContentManager::loadContent();
 
 	return true;
 }

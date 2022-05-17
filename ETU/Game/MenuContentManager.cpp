@@ -16,6 +16,8 @@ bool MenuContentManager::loadContent()
 		return false;
 	if (!titleScreenTexture.loadFromFile("Assets\\Sprites\\Title\\Title.png"))
 		return false;
+	ContentManager::loadContent();
+
 	return true;
 }
 const sf::Texture& MenuContentManager::getBackgroundTexture() const

@@ -6,9 +6,9 @@
 
 const sf::Vector2f GunBonus::SCALING_SIZE(2, 2);
 const float GunBonus::BONUS_DURATION = 5;
-const float GunBonus::BONUS_POINTS = 100; 
+const float GunBonus::BONUS_POINTS = 100;
 
-GunBonus::GunBonus() : 
+GunBonus::GunBonus() :
 	GameObject(),
 	duration(BONUS_DURATION),
 	bonusTimer(0)

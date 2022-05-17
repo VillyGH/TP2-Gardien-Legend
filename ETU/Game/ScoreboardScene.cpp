@@ -125,7 +125,8 @@ void ScoreboardScene::setInitialsText()
 				initialsText.setString(initialsText.getString() + "   " + "\n");
 				nameWritten = true;
 				nameIndex = currentIndex - 1;
-			} else {
+			}
+			else {
 				initialsText.setString(initialsText.getString() + stat.name + "\n");
 			}
 		}
@@ -259,7 +260,8 @@ bool ScoreboardScene::handleEvents(sf::RenderWindow& window)
 					hasExited = true;
 				}
 			}
-		} else {
+		}
+		else {
 			if (event.type == sf::Event::KeyPressed)
 			{
 				if (event.key.code == sf::Keyboard::Escape && canExit)

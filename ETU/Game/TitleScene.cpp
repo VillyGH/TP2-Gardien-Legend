@@ -55,7 +55,7 @@ bool TitleScene::init()
 	menuStartText.setString(menuStartString);
 	menuStartText.setOrigin(menuStartText.getLocalBounds().width / 2.0f, menuStartText.getLocalBounds().height / 2.0f);
 
-	gameStarted = false; 
+	gameStarted = false;
 
 	return true;
 }

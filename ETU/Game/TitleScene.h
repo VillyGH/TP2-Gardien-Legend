@@ -1,7 +1,6 @@
 #pragma once
 #include "Scene.h"
 #include "MenuContentManager.h"
-//#include "Hud.h"
 class TitleScene :
 	public Scene
 {

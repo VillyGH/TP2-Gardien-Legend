@@ -30,6 +30,7 @@ bool Level01ContentManager::loadContent()
 		return false;
 	if (!enemyKilledSoundBuffer.loadFromFile("Assets\\SoundFX\\Level01\\enemyKilled.wav"))
 		return false;
+	ContentManager::loadContent();
 
 	return true;
 }

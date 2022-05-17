@@ -43,7 +43,7 @@ void Hud::addNbLivesRemainingText(const Level01ContentManager& contentManager)
 
 void Hud::addBonusSprite(const Level01ContentManager& contentManager)
 {
-	bonusSprite.setTexture(contentManager.getMiscTexture()); 
+	bonusSprite.setTexture(contentManager.getMiscTexture());
 	bonusSprite.setTextureRect(sf::IntRect(248, 104, 16, 16));
 	bonusSprite.setScale(2.5f, 2.5f);
 	bonusSprite.setPosition(nbLivesRemainingText.getPosition().x + 150, lifeSprite.getPosition().y);
